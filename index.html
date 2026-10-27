@@ -79,15 +79,15 @@
                     </div>
                 </div>
 
-                <!-- Input Kelas (Ringkas) -->
+                <!-- Input Kelas -->
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="student-class">
                         Pilih Kelas:
                     </label>
                     <div class="relative">
                         <select id="student-class" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white text-slate-800 font-bold text-sm shadow-sm appearance-none cursor-pointer transition">
-                            <option value="Kelas 8">Kelas 8</option>
-                            <option value="Kelas 9" selected>Kelas 9</option>
+                            <option value="Kelas 8">Kelas 8 SMPLB</option>
+                            <option value="Kelas 9" selected>Kelas 9 SMPLB</option>
                         </select>
                         <i class="fa-solid fa-school absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                         <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -102,7 +102,7 @@
 
 
         <!-- STEP 2: DASHBOARD PILIH MATA PELAJARAN -->
-        <section id="subject-section" class="max-w-2xl mx-auto hidden transition-all">
+        <section id="subject-section" class="max-w-3xl mx-auto hidden transition-all">
             <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-emerald-100 text-center relative overflow-hidden">
                 <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl border border-emerald-200">
                     <i class="fa-solid fa-book-bookmark"></i>
@@ -111,15 +111,15 @@
                 <h2 class="text-2xl font-black text-slate-800 mb-1">Selamat Datang, <span id="welcome-student-name" class="text-emerald-700"></span>!</h2>
                 <p class="text-xs md:text-sm text-slate-500 font-medium mb-6">Silakan pilih Ujian Mata Pelajaran yang ingin dikerjakan (<span id="welcome-student-class" class="font-bold text-slate-700"></span>):</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
                     <!-- Opsi 1: Bahasa Indonesia -->
                     <button onclick="selectSubject('indo')" class="group p-5 bg-gradient-to-br from-emerald-50 to-teal-50 hover:from-emerald-100 hover:to-teal-100 border-2 border-emerald-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-language"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-800">Bahasa Indonesia</h3>
-                            <p class="text-xs text-slate-500 mt-1">Materi: Kalimat Tanya & Kalimat Perintah (30 Soal | 60 Menit)</p>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-emerald-800">Bahasa Indonesia</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Materi: Kalimat Tanya & Perintah (30 Soal | 60 Menit)</p>
                         </div>
                         <div class="mt-4 flex items-center font-bold text-xs text-emerald-700 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
@@ -132,10 +132,38 @@
                             <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-palette"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-purple-800">Seni Budaya</h3>
-                            <p class="text-xs text-slate-500 mt-1">Materi: Jenis Seni, Aliran Seni Lukis, & Batik (30 Soal | 60 Menit)</p>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-purple-800">Seni Budaya</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Materi: Seni Rupa, Lukis, & Batik (30 Soal | 60 Menit)</p>
                         </div>
                         <div class="mt-4 flex items-center font-bold text-xs text-purple-700 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+
+                    <!-- Opsi 3: IPA Bergambar -->
+                    <button onclick="selectSubject('ipa')" class="group p-5 bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 border-2 border-amber-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-flask font-bold"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-amber-800">IPA Bergambar</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Materi IPA Kelas 8 & 9 Tunarungu (30 Soal | Visual Gambar)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-amber-700 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+
+                    <!-- Opsi 4: PKPBI -->
+                    <button onclick="selectSubject('pkpbi')" class="group p-5 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 border-2 border-blue-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-ear-listen"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-blue-800">PKPBI</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Persepsi Bunyi: Benda, Hewan, & Kendaraan (30 Soal | Visual)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-blue-700 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
@@ -152,7 +180,7 @@
 
         <!-- STEP 3: LEMBAR UJIAN / QUIZ FORM -->
         <form id="quiz-form" class="hidden" onsubmit="event.preventDefault(); submitQuiz();">
-            <!-- Header Info Siswa & Tombol Keluar Kembali ke Menu Soal -->
+            <!-- Header Info Siswa & Tombol Keluar -->
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-700">
                 <div class="flex items-center gap-3 w-full sm:w-auto">
                     <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold flex-shrink-0">
@@ -166,10 +194,8 @@
                 
                 <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2">
                     <div id="display-student-class" class="bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 text-xs font-bold text-emerald-800">
-                        <!-- Kelas & Mapel info -->
                     </div>
                     
-                    <!-- Tombol Keluar Kembali ke Menu Soal -->
                     <button type="button" onclick="confirmExitToSubjectMenu()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl border border-rose-200 text-xs font-bold transition flex items-center gap-1.5">
                         <i class="fa-solid fa-arrow-left"></i> Menu Soal
                     </button>
@@ -285,7 +311,7 @@
         SLB Negeri 2 Pemalang &copy; Ujian Online Tunarungu
     </footer>
 
-    <!-- Custom Modal Notification (Anti alert()) -->
+    <!-- Custom Modal Notification -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-slate-100 transform transition-all">
             <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl" id="modal-icon-wrapper">
@@ -305,10 +331,10 @@
         // Global User State & Timer Variables
         let currentStudentName = "";
         let currentStudentClass = "";
-        let currentSubject = ""; // 'indo' or 'seni'
+        let currentSubject = ""; // 'indo', 'seni', 'ipa', or 'pkpbi'
         let timerInterval = null;
-        let totalSeconds = 60 * 60; // 60 Menit (3600 Detik)
-        let latestResultData = null; // Menyimpan data hasil ujian terakhir untuk WA
+        let totalSeconds = 60 * 60; // 60 Menit
+        let latestResultData = null;
 
         // DATA SOAL BAHASA INDONESIA (30 SOAL)
         const quizDataIndo = [
@@ -808,6 +834,514 @@
             }
         ];
 
+        // DATA SOAL IPA BERGAMBAR SMPLB KELAS 8 & 9 (30 SOAL)
+        const quizDataIPA = [
+            {
+                id: 1,
+                question: "Perhatikan gambar organ tubuh manusia di bawah ini!\nOrgan ini berfungsi untuk memompa darah ke seluruh tubuh. Nama organ tersebut adalah ...",
+                image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&auto=format&fit=crop&q=80",
+                options: ["Jantung", "Paru-paru", "Lambung", "Hati"],
+                answer: 0,
+                explanation: "Jantung adalah organ vital yang berfungsi memompa darah ke seluruh tubuh."
+            },
+            {
+                id: 2,
+                question: "Perhatikan gambar tanaman hijau berikut!\nBagian tumbuhan yang bertugas menyerap air dan zat hara dari dalam tanah adalah ...",
+                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80",
+                options: ["Akar", "Daun", "Bunga", "Buah"],
+                answer: 0,
+                explanation: "Akar berfungsi menyerap air dan mineral/hara dari dalam tanah."
+            },
+            {
+                id: 3,
+                question: "Perhatikan gambar planet bumi dan matahari berikut!\nBumi berputar mengelilingi matahari. Peristiwa ini dinamakan ...",
+                image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600&auto=format&fit=crop&q=80",
+                options: ["Revolusi Bumi", "Rotasi Bumi", "Gerhana Bulan", "Tsunami"],
+                answer: 0,
+                explanation: "Gerakan planet mengelilingi matahari disebut Revolusi Bumi."
+            },
+            {
+                id: 4,
+                question: "Perhatikan gambar es batu yang meleleh menjadi air berikut!\nPerubahan wujud dari benda PADAT menjadi benda CAIR disebut ...",
+                image: "https://images.unsplash.com/photo-1523156894592-f27056adc806?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Mencair", "Membeku", "Menguap", "Mengembun"],
+                answer: 0,
+                explanation: "Mencair adalah perubahan wujud zat dari padat menjadi cair."
+            },
+            {
+                id: 5,
+                question: "Perhatikan gambar magnet dan paku besi berikut!\nJika magnet didekatkan ke paku besi, maka paku besi akan ...",
+                image: "https://images.unsplash.com/vector-1778831580586-2a4dbbb7fda9?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Tertarik oleh magnet", "Tolak menolak", "Patah menjadi dua", "Menjadi panas"],
+                answer: 0,
+                explanation: "Benda dari besi akan ditarik kuat oleh magnet karena bersifat magnetis."
+            },
+            {
+                id: 6,
+                question: "Perhatikan gambar mata manusia berikut!\nIndra penglihatan yang berfungsi untuk melihat warna dan bentuk benda adalah ...",
+                image: "https://images.unsplash.com/photo-1494869042583-f6c911f04b4c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Mata", "Telinga", "Hidung", "Lidah"],
+                answer: 0,
+                explanation: "Mata merupakan panca indra yang berfungsi untuk penglihatan."
+            },
+            {
+                id: 7,
+                question: "Perhatikan gambar kupu-kupu di atas bunga berikut!\nKupu-kupu membantu proses penyerbukan bunga. Hubungan ini dinamakan ...",
+                image: "https://images.unsplash.com/photo-1533048324814-79b0a31982f1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Simbiosis Mutualisme", "Parasitisme", "Komensalisme", "Predasi"],
+                answer: 0,
+                explanation: "Simbiosis mutualisme terjadi saat kedua makhluk hidup sama-sama diuntungkan."
+            },
+            {
+                id: 8,
+                question: "Perhatikan gambar rantai makanan ekosistem hutan berikut!\nHewan pemakan tumbuhan (seperti kelinci/sapi) disebut hewan ...",
+                image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=600&auto=format&fit=crop&q=80",
+                options: ["Herbivora", "Karnivora", "Omnivora", "Insektivora"],
+                answer: 0,
+                explanation: "Herbivora adalah sebutan untuk kelompok hewan pemakan tumbuhan."
+            },
+            {
+                id: 9,
+                question: "Perhatikan gambar harimau berikut!\nHarimau memakan daging hewan lain. Harimau termasuk kelompok ...",
+                image: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&auto=format&fit=crop&q=80",
+                options: ["Karnivora", "Herbivora", "Pengurai", "Tumbuhan"],
+                answer: 0,
+                explanation: "Karnivora adalah jenis pemakan pemangsa atau daging."
+            },
+            {
+                id: 10,
+                question: "Perhatikan gambar proses memasak air hingga mendidih!\nPerubahan wujud dari benda CAIR menjadi GAS (uap) disebut ...",
+                image: "https://images.unsplash.com/flagged/photo-1571902241554-82ec31087fe3?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Menguap", "Membeku", "Menyublim", "Mengkristal"],
+                answer: 0,
+                explanation: "Menguap adalah perubahan wujud dari air cair menjadi uap gas karena panas."
+            },
+            {
+                id: 11,
+                question: "Perhatikan gambar paru-paru manusia berikut!\nGas yang dibutuhkan tubuh manusia saat menghirup napas adalah ...",
+                image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&auto=format&fit=crop&q=80",
+                options: ["Oksigen (O2)", "Karbondioksida (CO2)", "Minyak", "Asap"],
+                answer: 0,
+                explanation: "Manusia bernapas menghirup Oksigen (O2) untuk proses metabolisme tubuh."
+            },
+            {
+                id: 12,
+                question: "Perhatikan gambar tulang rangka manusia berikut!\nFungsi utama tulang rangka pada tubuh manusia adalah ...",
+                image: "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Menopang dan memberi bentuk tubuh",
+                    "Mencerna makanan",
+                    "Mengalirkan darah",
+                    "Mencium bau"
+                ],
+                answer: 0,
+                explanation: "Tulang rangka berfungsi menegakkan tubuh, memberi bentuk, dan melindungi organ dalam."
+            },
+            {
+                id: 13,
+                question: "Perhatikan gambar sel tumbuhan berdaun hijau berikut!\nProses tumbuhan hijau membuat makanan sendiri dengan bantuan sinar matahari disebut ...",
+                image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=600&auto=format&fit=crop&q=80",
+                options: ["Fotosintesis", "Respirasi", "Cangkok", "Adaptasi"],
+                answer: 0,
+                explanation: "Fotosintesis adalah proses pembuatan makanan oleh tumbuhan hijau menggunakan cahaya matahari."
+            },
+            {
+                id: 14,
+                question: "Perhatikan gambar lampu dan baterai pada rangkaian listrik berikut!\nSumber energi listrik yang digunakan pada lampu senter adalah ...",
+                image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=600&auto=format&fit=crop&q=80",
+                options: ["Baterai", "Air", "Batu", "Kayu"],
+                answer: 0,
+                explanation: "Baterai merupakan sumber kimia penyimpan arus listrik untuk menyalakan senter."
+            },
+            {
+                id: 15,
+                question: "Perhatikan gambar anak mengayuh sepeda berikut!\nPada saat mengayuh sepeda, gaya yang dikeluarkan oleh kaki anak tersebut adalah ...",
+                image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80",
+                options: ["Gaya Otot", "Gaya Magnet", "Gaya Listrik", "Gaya Gravitasi"],
+                answer: 0,
+                explanation: "Gaya otot dihasilkan oleh kontraksi otot tubuh manusia saat mengayuh pedal."
+            },
+            {
+                id: 16,
+                question: "Perhatikan gambar buah apel jatuh dari pohon berikut!\nBuah apel jatuh ke bawah menuju tanah karena pengaruh gaya ...",
+                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop&q=80",
+                options: ["Gaya Gravitasi Bumi", "Gaya Pegas", "Gaya Magnet", "Gaya Gesek"],
+                answer: 0,
+                explanation: "Gaya gravitasi bumi menarik semua benda ke pusat bumi (ke bawah)."
+            },
+            {
+                id: 17,
+                question: "Perhatikan gambar sendok di dalam cangkir berisi air panas!\nPanas air berpindah ke ujung sendok sehingga sendok terasa hangat. Peristiwa ini disebut ...",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80",
+                options: ["Konduksi", "Konveksi", "Radiasi", "Evaporasi"],
+                answer: 0,
+                explanation: "Konduksi adalah perpindahan panas melalui zat perantara padat tanpa disertai perpindahan partikelnya."
+            },
+            {
+                id: 18,
+                question: "Perhatikan gambar lidah manusia berikut!\nBagian panca indra yang berfungsi untuk merasakan rasa manis, asin, asam, dan pahit adalah ...",
+                image: "https://images.unsplash.com/photo-1758598304204-5bec31342d05?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Lidah", "Telinga", "Mata", "Kulit"],
+                answer: 0,
+                explanation: "Lidah adalah organ panca indra pengecap rasa makanan."
+            },
+            {
+                id: 19,
+                question: "Perhatikan gambar kaktus di gurun pasir berikut!\nKaktus memiliki daun berbentuk duri. Hal ini bertujuan untuk ...",
+                image: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Mengurangi penguapan air",
+                    "Menarik burung",
+                    "Memperbanyak air",
+                    "Membuat kaktus tinggi"
+                ],
+                answer: 0,
+                explanation: "Daun berbentuk duri pada kaktus berfungsi menghemat dan mengurangi penguapan air di daerah kering."
+            },
+            {
+                id: 20,
+                question: "Perhatikan gambar bunglon yang berubah warna kulitnya berikut!\nKemampuan bunglon mengubah warna kulit sesuai lingkungannya untuk melindungi diri disebut ...",
+                image: "https://images.unsplash.com/photo-1617540021016-72023b487e99?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Mimikri", "Autotomi", "Hibernasi", "Adaptasi morfologi"],
+                answer: 0,
+                explanation: "Mimikri adalah adaptasi bunglon mengubah warna kulit mengikuti warna tempat ia hinggap."
+            },
+            {
+                id: 21,
+                question: "Perhatikan gambar pemandangan laut yang bersih berikut!\nContoh tindakan yang BENAR dalam menjaga kelestarian lingkungan laut adalah ...",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Tidak membuang sampah plastik ke laut",
+                    "Membuang minyak bekas ke laut",
+                    "Mengebom terumbu karang",
+                    "Menangkap ikan memakai racun"
+                ],
+                answer: 0,
+                explanation: "Menjaga laut dilakukan dengan tidak membuang sampah plastik dan limbah."
+            },
+            {
+                id: 22,
+                question: "Perhatikan gambar air mani/es yang membeku di freezer berikut!\nPerubahan wujud zat dari CAIR menjadi PADAT dinamakan ...",
+                image: "https://images.unsplash.com/photo-1516715094483-75da7dee9758?w=600&auto=format&fit=crop&q=80",
+                options: ["Membeku", "Mencair", "Menguap", "Menyublim"],
+                answer: 0,
+                explanation: "Membeku adalah proses perubahan bentuk dari cair menjadi padat."
+            },
+            {
+                id: 23,
+                question: "Perhatikan gambar termometer pengukur suhu berikut!\nAlat yang digunakan untuk mengukur suhu panas atau dingin suatu benda dinamakan ...",
+                image: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&auto=format&fit=crop&q=80",
+                options: ["Termometer", "Penggaris", "Timbangan", "Stopwatch"],
+                answer: 0,
+                explanation: "Termometer adalah instrumen pengukur derajat suhu."
+            },
+            {
+                id: 24,
+                question: "Perhatikan gambar rantai makanan tumbuhan padi berikut!\nPada rantai makanan di sawah, posisi tumbuhan padi bertindak sebagai ...",
+                image: "https://images.unsplash.com/photo-1536657464919-892534f60d6e?w=600&auto=format&fit=crop&q=80",
+                options: ["Produsen", "Konsumen I", "Konsumen II", "Pengurai"],
+                answer: 0,
+                explanation: "Tumbuhan hijau bertindak sebagai produsen karena menghasilkan makanan sendiri."
+            },
+            {
+                id: 25,
+                question: "Perhatikan gambar orang mendorong mobil mogok berikut!\nKegiatan mendorong atau menarik suatu benda hingga berpindah dinamakan ...",
+                image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&auto=format&fit=crop&q=80",
+                options: ["Gaya", "Energi kimia", "Suhu", "Massa"],
+                answer: 0,
+                explanation: "Gaya adalah dorongan atau tarikan yang dapat menyebabkan benda bergerak atau berubah tempat."
+            },
+            {
+                id: 26,
+                question: "Perhatikan gambar pelangi di langit berikut!\nPelangi terjadi karena sifat cahaya yang dapat ...",
+                image: "https://images.unsplash.com/photo-1533984649377-c20fc524425b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Dibiaskan / Diuraikan", "Diserap total", "Dihilangkan", "Dipadatkan"],
+                answer: 0,
+                explanation: "Pelangi terbentuk akibat pembiasan dan penguraian cahaya matahari oleh titik air hujan."
+            },
+            {
+                id: 27,
+                question: "Perhatikan gambar kotoran dan sampah organik yang membusuk berikut!\nOrganisme pengurai seperti jamur dan bakteri dinamakan ...",
+                image: "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?w=600&auto=format&fit=crop&q=80",
+                options: ["Dekomposer / Pengurai", "Produsen Utama", "Konsumen puncak", "Herbivora"],
+                answer: 0,
+                explanation: "Pengurai (dekomposer) membusukkan sisa makhluk hidup menjadi unsur hara tanah."
+            },
+            {
+                id: 28,
+                question: "Perhatikan gambar sistem pencernaan (lambung) manusia berikut!\nDi dalam lambung terjadi pencernaan makanan secara kimiawi dengan bantuan ...",
+                image: "https://images.unsplash.com/photo-1743767587835-7a80fe384236?q=80&w=1055&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Enzim dan asam lambung", "Gigi dan lidah", "Uap panas", "Udara Oksigen"],
+                answer: 0,
+                explanation: "Lambung menggunakan asam lambung (HCl) serta enzim untuk memecah zat makanan."
+            },
+            {
+                id: 29,
+                question: "Perhatikan gambar gerhana matahari berikut!\nGerhana matahari terjadi saat posisi Bulan berada di antara ...",
+                image: "https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Matahari dan Bumi secara sejajar",
+                    "Planet Mars dan Yupiter",
+                    "Awan dan Bintang",
+                    "Bumi dan Bintang Laut"
+                ],
+                answer: 0,
+                explanation: "Gerhana matahari timbul saat posisi Bulan berada di tengah-tengah antara Matahari dan Bumi."
+            },
+            {
+                id: 30,
+                question: "Perhatikan gambar panel surya matahari berikut!\nPanel surya mengubah energi cahaya matahari menjadi energi ...",
+                image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Listrik", "Bunyi", "Dingin", "Gerak mekanik"],
+                answer: 0,
+                explanation: "Panel surya menyerap sinar ultraviolet matahari untuk menghasilkan arus listrik ramah lingkungan."
+            }
+        ];
+
+        // DATA SOAL PKPBI BERGAMBAR SMPLB KELAS 8 & 9 (30 SOAL)
+        const quizDataPKPBI = [
+            {
+                id: 1,
+                question: "Perhatikan gambar hewan berikut!\nHewan ini mengeluarkan tiruan bunyi \"Mbeek... Mbeek...\". Hewan apakah ini?",
+                image: "https://images.unsplash.com/photo-1524024973431-2ad916746881?w=600&auto=format&fit=crop&q=80",
+                options: ["Kambing", "Kucing", "Anjing", "Ayam"],
+                answer: 0,
+                explanation: "Suara \"Mbeek... Mbeek...\" adalah bunyi tiruan khas dari kambing."
+            },
+            {
+                id: 2,
+                question: "Perhatikan gambar kendaraan berikut!\nKendaraan ini membunyikan klakson keras \"Din... Din... / Tiiitt!\". Kendaraan apakah ini?",
+                image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&auto=format&fit=crop&q=80",
+                options: ["Mobil", "Sepeda", "Kapal Laut", "Pesawat Terbang"],
+                answer: 0,
+                explanation: "Bunyi klakson \"Din... Din...\" berasal dari kendaraan mobil/sepeda motor."
+            },
+            {
+                id: 3,
+                question: "Perhatikan gambar benda berikut!\nBenda di atas meja ini berdering nyaring \"Kringgg... Kringgg...\" saat ada panggilan masuk. Benda apakah ini?",
+                image: "https://images.unsplash.com/photo-1520923642038-b4259acecbd7?w=600&auto=format&fit=crop&q=80",
+                options: ["Telepon Rumah / Telepon Meja", "Jam Dinding", "Televisi", "Kipas Angin"],
+                answer: 0,
+                explanation: "Telepon rumah tradisional menghasilkan bunyi tiruan \"Kringgg... Kringgg...\"."
+            },
+            {
+                id: 4,
+                question: "Perhatikan gambar hewan lucu berikut!\nHewan peliharaan ini bersuara \"Meong... Meong...\". Nama hewan ini adalah ...",
+                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80",
+                options: ["Kucing", "Sapi", "Bebek", "Kuda"],
+                answer: 0,
+                explanation: "Kucing mengeluarkan tiruan bunyi khas \"Meong... Meong...\"."
+            },
+            {
+                id: 5,
+                question: "Perhatikan gambar kendaraan darat beroda dua berikut!\nKendaraan ini menyalakan mesin bersuara \"Brumm... Brumm...\". Kendaraan ini adalah ...",
+                image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80",
+                options: ["Sepeda Motor", "Sepeda Dayung", "Perahu Kayu", "Delman"],
+                answer: 0,
+                explanation: "Sepeda motor yang dinyalakan mesinnya menghasilkan bunyi tiruan \"Brumm... Brumm...\"."
+            },
+            {
+                id: 6,
+                question: "Perhatikan gambar benda elektronika berikut!\nKetika jarum jam menunjukkan pukul 06.00 pagi, benda ini berbunyi \"Tittt... Tittt... Tittt...\" untuk membangunkan tidur. Benda ini adalah ...",
+                image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=600&auto=format&fit=crop&q=80",
+                options: ["Jam Weker / Alarm", "Radio", "Kamera", "Lampu Masak"],
+                answer: 0,
+                explanation: "Jam weker/alarm menghasilkan bunyi tiruan berulang \"Tittt... Tittt...\" saat membangunkan tidur."
+            },
+            {
+                id: 7,
+                question: "Perhatikan gambar hewan di peternakan berikut!\nHewan penghasil susu ini bersuara \"Moooww... Moooww...\". Hewan ini adalah ...",
+                image: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600&auto=format&fit=crop&q=80",
+                options: ["Sapi", "Kambing", "Harimau", "Burung"],
+                answer: 0,
+                explanation: "Sapi memiliki bunyi tiruan \"Moooww... Moooww...\"."
+            },
+            {
+                id: 8,
+                question: "Perhatikan gambar kendaraan darat panjang berikut!\nKendaraan yang berjalan di atas rel besi ini berbunyi \"Tut... Tut... Tut... Gujes... Gujes...\". Nama kendaraan ini adalah ...",
+                image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&auto=format&fit=crop&q=80",
+                options: ["Kereta Api", "Bus Sekolah", "Truk Traktor", "Mobil Sedan"],
+                answer: 0,
+                explanation: "Kereta api berjalan di atas rel dengan bunyi tiruan \"Tut... Tut... Gujes... Gujes...\"."
+            },
+            {
+                id: 9,
+                question: "Perhatikan gambar alat musik dipukul berikut!\nAlat musik drum ini jika dipukul stik kayu akan menghasilkan bunyi keras ...",
+                image: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&auto=format&fit=crop&q=80",
+                options: ["Dung... Dung... Tak!", "Tring... Tring...", "Ssshh... Ssshh...", "Kring... Kring..."],
+                answer: 0,
+                explanation: "Drum yang dipukul menghasilkan resonansi bunyi mantap dan keras \"Dung... Dung... Tak!\"."
+            },
+            {
+                id: 10,
+                question: "Perhatikan gambar hewan unggas berenang berikut!\nHewan unggas ini bersuara \"Kwek... Kwek... Kwek...\". Nama hewan ini adalah ...",
+                image: "https://images.unsplash.com/photo-1555852095-64e7428df0fa?w=600&auto=format&fit=crop&q=80",
+                options: ["Bebek", "Ayam Jantan", "Kucing", "Kambing"],
+                answer: 0,
+                explanation: "Bebek mengeluarkan tiruan bunyi khas \"Kwek... Kwek... Kwek...\"."
+            },
+            {
+                id: 11,
+                question: "Perhatikan gambar kendaraan darat darurat berikut!\nMobil ambulans saat membawa orang sakit menyalakan sirine berbunyi ...",
+                image: "https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=600&auto=format&fit=crop&q=80",
+                options: ["Niwuuu... Niwuuu...", "Kringgg... Kringgg...", "Prok... Prok...", "Byurr... Byurr..."],
+                answer: 0,
+                explanation: "Sirine mobil ambulans berbunyi \"Niwuuu... Niwuuu...\" sebagai tanda darurat jalan raya."
+            },
+            {
+                id: 12,
+                question: "Perhatikan gambar alat dapur di bawah ini!\nSaat ibu menumbuk bumbu memasak menggunakan cobek batu, bunyi tiruan yang terdengar adalah ...",
+                image: "https://images.unsplash.com/photo-1706051574488-5fd203d39b3d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Plak... Plak... / Tuk... Tuk...", "Kring... Kring...", "Niwu... Niwu...", "Piiip... Piiip..."],
+                answer: 0,
+                explanation: "Tumbukan batu cobek menghasilkan bunyi benturan padat \"Tuk... Tuk... / Plak... Plak...\"."
+            },
+            {
+                id: 13,
+                question: "Perhatikan gambar ayam jantan berikut!\nPada pagi hari saat matahari terbit, ayam jantan berkokok bersuara ...",
+                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=600&auto=format&fit=crop&q=80",
+                options: ["Kukuruyuk...", "Mbeek...", "Guk... Guk...", "Meong..."],
+                answer: 0,
+                explanation: "Kokok ayam jantan pagi hari ditirukan dengan suara \"Kukuruyuk...\"."
+            },
+            {
+                id: 14,
+                question: "Perhatikan gambar kendaraan udara berikut!\nPesawat terbang saat terbang tinggi di udara menghasilkan bunyi gemuruh mesin ...",
+                image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format&fit=crop&q=80",
+                options: ["Wuunggg... Ngunggg...", "Kwit... Kwit...", "Tuk... Tuk...", "Plak... Plak..."],
+                answer: 0,
+                explanation: "Mesin jet pesawat terbang terdengar bergemuruh bersuara \"Wuunggg... Ngunggg...\"."
+            },
+            {
+                id: 15,
+                question: "Perhatikan gambar benda alat kebersihan ini!\nSaat menyapu lantai rumah menggunakan sapu lidi, bunyi gesekan sapu pada lantai adalah ...",
+                image: "https://images.unsplash.com/photo-1633649758620-80da9d2261f5?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Srek... Srek... Srek...", "Kring... Kring...", "Brum... Brum...", "Dung... Dung..."],
+                answer: 0,
+                explanation: "Gesekan daun/lidi sapu di atas permukaan lantai berbunyi tiruan \"Srek... Srek... Srek...\"."
+            },
+            {
+                id: 16,
+                question: "Perhatikan gambar hewan penjaga rumah berikut!\nHewan ini menggonggong saat melihat orang asing dengan suara ...",
+                image: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&auto=format&fit=crop&q=80",
+                options: ["Guk... Guk... Guk!", "Kwek... Kwek...", "Mbeek... Mbeek...", "Muuk... Muuk..."],
+                answer: 0,
+                explanation: "Gonggongan anjing ditirukan dengan suara \"Guk... Guk... Guk!\"."
+            },
+            {
+                id: 17,
+                question: "Perhatikan gambar kendaraan tradisional sepeda gowes berikut!\nBel sepeda ontel jika ditekan jempol tangan akan berbunyi ...",
+                image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80",
+                options: ["Kring... Kring...", "Din... Din...", "Niwuuu... Niwuuu...", "Brummm... Brummm..."],
+                answer: 0,
+                explanation: "Bel sepeda manual terbuat dari logam kecil yang berbunyi \"Kring... Kring...\"."
+            },
+            {
+                id: 18,
+                question: "Perhatikan gambar pintu rumah kayu berikut!\nKetika ada tamu datang mengetuk pintu rumah, bunyi ketukan pintu tersebut adalah ...",
+                image: "https://images.unsplash.com/photo-1536160885591-301854e2ed04?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Tok... Tok... Tok!", "Byur... Byur...", "Meong... Meong...", "Tut... Tut..."],
+                answer: 0,
+                explanation: "Ketukan tangan pada daun pintu kayu menghasilkan bunyi \"Tok... Tok... Tok!\"."
+            },
+            {
+                id: 19,
+                question: "Perhatikan gambar burung cantik di atas ranting pohon berikut!\nBurung berkicau merdu dengan tiruan bunyi ...",
+                image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop&q=80",
+                options: ["Cicit... Cuit... / Cit... Cit...", "Mbeek... Mbeek...", "Guk... Guk...", "Brum... Brum..."],
+                answer: 0,
+                explanation: "Kicauan burung ditirukan dengan bunyi \"Cicit... Cuit...\"."
+            },
+            {
+                id: 20,
+                question: "Perhatikan gambar kendaraan pemadam kebakaran berikut!\nMobil pemadam kebakaran yang sedang melaju cepat membunyikan sirine ...",
+                image: "https://images.unsplash.com/photo-1606613892606-68f607b905b0?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Wiwuuu... Wiwuuu...", "Kring... Kring...", "Tok... Tok...", "Prok... Prok..."],
+                answer: 0,
+                explanation: "Mobil pemadam kebakaran menggunakan sirine berbunyi nyaring \"Wiwuuu... Wiwuuu...\"."
+            },
+            {
+                id: 21,
+                question: "Perhatikan gambar sendok dan gelas kaca berikut!\nSaat sendok besi dipukulkan pelan ke gelas kaca, bunyi yang terdengar adalah ...",
+                image: "https://images.unsplash.com/photo-1678392690809-7ccd62950b12?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Ting... Ting... Ting...", "Dung... Dung...", "Gujes... Gujes...", "Srek... Srek..."],
+                answer: 0,
+                explanation: "Benturan sendok besi pada kaca gelas menghasilkan bunyi berdenting \"Ting... Ting...\"."
+            },
+            {
+                id: 22,
+                question: "Perhatikan gambar katak di pinggir kolam air berikut!\nKatak/kodok bersuara nyaring pada saat musim hujan dengan bunyi ...",
+                image: "https://images.unsplash.com/photo-1559253664-ca249d4608c6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Korek... Korek... / Teoblok...", "Kukuruyuk...", "Cicit... Cuit...", "Meong... Meong..."],
+                answer: 0,
+                explanation: "Suara khas katak/kodok ditirukan dengan bunyi \"Korek... Korek...\"."
+            },
+            {
+                id: 23,
+                question: "Perhatikan gambar kapal laut besar di pelabuhan berikut!\nSaat akan berlayar meninggalkan pelabuhan, klakson kapal laut berbunyi gema panjang ...",
+                image: "https://images.unsplash.com/photo-1718314786551-798f1398a7b1?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Muuuuuunnng... / Oooooommm...", "Kring... Kring...", "Cicit... Cit...", "Tok... Tok..."],
+                answer: 0,
+                explanation: "Klakson cerobong kapal laut berukuran besar berbunyi gema berat \"Muuuuuunnng... / Oooooommm...\"."
+            },
+            {
+                id: 24,
+                question: "Perhatikan gambar balon ditiup besar ini!\nJika balon yang ditiup sangat besar ini meletus dipukul, bunyi letusannya adalah ...",
+                image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&auto=format&fit=crop&q=80",
+                options: ["Dorrr! / Darrr!", "Kringgg...", "Ssshhh...", "Tinggg..."],
+                answer: 0,
+                explanation: "Balon udara yang pecah meletus mengeluarkan tiruan bunyi keras \"Dorrr!\"."
+            },
+            {
+                id: 25,
+                question: "Perhatikan gambar kuda berlari berikut!\nSuara langkah kaki kuda yang menapak jalan keras berbunyi ...",
+                image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600&auto=format&fit=crop&q=80",
+                options: ["Plok... Plok... / Klopak... Klopak...", "Dung... Dung...", "Din... Din...", "Srek... Srek..."],
+                answer: 0,
+                explanation: "Sepatu besi kuda saat berlari di jalan menghasilkan bunyi \"Klopak... Klopak... / Plok... Plok...\"."
+            },
+            {
+                id: 26,
+                question: "Perhatikan gambar helikopter terbang rendah berikut!\nBaling-baling helikopter yang berputar cepat di udara menghasilkan bunyi tiruan ...",
+                image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80",
+                options: ["Prok... Prok... Prok... / Tak... Tak...", "Kring... Kring...", "Tok... Tok...", "Meong... Meong..."],
+                answer: 0,
+                explanation: "Kepakan baling-baling helikopter berputar menghasilkan bunyi menepuk \"Prok... Prok... / Tak... Tak...\"."
+            },
+            {
+                id: 27,
+                question: "Perhatikan gambar peluit yang ditiup pak guru olahraga berikut!\nPeluit kecil yang ditiup kencang akan mengeluarkan bunyi nyaring ...",
+                image: "https://images.unsplash.com/photo-1563330072-88f5fbf1127f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Piiit... Piiit!", "Dung... Dung...", "Brum... Brum...", "Guk... Guk..."],
+                answer: 0,
+                explanation: "Peluit yang ditiup menghasilkan bunyi melengking \"Piiit... Piiit!\"."
+            },
+            {
+                id: 28,
+                question: "Perhatikan gambar lebah hinggap di bunga berikut!\nLebah terbang menggepakkan sayap kecilnya dengan tiruan bunyi ...",
+                image: "https://images.unsplash.com/photo-1779202568356-a8239fd66d86?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Ngung... Ngung... / Sssuuu...", "Tok... Tok...", "Dorrr...", "Kukuruyuk..."],
+                answer: 0,
+                explanation: "Kepakan cepat sayap lebah terdengar mendengung bersuara \"Ngung... Ngung...\"."
+            },
+            {
+                id: 29,
+                question: "Perhatikan gambar truk besar mengangkut barang di jalan raya berikut!\nTruk diesel besar saat menanjak jalan membunyikan mesin berat ...",
+                image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&auto=format&fit=crop&q=80",
+                options: ["Grummm... Grummm...", "Ting... Ting...", "Piiit... Piiit...", "Cicit... Cuit..."],
+                answer: 0,
+                explanation: "Mesin besar truk diesel menghasilkan deru bunyi berat \"Grummm... Grummm...\"."
+            },
+            {
+                id: 30,
+                question: "Perhatikan gambar orang tepuk tangan berikut!\nSaat memberikan apresiasi tepuk tangan meriah, bunyi yang dihasilkan kedua telapak tangan adalah ...",
+                image: "https://images.unsplash.com/photo-1758691737492-48e8fdd336f7?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
+                options: ["Prok... Prok... Prok!", "Din... Din...", "Niwu... Niwu...", "Kwek... Kwek..."],
+                answer: 0,
+                explanation: "Tepukan telapak tangan menghasilkan tiruan bunyi \"Prok... Prok... Prok!\"."
+            }
+        ];
+
         // STEP 1: LOGIN PROCESS
         function processLogin() {
             const nameInput = document.getElementById('student-name').value.trim();
@@ -822,11 +1356,9 @@
             currentStudentName = nameInput;
             currentStudentClass = classInput;
 
-            // Update interface
             document.getElementById('welcome-student-name').innerText = currentStudentName;
             document.getElementById('welcome-student-class').innerText = currentStudentClass;
 
-            // Transition from Login -> Subject Selection Screen
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('subject-section').classList.remove('hidden');
         }
@@ -835,19 +1367,21 @@
         function selectSubject(subjectKey) {
             currentSubject = subjectKey;
 
-            const mapelTitle = subjectKey === 'indo' ? 'Bahasa Indonesia' : 'Seni Budaya';
+            let mapelTitle = '';
+            if (subjectKey === 'indo') mapelTitle = 'Bahasa Indonesia';
+            else if (subjectKey === 'seni') mapelTitle = 'Seni Budaya';
+            else if (subjectKey === 'ipa') mapelTitle = 'IPA Bergambar';
+            else if (subjectKey === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
+
             document.getElementById('header-subject').innerText = mapelTitle;
             document.getElementById('display-student-name').innerText = currentStudentName;
             document.getElementById('display-student-class').innerText = `${currentStudentClass} | ${mapelTitle}`;
 
-            // Render Questions
             renderQuestions();
 
-            // Transition: Subject Selection -> Quiz Form
             document.getElementById('subject-section').classList.add('hidden');
             document.getElementById('quiz-form').classList.remove('hidden');
             
-            // Show & Start Timer (60 Menit = 3600 Detik)
             document.getElementById('timer-box').classList.remove('hidden');
             startTimer(60 * 60);
 
@@ -888,11 +1422,11 @@
             showModal("Waktu Habis!", "Waktu pengerjaan 60 menit telah habis. Lembar ujian akan otomatis dikumpulkan dan dinilai.", true);
             setTimeout(() => {
                 closeModal();
-                processSubmitQuiz(true); // Forced submit on timeout
+                processSubmitQuiz(true);
             }, 2500);
         }
 
-        // CONFIRM EXIT TO SUBJECT MENU
+        // CONFIRM EXIT
         function confirmExitToSubjectMenu() {
             showConfirmModal(
                 "Kembali ke Menu Soal?",
@@ -907,11 +1441,20 @@
             );
         }
 
+        // GET ACTIVE QUIZ DATA
+        function getActiveData() {
+            if (currentSubject === 'indo') return quizDataIndo;
+            if (currentSubject === 'seni') return quizDataSeni;
+            if (currentSubject === 'ipa') return quizDataIPA;
+            if (currentSubject === 'pkpbi') return quizDataPKPBI;
+            return quizDataIndo;
+        }
+
         // RENDER QUESTIONS DYNAMICALLY
         function renderQuestions() {
             const container = document.getElementById('questions-container');
             container.innerHTML = '';
-            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            const activeData = getActiveData();
 
             activeData.forEach((q, index) => {
                 const card = document.createElement('div');
@@ -934,12 +1477,23 @@
                     `;
                 });
 
+                // Render Gambar jika ada (Khusus Soal IPA/Visual)
+                let imageHtml = '';
+                if (q.image) {
+                    imageHtml = `
+                        <div class="mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 max-h-64 sm:max-h-80 flex items-center justify-center">
+                            <img src="${q.image}" alt="Gambar Soal IPA No ${index+1}" class="w-full h-auto object-cover max-h-64 sm:max-h-80 hover:scale-105 transition duration-300" loading="lazy" onError="this.onerror=null;this.src='https://placehold.co/600x350?text=Gambar+IPA+Tunarungu';">
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="flex items-center gap-2 mb-3">
                         <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-xl">
                             Soal ${index + 1}
                         </span>
                     </div>
+                    ${imageHtml}
                     <p class="text-sm md:text-base font-bold text-slate-800 whitespace-pre-line mb-4 leading-relaxed">
                         ${q.question}
                     </p>
@@ -952,9 +1506,9 @@
             });
         }
 
-        // STEP 3: SUBMIT QUIZ & CALCULATE SCORE
+        // STEP 3: SUBMIT QUIZ
         function submitQuiz() {
-            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            const activeData = getActiveData();
             let answeredCount = 0;
 
             activeData.forEach((q, index) => {
@@ -972,7 +1526,7 @@
 
         function processSubmitQuiz(isForced = false) {
             stopTimer();
-            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            const activeData = getActiveData();
             let userAnswers = [];
             let correctCount = 0;
 
@@ -983,13 +1537,18 @@
                     userAnswers.push(ansVal);
                     if (ansVal === q.answer) correctCount++;
                 } else {
-                    userAnswers.push(null); // Unanswered considered wrong
+                    userAnswers.push(null);
                 }
             });
 
             const wrongCount = activeData.length - correctCount;
             const finalScore = Math.round((correctCount / activeData.length) * 100);
-            const mapelTitle = currentSubject === 'indo' ? 'Bahasa Indonesia' : 'Seni Budaya';
+            
+            let mapelTitle = '';
+            if (currentSubject === 'indo') mapelTitle = 'Bahasa Indonesia';
+            else if (currentSubject === 'seni') mapelTitle = 'Seni Budaya';
+            else if (currentSubject === 'ipa') mapelTitle = 'IPA Bergambar';
+            else if (currentSubject === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
 
             // Display Results
             document.getElementById('quiz-form').classList.add('hidden');
@@ -1000,7 +1559,6 @@
             document.getElementById('correct-count').innerText = `${correctCount} Soal`;
             document.getElementById('wrong-count').innerText = `${wrongCount} Soal`;
 
-            // Simpan data hasil ujian ke variabel global untuk kirim ke WA
             latestResultData = {
                 studentName: currentStudentName,
                 studentClass: currentStudentClass,
@@ -1011,7 +1569,6 @@
                 total: activeData.length
             };
 
-            // Evaluation Message
             const evalBox = document.getElementById('evaluation-message');
             const scoreBg = document.getElementById('score-header-bg');
             
@@ -1033,16 +1590,15 @@
                 scoreBg.className = "absolute top-0 left-0 right-0 h-3 bg-amber-500";
             }
 
-            // Render Detailed Review
             renderReview(userAnswers);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // RENDER DETAILED REVIEW
+        // RENDER REVIEW
         function renderReview(userAnswers) {
             const reviewContainer = document.getElementById('review-container');
             reviewContainer.innerHTML = '';
-            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            const activeData = getActiveData();
 
             activeData.forEach((q, index) => {
                 const isCorrect = userAnswers[index] === q.answer;
@@ -1052,12 +1608,18 @@
                 const item = document.createElement('div');
                 item.className = `p-4 md:p-5 rounded-2xl border ${isCorrect ? 'bg-emerald-50/40 border-emerald-200' : 'bg-rose-50/40 border-rose-200'} transition`;
 
+                let reviewImage = '';
+                if(q.image) {
+                    reviewImage = `<img src="${q.image}" class="w-32 h-24 object-cover rounded-xl mb-3 border border-slate-200">`;
+                }
+
                 item.innerHTML = `
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${isCorrect ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
                             No. ${index + 1} - ${isCorrect ? 'BENAR' : 'SALAH'}
                         </span>
                     </div>
+                    ${reviewImage}
                     <p class="font-bold text-slate-800 text-xs md:text-sm mb-3 whitespace-pre-line leading-relaxed">${q.question}</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-3">
@@ -1079,7 +1641,7 @@
             });
         }
 
-        // NAVIGATION: RETURN TO MAIN DASHBOARD / SUBJECT SELECTOR
+        // NAVIGATION
         function goToSubjectSelection() {
             stopTimer();
             document.getElementById('quiz-form').reset();
@@ -1090,7 +1652,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // NAVIGATION: LOGOUT TO LOGIN PAGE
         function logout() {
             stopTimer();
             document.getElementById('student-name').value = '';
@@ -1159,20 +1720,18 @@
             document.getElementById('custom-modal').classList.add('hidden');
         }
 
-        // FUNGSI KIRIM HASIL UJIAN KE WHATSAPP GURU
+        // WHATSAPP SENDER
         function sendToWhatsApp(teacherName, phoneNumber) {
             if (!latestResultData) {
                 showModal("Gagal Kirim", "Data hasil ujian belum tersedia.");
                 return;
             }
 
-            // Standardize Phone Number Format to 62...
             let cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
             if (cleanPhone.startsWith('0')) {
                 cleanPhone = '62' + cleanPhone.slice(1);
             }
 
-            // Build WhatsApp Message Body
             const textMessage = 
                 `*HASIL UJIAN ASTS ONLINE - SLBN 2 PEMALANG*\n\n` +
                 `*Kepada Yth:* ${teacherName}\n` +
@@ -1187,11 +1746,9 @@
                 `------------------------------------\n` +
                 `_Pesan ini dikirim otomatis dari Portal Ujian ASTS SMPLB Tunarungu SLB Negeri 2 Pemalang._`;
 
-            // Properly Encode URI Components for WhatsApp Web/App compatibility
             const encodedMessage = encodeURIComponent(textMessage);
             const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
             
-            // Open WhatsApp link in new tab/app
             window.open(waUrl, '_blank');
         }
     </script>
