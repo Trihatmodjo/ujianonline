@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTS SMPLB Tunarungu - SLBN 2 Pemalang</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-radio:checked + label {
+            border-color: #059669;
+            background-color: #ecfdf5;
+            color: #065f46;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 pb-12 flex flex-col justify-between">
+
+    <!-- Header / Kop Ujian -->
+    <header class="bg-emerald-700 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5 flex flex-row items-center justify-between gap-2">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <div class="bg-white/10 p-2 sm:p-2.5 rounded-xl text-white font-black text-lg sm:text-xl flex items-center justify-center">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-sm sm:text-lg md:text-xl leading-tight tracking-tight">SLB NEGERI 2 PEMALANG</h1>
+                    <p class="text-emerald-100 text-[10px] sm:text-xs hidden sm:block">Portal Ujian Online ASTS SMPLB Tunarungu</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <!-- Header Subject Badge -->
+                <div id="quiz-badge" class="bg-emerald-800/80 text-emerald-100 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-[10px] sm:text-xs font-semibold text-right border border-emerald-600/50 hidden sm:block">
+                    <span id="header-subject" class="text-white font-bold block text-xs md:text-sm">Asesmen Sumatif</span>
+                </div>
+
+                <!-- Timer Di Pojok Kanan Atas -->
+                <div id="timer-box" class="hidden flex items-center gap-1.5 bg-rose-600 text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl shadow-md border border-rose-500 text-xs sm:text-sm font-black animate-pulse">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="timer-display">60:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 mt-6 md:mt-10 w-full flex-grow">
+
+        <!-- STEP 1: LOGIN SECTION -->
+        <section id="login-section" class="max-w-md mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100 relative overflow-hidden transition-all">
+            <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600"></div>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-sm border border-emerald-200">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h2 class="text-xl font-extrabold text-slate-800">Masuk Ujian Online</h2>
+                <p class="text-xs text-slate-500 mt-1">Isi data diri murid untuk memulai</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); processLogin();" class="space-y-5">
+                <!-- Input Nama -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="student-name">
+                        Nama Siswa:
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="student-name" placeholder="Ketik nama lengkap..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-800 font-semibold text-sm shadow-sm transition">
+                        <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Input Kelas (Ringkas) -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="student-class">
+                        Pilih Kelas:
+                    </label>
+                    <div class="relative">
+                        <select id="student-class" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white text-slate-800 font-bold text-sm shadow-sm appearance-none cursor-pointer transition">
+                            <option value="Kelas 8">Kelas 8</option>
+                            <option value="Kelas 9" selected>Kelas 9</option>
+                        </select>
+                        <i class="fa-solid fa-school absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-base rounded-2xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2">
+                    Masuk <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </form>
+        </section>
+
+
+        <!-- STEP 2: DASHBOARD PILIH MATA PELAJARAN -->
+        <section id="subject-section" class="max-w-2xl mx-auto hidden transition-all">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-emerald-100 text-center relative overflow-hidden">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl border border-emerald-200">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                
+                <h2 class="text-2xl font-black text-slate-800 mb-1">Selamat Datang, <span id="welcome-student-name" class="text-emerald-700"></span>!</h2>
+                <p class="text-xs md:text-sm text-slate-500 font-medium mb-6">Silakan pilih Ujian Mata Pelajaran yang ingin dikerjakan (<span id="welcome-student-class" class="font-bold text-slate-700"></span>):</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <!-- Opsi 1: Bahasa Indonesia -->
+                    <button onclick="selectSubject('indo')" class="group p-5 bg-gradient-to-br from-emerald-50 to-teal-50 hover:from-emerald-100 hover:to-teal-100 border-2 border-emerald-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-language"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-800">Bahasa Indonesia</h3>
+                            <p class="text-xs text-slate-500 mt-1">Materi: Kalimat Tanya & Kalimat Perintah (30 Soal | 60 Menit)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-emerald-700 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+
+                    <!-- Opsi 2: Seni Budaya -->
+                    <button onclick="selectSubject('seni')" class="group p-5 bg-gradient-to-br from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 border-2 border-purple-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-purple-800">Seni Budaya</h3>
+                            <p class="text-xs text-slate-500 mt-1">Materi: Jenis Seni, Aliran Seni Lukis, & Batik (30 Soal | 60 Menit)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-purple-700 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                    <button onclick="logout()" class="text-xs text-slate-400 font-semibold hover:text-slate-600 transition inline-flex items-center gap-1">
+                        <i class="fa-solid fa-right-from-bracket"></i> Ganti Nama / Keluar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- STEP 3: LEMBAR UJIAN / QUIZ FORM -->
+        <form id="quiz-form" class="hidden" onsubmit="event.preventDefault(); submitQuiz();">
+            <!-- Header Info Siswa & Tombol Keluar Kembali ke Menu Soal -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-700">
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold flex-shrink-0">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-semibold">Peserta Ujian:</span>
+                        <span id="display-student-name" class="font-extrabold text-slate-800 text-sm md:text-base"></span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2">
+                    <div id="display-student-class" class="bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 text-xs font-bold text-emerald-800">
+                        <!-- Kelas & Mapel info -->
+                    </div>
+                    
+                    <!-- Tombol Keluar Kembali ke Menu Soal -->
+                    <button type="button" onclick="confirmExitToSubjectMenu()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl border border-rose-200 text-xs font-bold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-arrow-left"></i> Menu Soal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tempat Soal Di-inject via JS -->
+            <div id="questions-container" class="space-y-6"></div>
+
+            <!-- Submit Button -->
+            <div class="mt-8 text-center" id="submit-button-wrapper">
+                <button type="button" onclick="submitQuiz()" class="w-full sm:w-auto px-10 py-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-base md:text-lg rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mx-auto">
+                    <i class="fa-solid fa-paper-plane"></i> Kirim & Lihat Hasil Ujian
+                </button>
+            </div>
+        </form>
+
+
+        <!-- STEP 4: HASIL & EVALUASI UJIAN -->
+        <section id="result-section" class="hidden space-y-6">
+            <!-- Ringkasan Hasil -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-slate-100 relative overflow-hidden text-center">
+                <div id="score-header-bg" class="absolute top-0 left-0 right-0 h-3 bg-emerald-500"></div>
+                
+                <h2 class="text-2xl font-black text-slate-800 mb-1">Hasil Ujian ASTS</h2>
+                <p id="result-student-info" class="text-xs md:text-sm text-slate-500 font-semibold mb-6"></p>
+
+                <!-- Nilai Besar -->
+                <div class="inline-flex flex-col items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full bg-slate-50 border-4 border-emerald-500 mb-6 shadow-inner">
+                    <span class="text-xs uppercase font-extrabold text-slate-400">Nilai Akhir</span>
+                    <span id="final-score" class="text-4xl md:text-5xl font-black text-emerald-600">0</span>
+                    <span class="text-xs text-slate-400 font-medium">/ 100</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto mb-6">
+                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200">
+                        <span class="text-xs text-emerald-700 block font-bold">Jawaban Benar</span>
+                        <span id="correct-count" class="text-xl font-black text-emerald-800">0 Soal</span>
+                    </div>
+                    <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
+                        <span class="text-xs text-rose-700 block font-bold">Jawaban Salah</span>
+                        <span id="wrong-count" class="text-xl font-black text-rose-800">0 Soal</span>
+                    </div>
+                </div>
+
+                <!-- Pesan Evaluasi Singkat -->
+                <div id="evaluation-message" class="p-4 rounded-2xl font-bold text-sm mb-6"></div>
+
+                <!-- SEKSI KIRIM WA GURU -->
+                <div class="bg-emerald-50/70 border-2 border-emerald-200 rounded-2xl p-4 md:p-5 mb-6 text-left">
+                    <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2 mb-1">
+                        <i class="fa-brands fa-whatsapp text-emerald-600 text-lg md:text-xl"></i> Kirim Nilai ke WhatsApp Guru Pengampu
+                    </h3>
+                    <p class="text-xs text-slate-600 mb-4">Klik salah satu tombol di bawah untuk langsung mengarahkan dan mengirimkan hasil ujian ke WhatsApp Guru:</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                        <!-- Guru 1: Pak Tri -->
+                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col justify-between items-center text-center">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-2">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <h4 class="font-extrabold text-slate-800 text-sm">Pak Tri</h4>
+                            <p class="text-[11px] text-slate-500 mb-3">Guru Pengampu ASTS</p>
+                            
+                            <button type="button" onclick="sendToWhatsApp('Pak Tri', '082326666767')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-base"></i> Kirim Hasil ke Pak Tri
+                            </button>
+                        </div>
+
+                        <!-- Guru 2: Bu Sekar -->
+                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col justify-between items-center text-center">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-2">
+                                <i class="fa-solid fa-user-nurse"></i>
+                            </div>
+                            <h4 class="font-extrabold text-slate-800 text-sm">Bu Sekar</h4>
+                            <p class="text-[11px] text-slate-500 mb-3">Guru Pengampu ASTS</p>
+                            
+                            <button type="button" onclick="sendToWhatsApp('Bu Sekar', '085642155794')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-base"></i> Kirim Hasil ke Bu Sekar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="goToSubjectSelection()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> Kembali ke Menu Utama
+                    </button>
+                    <button onclick="window.scrollTo({top: document.getElementById('evaluation-section').offsetTop - 80, behavior: 'smooth'});" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-list-check"></i> Lihat Pembahasan Soal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pembahasan Detail Soal -->
+            <div id="evaluation-section" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200">
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check text-emerald-600"></i> Evaluasi Pembahasan Soal
+                </h3>
+                <div id="review-container" class="space-y-6"></div>
+
+                <div class="mt-8 text-center pt-4 border-t border-slate-100">
+                    <button onclick="goToSubjectSelection()" class="px-8 py-3.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-2xl shadow transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> Keluar ke Menu Utama
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-xs text-slate-400 py-4 mt-8">
+        SLB Negeri 2 Pemalang &copy; Ujian Online Tunarungu
+    </footer>
+
+    <!-- Custom Modal Notification (Anti alert()) -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-slate-100 transform transition-all">
+            <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl" id="modal-icon-wrapper">
+                <i class="fa-solid fa-triangle-exclamation" id="modal-icon"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800 mb-1" id="modal-title">Peringatan</h3>
+            <p class="text-xs md:text-sm text-slate-600 mb-5" id="modal-message">Harap isi nama Anda terlebih dahulu!</p>
+            <div id="modal-action-buttons" class="flex gap-2 justify-center">
+                <button onclick="closeModal()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow transition">
+                    Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global User State & Timer Variables
+        let currentStudentName = "";
+        let currentStudentClass = "";
+        let currentSubject = ""; // 'indo' or 'seni'
+        let timerInterval = null;
+        let totalSeconds = 60 * 60; // 60 Menit (3600 Detik)
+        let latestResultData = null; // Menyimpan data hasil ujian terakhir untuk WA
+
+        // DATA SOAL BAHASA INDONESIA (30 SOAL)
+        const quizDataIndo = [
+            {
+                id: 1,
+                question: "Siswa membaca kalimat berikut:\n\"... nama teman barumu itu?\"\nKata tanya yang benar untuk melengkapi kalimat di atas adalah ...",
+                options: ["Apa", "Siapa", "Kapan", "Berapa"],
+                answer: 1,
+                explanation: "Kata 'Siapa' digunakan untuk menanyakan nama orang."
+            },
+            {
+                id: 2,
+                question: "Perhatikan kalimat berikut!\n\"Budi, ... kamu tinggal di Pemalang?\"\nKata tanya yang tepat untuk menanyakan tempat adalah ...",
+                options: ["Di mana", "Mengapa", "Siapa", "Berapa"],
+                answer: 0,
+                explanation: "Kata 'Di mana' digunakan untuk menanyakan tempat atau lokasi."
+            },
+            {
+                id: 3,
+                question: "Ibu guru berkata: \"... kamu berangkat ke sekolah?\"\nSiti menjawab: \"Pukul 06.30 pagi, Bu.\"\nKata tanya yang tepat diucapkan Ibu guru adalah ...",
+                options: ["Siapa", "Mengapa", "Kapan", "Berapa"],
+                answer: 2,
+                explanation: "Kata 'Kapan' digunakan untuk menanyakan waktu."
+            },
+            {
+                id: 4,
+                question: "Perhatikan kalimat berikut!\n\"... harga buku tulis ini?\"\nKata tanya yang tepat untuk menanyakan jumlah uang atau harga adalah ...",
+                options: ["Berapa", "Bagaimana", "Siapa", "Di mana"],
+                answer: 0,
+                explanation: "Kata 'Berapa' digunakan untuk menanyakan jumlah, nominal, atau harga."
+            },
+            {
+                id: 5,
+                question: "Doni bertanya: \"... cara membuat kue donat ini?\"\nKata tanya yang tepat untuk menanyakan cara atau proses adalah ...",
+                options: ["Kapan", "Bagaimana", "Siapa", "Berapa"],
+                answer: 1,
+                explanation: "Kata 'Bagaimana' digunakan untuk menanyakan cara, proses, atau keadaan."
+            },
+            {
+                id: 6,
+                question: "Siswa melihat teman menangis.\n\"... kamu menangis, Ani?\"\nKata tanya yang tepat untuk menanyakan sebab atau alasan adalah ...",
+                options: ["Siapa", "Di mana", "Mengapa", "Berapa"],
+                answer: 2,
+                explanation: "Kata 'Mengapa' digunakan untuk menanyakan alasan atau sebab."
+            },
+            {
+                id: 7,
+                question: "Kalimat tanya selalu diakhiri dengan tanda baca ...",
+                options: ["Tanda titik ( . )", "Tanda seru ( ! )", "Tanda tanya ( ? )", "Tanda koma ( , )"],
+                answer: 2,
+                explanation: "Setiap kalimat tanya wajib diakhiri dengan tanda tanya ( ? )."
+            },
+            {
+                id: 8,
+                question: "Manakah di bawah ini yang merupakan contoh KALIMAT TANYA?",
+                options: [
+                    "Siti sedang membersihkan kelas.",
+                    "Tutup pintu kelas itu!",
+                    "Di mana rumah Pak Guru?",
+                    "Jangan buang sampah di sini!"
+                ],
+                answer: 2,
+                explanation: "\"Di mana rumah Pak Guru?\" menggunakan kata tanya 'Di mana' dan diakhiri tanda tanya (?)."
+            },
+            {
+                id: 9,
+                question: "Roni ingin tahu benda di atas meja.\nKalimat tanya yang benar diucapkan Roni adalah ...",
+                options: [
+                    "Apa benda di atas meja itu?",
+                    "Siapa di atas meja itu?",
+                    "Kapan benda di atas meja?",
+                    "Berapa benda di atas meja?"
+                ],
+                answer: 0,
+                explanation: "Untuk menanyakan barang/benda, kata tanya yang tepat adalah 'Apa'."
+            },
+            {
+                id: 10,
+                question: "Ibu guru minta siswa membuka buku paket halaman 15.\nKalimat perintah yang diucapkan Ibu Guru adalah ...",
+                options: [
+                    "Apakah halaman 15 dibuka?",
+                    "Bukalah buku halaman 15!",
+                    "Siapa yang buka buku?",
+                    "Kapan buku dibuka?"
+                ],
+                answer: 1,
+                explanation: "\"Bukalah buku halaman 15!\" adalah kalimat perintah (instruksi)."
+            },
+            {
+                id: 11,
+                question: "Kalimat perintah biasanya diakhiri dengan tanda baca ...",
+                options: ["Tanda tanya ( ? )", "Tanda seru ( ! )", "Tanda koma ( , )", "Tanda petik ( \" )"],
+                answer: 1,
+                explanation: "Kalimat perintah diakhiri dengan tanda seru ( ! )."
+            },
+            {
+                id: 12,
+                question: "Perhatikan kalimat berikut:\n\"... buang sampah di tempat ini!\"\nKata larangan yang tepat untuk melengkapi kalimat perintah di atas adalah ...",
+                options: ["Silakan", "Jangan", "Tolong", "Mengapa"],
+                answer: 1,
+                explanation: "Kata 'Jangan' digunakan untuk membuat kalimat perintah larangan."
+            },
+            {
+                id: 13,
+                question: "Eko ingin meminta bantuan Edo mengambilkan sapu.\nKalimat perintah santun (permohonan) yang benar adalah ...",
+                options: [
+                    "Ambil sapu itu sekarang!",
+                    "Tolong ambilkan sapu itu, Edo!",
+                    "Jangan ambil sapu itu!",
+                    "Siapa ambil sapu?"
+                ],
+                answer: 1,
+                explanation: "Penggunaan kata 'Tolong' membuat kalimat perintah menjadi santun dan sopan."
+            },
+            {
+                id: 14,
+                question: "Ibu guru mengajak siswa membersihkan taman sekolah.\nKalimat ajakan yang benar adalah ...",
+                options: [
+                    "Mari kita bersihkan taman sekolah bersama!",
+                    "Jangan bersihkan taman sekolah!",
+                    "Apakah taman sekolah bersih?",
+                    "Di mana taman sekolah kita?"
+                ],
+                answer: 0,
+                explanation: "Kata 'Mari' atau 'Ayo' digunakan dalam kalimat ajakan."
+            },
+            {
+                id: 15,
+                question: "Di bawah ini yang merupakan kalimat PERINTAH LARANGAN adalah ...",
+                options: [
+                    "Buka jendela kamar ini!",
+                    "Dilarang merokok di area sekolah!",
+                    "Silakan masuk ke dalam ruangan!",
+                    "Ayo kita belajar membaca!"
+                ],
+                answer: 1,
+                explanation: "\"Dilarang merokok di area sekolah!\" memuat kata larangan 'Dilarang'."
+            },
+            {
+                id: 16,
+                question: "Lantai kelas sangat kotor.\nKalimat perintah yang cocok untuk situasi tersebut adalah ...",
+                options: [
+                    "Siapa yang mengotori lantai?",
+                    "Sapu lantai kelas itu sampai bersih!",
+                    "Mengapa lantainya kotor sekali?",
+                    "Kapan lantai kelas disapu?"
+                ],
+                answer: 1,
+                explanation: "Perintah yang sesuai dengan masalah lantai kotor adalah perintah menyapu."
+            },
+            {
+                id: 17,
+                question: "Bacalah kalimat ini:\n\"Silakan duduk di kursi depan!\"\nKalimat di atas termasuk jenis kalimat ...",
+                options: ["Kalimat Tanya", "Kalimat Perintah", "Kalimat Berita", "Kalimat Sanggahan"],
+                answer: 1,
+                explanation: "Kalimat tersebut berisi instruksi/permohonan halus (perintah) ditandai dengan kata 'Silakan' dan diakhiri tanda seru (!)."
+            },
+            {
+                id: 18,
+                question: "Budi bertanya: \"... jumlah siswa kelas 9 Tunarungu?\"\nKata tanya yang tepat adalah ...",
+                options: ["Bagaimana", "Berapa", "Siapa", "Mengapa"],
+                answer: 1,
+                explanation: "Menanyakan jumlah siswa menggunakan kata tanya 'Berapa'."
+            },
+            {
+                id: 19,
+                question: "Ani tidak masuk sekolah hari ini.\nSiti ingin tahu alasannya.\nKalimat tanya Siti yang benar adalah ...",
+                options: [
+                    "Mengapa Ani tidak masuk sekolah hari ini?",
+                    "Di mana Ani tidak masuk sekolah?",
+                    "Siapa Ani tidak masuk sekolah?",
+                    "Berapa Ani tidak masuk sekolah?"
+                ],
+                answer: 0,
+                explanation: "Menanyakan alasan/sebab ketidakhadiran menggunakan kata 'Mengapa'."
+            },
+            {
+                id: 20,
+                question: "\"Dina, ... kerajinan tangan dari kayu ini?\"\nJawab Dina: \"Dibuat dengan cara diukir dan dihaluskan.\"\nKata tanya yang tepat untuk titik-titik di atas adalah ...",
+                options: ["siapa dibuat", "bagaimana cara membuat", "kapan dibuat", "di mana dibuat"],
+                answer: 1,
+                explanation: "Jawaban menjelaskan proses pembuatan, jadi kata tanyanya adalah 'bagaimana cara membuat'."
+            },
+            {
+                id: 21,
+                question: "Manakah kalimat berikut yang BUKAN merupakan kalimat perintah?",
+                options: [
+                    "Cuci tanganmu sebelum makan!",
+                    "Matikan lampu jika tidak digunakan!",
+                    "Dimana kamu membeli sepatu baru itu?",
+                    "Rapikan tempat tidurmu!"
+                ],
+                answer: 2,
+                explanation: "\"Dimana kamu membeli sepatu baru itu?\" adalah kalimat tanya, bukan kalimat perintah."
+            },
+            {
+                id: 22,
+                question: "Sebelum masuk ke ruang laboratorium, siswa harus melepas sepatu.\nKalimat perintah yang sesuai adalah ...",
+                options: [
+                    "Lepaslah sepatumu sebelum masuk ruangan!",
+                    "Apakah sepatu sudah dilepas?",
+                    "Siapa yang melepas sepatu?",
+                    "Mengapa sepatu harus dilepas?"
+                ],
+                answer: 0,
+                explanation: "\"Lepaslah sepatumu sebelum masuk ruangan!\" adalah bentuk instruksi perintah yang tepat."
+            },
+            {
+                id: 23,
+                question: "Penggunaan tanda baca yang BENAR pada kalimat perintah adalah ...",
+                options: [
+                    "Tolong ambilkan buku itu?",
+                    "Tolong ambilkan buku itu.",
+                    "Tolong ambilkan buku itu!",
+                    "Tolong ambilkan buku itu,"
+                ],
+                answer: 2,
+                explanation: "Kalimat perintah wajib menggunakan tanda seru (!) di akhir kalimat."
+            },
+            {
+                id: 24,
+                question: "Penggunaan tanda baca yang BENAR pada kalimat tanya adalah ...",
+                options: [
+                    "Kapan kita ujian Bahasa Indonesia!",
+                    "Kapan kita ujian Bahasa Indonesia?",
+                    "Kapan kita ujian Bahasa Indonesia.",
+                    "Kapan kita ujian Bahasa Indonesia;"
+                ],
+                answer: 1,
+                explanation: "Kalimat tanya wajib diakhiri tanda tanya (?)."
+            },
+            {
+                id: 25,
+                question: "Ayah: \"Dewi, ... air hangat ini ke dalam cangkir!\"\nKata perintah yang tepat mengisi titik-titik tersebut adalah ...",
+                options: ["Tuangkan", "Minumlah", "Buanglah", "Simpanlah"],
+                answer: 0,
+                explanation: "Kata aksi yang tepat untuk memasukkan air ke cangkir adalah 'Tuangkan'."
+            },
+            {
+                id: 26,
+                question: "Lihat gambar / situasi: Kelas bising dan ramai.\nBapak Guru berkata: \"Anak-anak, ... !\"\nKata perintah yang tepat agar siswa tenang adalah ...",
+                options: ["berlarilah", "jangan tenang", "harap tenang", "menangislah"],
+                answer: 2,
+                explanation: "Kata 'harap tenang' digunakan untuk meminta siswa tidak bising."
+            },
+            {
+                id: 27,
+                question: "\"Ayo, kita menjaga kebersihan SLB Negeri 2 Pemalang!\"\nKalimat di atas termasuk jenis kalimat perintah ...",
+                options: ["Larangan", "Ajakan", "Permintaan maaf", "Pertanyaan"],
+                answer: 1,
+                explanation: "Kata 'Ayo' menandakan kalimat perintah berupa ajakan."
+            },
+            {
+                id: 28,
+                question: "Kata tanya \"Siapa\" digunakan untuk menanyakan ...",
+                options: ["Waktu", "Orang / Nama orang", "Tempat", "Harga"],
+                answer: 1,
+                explanation: "Kata tanya 'Siapa' khusus menanyakan subjek/orang."
+            },
+            {
+                id: 29,
+                question: "Kata tanya \"Kapan\" digunakan untuk menanyakan ...",
+                options: ["Waktu kejadian", "Tempat kejadian", "Sebab kejadian", "Nama barang"],
+                answer: 0,
+                explanation: "Kata tanya 'Kapan' khusus menanyakan waktu (jam, hari, tanggal, tahun)."
+            },
+            {
+                id: 30,
+                question: "Perhatikan kalimat perintah berikut:\n\"Jangan bermain di jalan raya!\"\nKalimat di atas bertujuan untuk ...",
+                options: [
+                    "Mengajak bermain bersama",
+                    "Melarang siswa bermain di jalan raya",
+                    "Menanyakan tempat bermain",
+                    "Menjelaskan jalan raya"
+                ],
+                answer: 1,
+                explanation: "Kata 'Jangan' dalam kalimat tersebut bertujuan melarang aktivitas berbahaya di jalan raya."
+            }
+        ];
+
+        // DATA SOAL SENI BUDAYA (30 SOAL)
+        const quizDataSeni = [
+            {
+                id: 1,
+                question: "Karya seni yang dinikmati menggunakan indra penglihatan (mata) seperti lukisan dan patung disebut ...",
+                options: ["Seni Musik", "Seni Rupa", "Seni Tari", "Seni Teater"],
+                answer: 1,
+                explanation: "Seni Rupa adalah cabang seni yang karyanya dapat dilihat oleh mata dan diraba."
+            },
+            {
+                id: 2,
+                question: "Seni yang mengutamakan keindahan suara, irama, dan nada dinamakan ...",
+                options: ["Seni Rupa", "Seni Musik", "Seni Tari", "Seni Sastra"],
+                answer: 1,
+                explanation: "Seni Musik adalah karya seni yang memadukan suara, nada, dan irama."
+            },
+            {
+                id: 3,
+                question: "Gerakan tubuh yang indah dan berirama disebut karya ...",
+                options: ["Seni Tari", "Seni Lukis", "Seni Grafis", "Seni Musik"],
+                answer: 0,
+                explanation: "Seni Tari menggunakan unsur utama gerakan tubuh yang indah sesuai irama."
+            },
+            {
+                id: 4,
+                question: "Manakah di bawah ini yang merupakan contoh karya SENI RUPA dua dimensi?",
+                options: ["Patung kuda", "Gedung sekolah", "Lukisan pemandangan", "Guci keramik"],
+                answer: 2,
+                explanation: "Lukisan pemandangan merupakan contoh seni rupa 2 dimensi (memiliki panjang dan lebar)."
+            },
+            {
+                id: 5,
+                question: "Patung, meja ukir, dan vas bunga merupakan contoh karya Seni Rupa ...",
+                options: ["1 Dimensi", "2 Dimensi", "3 Dimensi", "4 Dimensi"],
+                answer: 2,
+                explanation: "Karya seni 3 dimensi memiliki ukuran panjang, lebar, tinggi, serta volume."
+            },
+            {
+                id: 6,
+                question: "Pementasan drama atau pertunjukan drama panggung termasuk cabang seni ...",
+                options: ["Seni Teater", "Seni Musik", "Seni Rupa", "Seni Patung"],
+                answer: 0,
+                explanation: "Seni Teater/Drama merupakan pertunjukan lakon di atas panggung."
+            },
+            {
+                id: 7,
+                question: "Alat yang digunakan menggambar lukisan dengan cat air adalah ...",
+                options: ["Cangkul", "Kuas dan Palet", "Palu", "Gunting"],
+                answer: 1,
+                explanation: "Kuas dan palet adalah alat utama untuk melukis dengan cat."
+            },
+            {
+                id: 8,
+                question: "Seni rupa yang dibuat dengan tujuan untuk digunakan dalam kehidupan sehari-hari (seperti cangkir, tas batik) disebut seni rupa ...",
+                options: ["Murni", "Terapan", "Tari", "Musik"],
+                answer: 1,
+                explanation: "Seni Rupa Terapan adalah karya seni yang mengutamakan fungsi guna/pakai."
+            },
+            {
+                id: 9,
+                question: "Lukisan yang dibuat hanya untuk pajangan dinding keindahan ruangan saja termasuk seni rupa ...",
+                options: ["Murni", "Terapan", "Pakai", "Industri"],
+                answer: 0,
+                explanation: "Seni Rupa Murni mengutamakan keindahan estetika tanpa fungsi pakai."
+            },
+            {
+                id: 10,
+                question: "Tari Serimpi dan Tari Pendet merupakan contoh karya cabang ...",
+                options: ["Seni Rupa", "Seni Tari", "Seni Musik", "Seni Teater"],
+                answer: 1,
+                explanation: "Tari Serimpi dan Tari Pendet adalah tarian tradisional khas Indonesia."
+            },
+            {
+                id: 11,
+                question: "Aliran seni lukis yang menggambarkan bentuk sesuai dengan keadaan alam yang asli (nyata) disebut ...",
+                options: ["Naturalisme", "Abstrak", "Kubisme", "Surrealisme"],
+                answer: 0,
+                explanation: "Naturalisme menggambarkan pemandangan/objek persis seperti keadaan alam nyata."
+            },
+            {
+                id: 12,
+                question: "Aliran seni lukis yang lukisannya berbentuk bangun kotak-kotak atau bidang geometris disebut ...",
+                options: ["Kubisme", "Naturalisme", "Realisme", "Romantisme"],
+                answer: 0,
+                explanation: "Kubisme menggunakan bentuk geometris seperti kubus, segitiga, dan kotak."
+            },
+            {
+                id: 13,
+                question: "Aliran lukisan yang gambarnya seperti di dalam dunia mimpi atau khayalan disebut ...",
+                options: ["Surrealisme", "Realisme", "Naturalisme", "Impresionisme"],
+                answer: 0,
+                explanation: "Surrealisme menampilkan lukisan fantasi/khayalan seperti alam mimpi."
+            },
+            {
+                id: 14,
+                question: "Aliran lukisan yang tidak memiliki bentuk nyata (hanya berupa corak warna dan garis bebas) disebut ...",
+                options: ["Abstrak", "Realisme", "Naturalisme", "Fotografi"],
+                answer: 0,
+                explanation: "Aliran Abstrak tidak meniru objek nyata di alam, melainkan ekspresi bentuk bebas."
+            },
+            {
+                id: 15,
+                question: "Aliran seni lukis Realisme menggambarkan kenyataan hidup masyarakat ...",
+                options: ["Apa adanya / sesuai kenyataan", "Seperti mimpi", "Bentuk kotak-kotak", "Penuh bunga khayalan"],
+                answer: 0,
+                explanation: "Realisme melukiskan kenyataan fakta kehidupan sehari-hari apa adanya."
+            },
+            {
+                id: 16,
+                question: "Raden Saleh adalah salah satu tokoh pelukis Indonesia yang terkenal dengan aliran ...",
+                options: ["Romantisme", "Kubisme", "Abstrak", "Pop Art"],
+                answer: 0,
+                explanation: "Raden Saleh merupakan pelopor pelukis Indonesia ber-aliran Romantisme."
+            },
+            {
+                id: 17,
+                question: "Pelukis legendaris Indonesia bernama Affandi terkenal dengan gaya lukisan ekspresionis dengan cara melukis ...",
+                options: ["Menumpahkan dan menggosok cat langsung dari tube", "Menggunakan komputer", "Mengukir batu", "Mencetak kain"],
+                answer: 0,
+                explanation: "Affandi terkenal dengan teknik melukis ekspresionis langsung menyapu cat dari tube."
+            },
+            {
+                id: 18,
+                question: "Ciri utama dari aliran lukisan Naturalisme adalah lukisan gambarnya berupa ...",
+                options: ["Pemandangan alam yang indah dan mirip aslinya", "Benda kotak tidak beraturan", "Garis hitam tanpa warna", "Huruf dan angka"],
+                answer: 0,
+                explanation: "Objek utama Naturalisme adalah keindahan pemandangan alam."
+            },
+            {
+                id: 19,
+                question: "Jika seorang siswa melukis laut dan gunung persis seperti aslinya, maka lukisan itu ber-aliran ...",
+                options: ["Naturalisme", "Kubisme", "Abstrak", "Surrealisme"],
+                answer: 0,
+                explanation: "Melukis gunung dan laut sesuai objek aslinya dinamakan Naturalisme."
+            },
+            {
+                id: 20,
+                question: "Aliran seni lukis yang mengutamakan pencahayaan dan kesan sinar matahari secara cepat dinamakan ...",
+                options: ["Impresionisme", "Kubisme", "Patung", "Batik"],
+                answer: 0,
+                explanation: "Impresionisme mengutamakan impresi tangkapan cahaya matahari."
+            },
+            {
+                id: 21,
+                question: "Kain bergambar yang dibuat khusus dengan menuliskan malam (lilin) menggunakan canting dinamakan ...",
+                options: ["Kain Batik", "Kain Wol", "Kain Handuk", "Kain Plastik"],
+                answer: 0,
+                explanation: "Batik adalah kain bergambar khas Indonesia yang dibuat menggunakan cairan malam (lilin)."
+            },
+            {
+                id: 22,
+                question: "Alat kecil tradisional yang digunakan untuk menggoreskan lilin/malam panas pada kain batik disebut ...",
+                options: ["Canting", "Kuas", "Pensil", "Sendok"],
+                answer: 0,
+                explanation: "Canting adalah alat utama menorehkan lilin malam saat membatik."
+            },
+            {
+                id: 23,
+                question: "Bahan khusus penahan warna yang dipanaskan untuk membuat pola batik adalah ...",
+                options: ["Malam / Lilin batik", "Minyak goreng", "Cat tembok", "Air garam"],
+                answer: 0,
+                explanation: "Malam (lilin batik) berguna untuk menutup pola kain agar tidak terkena warna."
+            },
+            {
+                id: 24,
+                question: "Batik yang proses pembuatannya digambar langsung menggunakan tangan memakai canting dinamakan ...",
+                options: ["Batik Tulis", "Batik Cap", "Batik Sablon", "Batik Mesin"],
+                answer: 0,
+                explanation: "Batik Tulis digambar manual menggunakan canting secara teliti."
+            },
+            {
+                id: 25,
+                question: "Batik yang pembuatannya dicetak menggunakan alat stempel tembaga dinamakan ...",
+                options: ["Batik Cap", "Batik Tulis", "Batik Lukis", "Batik Rajut"],
+                answer: 0,
+                explanation: "Batik Cap menggunakan stempel / tembaga cap bermotif."
+            },
+            {
+                id: 26,
+                question: "Hari Batik Nasional di Indonesia diperingati setiap tanggal ...",
+                options: ["2 Oktober", "17 Agustus", "25 Desember", "1 Januari"],
+                answer: 0,
+                explanation: "Hari Batik Nasional diperingati setiap tanggal 2 Oktober."
+            },
+            {
+                id: 27,
+                question: "Salah satu motif batik terkenal dari Kabupaten Pemalang yang terinspirasi dari tanaman adalah motif ...",
+                options: ["Batik Nanas Honje", "Batik Parang Klenteng", "Batik Megamendung", "Batik Monas"],
+                answer: 0,
+                explanation: "Pemalang terkenal dengan motif khas Batik Nanas Honje."
+            },
+            {
+                id: 28,
+                question: "Proses menghilangkan / melorotkan lilin malam pada kain batik menggunakan air panas disebut ...",
+                options: ["Melorod / Nglorot", "Menyapu", "Menjemur", "Menggunting"],
+                answer: 0,
+                explanation: "Nglorot adalah tahap melepaskan lilin batik dalam rebusan air panas."
+            },
+            {
+                id: 29,
+                question: "UNESCO telah mengakui Batik sebagai Warisan Budaya Takbenda yang berasal dari negara ...",
+                options: ["Indonesia", "Jepang", "Amerika", "Inggris"],
+                answer: 0,
+                explanation: "Batik merupakan warisan budaya dunia asli dari negara Indonesia."
+            },
+            {
+                id: 30,
+                question: "Mengapa kita harus bangga memakai baju batik ke sekolah?",
+                options: [
+                    "Karena batik adalah budaya warisan luhur bangsa Indonesia",
+                    "Karena kain batik sangat berat",
+                    "Karena batik hanya milik asing",
+                    "Karena batik susah dicuci"
+                ],
+                answer: 0,
+                explanation: "Memakai batik merupakan bentuk kebanggaan dan pelestarian budaya bangsa Indonesia."
+            }
+        ];
+
+        // STEP 1: LOGIN PROCESS
+        function processLogin() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value;
+
+            if (!nameInput) {
+                showModal("Identitas Belum Diisi", "Mohon isi nama lengkap murid terlebih dahulu!");
+                document.getElementById('student-name').focus();
+                return;
+            }
+
+            currentStudentName = nameInput;
+            currentStudentClass = classInput;
+
+            // Update interface
+            document.getElementById('welcome-student-name').innerText = currentStudentName;
+            document.getElementById('welcome-student-class').innerText = currentStudentClass;
+
+            // Transition from Login -> Subject Selection Screen
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('subject-section').classList.remove('hidden');
+        }
+
+        // STEP 2: SELECT SUBJECT & START QUIZ WITH TIMER
+        function selectSubject(subjectKey) {
+            currentSubject = subjectKey;
+
+            const mapelTitle = subjectKey === 'indo' ? 'Bahasa Indonesia' : 'Seni Budaya';
+            document.getElementById('header-subject').innerText = mapelTitle;
+            document.getElementById('display-student-name').innerText = currentStudentName;
+            document.getElementById('display-student-class').innerText = `${currentStudentClass} | ${mapelTitle}`;
+
+            // Render Questions
+            renderQuestions();
+
+            // Transition: Subject Selection -> Quiz Form
+            document.getElementById('subject-section').classList.add('hidden');
+            document.getElementById('quiz-form').classList.remove('hidden');
+            
+            // Show & Start Timer (60 Menit = 3600 Detik)
+            document.getElementById('timer-box').classList.remove('hidden');
+            startTimer(60 * 60);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // TIMER FUNCTIONS
+        function startTimer(durationInSeconds) {
+            clearInterval(timerInterval);
+            totalSeconds = durationInSeconds;
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const displayStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer-display').innerText = displayStr;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timer-box').classList.add('hidden');
+        }
+
+        function handleTimeOut() {
+            stopTimer();
+            showModal("Waktu Habis!", "Waktu pengerjaan 60 menit telah habis. Lembar ujian akan otomatis dikumpulkan dan dinilai.", true);
+            setTimeout(() => {
+                closeModal();
+                processSubmitQuiz(true); // Forced submit on timeout
+            }, 2500);
+        }
+
+        // CONFIRM EXIT TO SUBJECT MENU
+        function confirmExitToSubjectMenu() {
+            showConfirmModal(
+                "Kembali ke Menu Soal?",
+                "Pengerjaan ujian yang sedang berjalan akan dibatalkan.",
+                () => {
+                    stopTimer();
+                    document.getElementById('quiz-form').classList.add('hidden');
+                    document.getElementById('subject-section').classList.remove('hidden');
+                    document.getElementById('header-subject').innerText = "Asesmen Sumatif";
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            );
+        }
+
+        // RENDER QUESTIONS DYNAMICALLY
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+
+            activeData.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-5 md:p-6 shadow-sm border border-slate-200 hover:shadow-md transition";
+                card.id = `q-card-${index}`;
+
+                let optionsHtml = '';
+                q.options.forEach((opt, optIndex) => {
+                    const optionLetter = String.fromCharCode(65 + optIndex);
+                    optionsHtml += `
+                        <div class="relative">
+                            <input type="radio" id="q${index}_opt${optIndex}" name="question_${index}" value="${optIndex}" class="custom-radio hidden">
+                            <label for="q${index}_opt${optIndex}" class="flex items-center gap-3 p-3.5 md:p-4 rounded-2xl border-2 border-slate-100 bg-slate-50 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/50 transition">
+                                <span class="w-7 h-7 md:w-8 md:h-8 rounded-xl bg-white border border-slate-300 flex items-center justify-center font-bold text-slate-600 text-xs md:text-sm shadow-sm flex-shrink-0">
+                                    ${optionLetter}
+                                </span>
+                                <span class="text-xs md:text-sm text-slate-700 font-medium">${opt}</span>
+                            </label>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-xl">
+                            Soal ${index + 1}
+                        </span>
+                    </div>
+                    <p class="text-sm md:text-base font-bold text-slate-800 whitespace-pre-line mb-4 leading-relaxed">
+                        ${q.question}
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        ${optionsHtml}
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // STEP 3: SUBMIT QUIZ & CALCULATE SCORE
+        function submitQuiz() {
+            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            let answeredCount = 0;
+
+            activeData.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question_${index}"]:checked`);
+                if (selectedOption) answeredCount++;
+            });
+
+            if (answeredCount < activeData.length) {
+                showModal("Belum Selesai", `Kamu baru menjawab ${answeredCount} dari ${activeData.length} soal. Masih ada soal yang belum diisi!`);
+                return;
+            }
+
+            processSubmitQuiz(false);
+        }
+
+        function processSubmitQuiz(isForced = false) {
+            stopTimer();
+            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+            let userAnswers = [];
+            let correctCount = 0;
+
+            activeData.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question_${index}"]:checked`);
+                if (selectedOption) {
+                    const ansVal = parseInt(selectedOption.value);
+                    userAnswers.push(ansVal);
+                    if (ansVal === q.answer) correctCount++;
+                } else {
+                    userAnswers.push(null); // Unanswered considered wrong
+                }
+            });
+
+            const wrongCount = activeData.length - correctCount;
+            const finalScore = Math.round((correctCount / activeData.length) * 100);
+            const mapelTitle = currentSubject === 'indo' ? 'Bahasa Indonesia' : 'Seni Budaya';
+
+            // Display Results
+            document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+
+            document.getElementById('result-student-info').innerText = `Nama: ${currentStudentName} | ${currentStudentClass} | Mapel: ${mapelTitle}`;
+            document.getElementById('final-score').innerText = finalScore;
+            document.getElementById('correct-count').innerText = `${correctCount} Soal`;
+            document.getElementById('wrong-count').innerText = `${wrongCount} Soal`;
+
+            // Simpan data hasil ujian ke variabel global untuk kirim ke WA
+            latestResultData = {
+                studentName: currentStudentName,
+                studentClass: currentStudentClass,
+                subject: mapelTitle,
+                score: finalScore,
+                correct: correctCount,
+                wrong: wrongCount,
+                total: activeData.length
+            };
+
+            // Evaluation Message
+            const evalBox = document.getElementById('evaluation-message');
+            const scoreBg = document.getElementById('score-header-bg');
+            
+            if (isForced) {
+                evalBox.className = "p-4 rounded-2xl font-bold text-xs md:text-sm bg-rose-100 text-rose-900 border border-rose-300";
+                evalBox.innerHTML = "<i class=\"fa-solid fa-clock text-rose-600 mr-1\"></i> Waktu Pengerjaan Habis! Jawaban Telah Dikumpulkan Secara Otomatis.";
+                scoreBg.className = "absolute top-0 left-0 right-0 h-3 bg-rose-500";
+            } else if (finalScore >= 85) {
+                evalBox.className = "p-4 rounded-2xl font-bold text-xs md:text-sm bg-emerald-100 text-emerald-800 border border-emerald-300";
+                evalBox.innerHTML = "<i class=\"fa-solid fa-star text-amber-500 mr-1\"></i> Sangat Bagus! Kamu Sudah Memahami Materi dengan Sangat Baik!";
+                scoreBg.className = "absolute top-0 left-0 right-0 h-3 bg-emerald-500";
+            } else if (finalScore >= 70) {
+                evalBox.className = "p-4 rounded-2xl font-bold text-xs md:text-sm bg-blue-100 text-blue-800 border border-blue-300";
+                evalBox.innerHTML = "<i class=\"fa-solid fa-thumbs-up text-blue-600 mr-1\"></i> Bagus! Hasilmu Cukup Baik. Pelajari Soal yang Salah Ya!";
+                scoreBg.className = "absolute top-0 left-0 right-0 h-3 bg-blue-500";
+            } else {
+                evalBox.className = "p-4 rounded-2xl font-bold text-xs md:text-sm bg-amber-100 text-amber-900 border border-amber-300";
+                evalBox.innerHTML = "<i class=\"fa-solid fa-book-open text-amber-700 mr-1\"></i> Tetap Semangat! Ayo Pelajari Pembahasan Soal Di Bawah Ini.";
+                scoreBg.className = "absolute top-0 left-0 right-0 h-3 bg-amber-500";
+            }
+
+            // Render Detailed Review
+            renderReview(userAnswers);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // RENDER DETAILED REVIEW
+        function renderReview(userAnswers) {
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = '';
+            const activeData = currentSubject === 'indo' ? quizDataIndo : quizDataSeni;
+
+            activeData.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.answer;
+                const userChoiceLetter = userAnswers[index] !== null ? String.fromCharCode(65 + userAnswers[index]) : '-';
+                const correctChoiceLetter = String.fromCharCode(65 + q.answer);
+
+                const item = document.createElement('div');
+                item.className = `p-4 md:p-5 rounded-2xl border ${isCorrect ? 'bg-emerald-50/40 border-emerald-200' : 'bg-rose-50/40 border-rose-200'} transition`;
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${isCorrect ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
+                            No. ${index + 1} - ${isCorrect ? 'BENAR' : 'SALAH'}
+                        </span>
+                    </div>
+                    <p class="font-bold text-slate-800 text-xs md:text-sm mb-3 whitespace-pre-line leading-relaxed">${q.question}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-3">
+                        <div class="p-2.5 rounded-xl border ${isCorrect ? 'bg-emerald-100/70 border-emerald-300 text-emerald-900 font-bold' : 'bg-rose-100/70 border-rose-300 text-rose-900 font-bold'}">
+                            Jawaban Kamu: (${userChoiceLetter}) ${userAnswers[index] !== null ? q.options[userAnswers[index]] : 'Tidak dijawab'}
+                        </div>
+                        <div class="p-2.5 rounded-xl border bg-emerald-100/70 border-emerald-300 text-emerald-900 font-bold">
+                            Kunci Jawaban: (${correctChoiceLetter}) ${q.options[q.answer]}
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-600">
+                        <strong class="text-slate-800"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Penjelasan:</strong>
+                        <p class="mt-0.5">${q.explanation}</p>
+                    </div>
+                `;
+
+                reviewContainer.appendChild(item);
+            });
+        }
+
+        // NAVIGATION: RETURN TO MAIN DASHBOARD / SUBJECT SELECTOR
+        function goToSubjectSelection() {
+            stopTimer();
+            document.getElementById('quiz-form').reset();
+            document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('subject-section').classList.remove('hidden');
+            document.getElementById('header-subject').innerText = "Asesmen Sumatif";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // NAVIGATION: LOGOUT TO LOGIN PAGE
+        function logout() {
+            stopTimer();
+            document.getElementById('student-name').value = '';
+            document.getElementById('subject-section').classList.add('hidden');
+            document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('header-subject').innerText = "Asesmen Sumatif";
+            currentStudentName = "";
+            currentStudentClass = "";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // MODAL FUNCTIONS
+        function showModal(title, message, isInfo = false) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const iconWrapper = document.getElementById('modal-icon-wrapper');
+            const icon = document.getElementById('modal-icon');
+            
+            if(isInfo) {
+                iconWrapper.className = "w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
+                icon.className = "fa-solid fa-clock";
+            } else {
+                iconWrapper.className = "w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
+                icon.className = "fa-solid fa-triangle-exclamation";
+            }
+
+            document.getElementById('modal-action-buttons').innerHTML = `
+                <button onclick="closeModal()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow transition">
+                    Mengerti
+                </button>
+            `;
+
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function showConfirmModal(title, message, onConfirm) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const iconWrapper = document.getElementById('modal-icon-wrapper');
+            const icon = document.getElementById('modal-icon');
+            iconWrapper.className = "w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
+            icon.className = "fa-solid fa-circle-question";
+
+            document.getElementById('modal-action-buttons').innerHTML = `
+                <button id="modal-cancel-btn" onclick="closeModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                    Batal
+                </button>
+                <button id="modal-confirm-btn" class="w-1/2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow transition">
+                    Ya, Keluar
+                </button>
+            `;
+
+            document.getElementById('modal-confirm-btn').onclick = () => {
+                closeModal();
+                onConfirm();
+            };
+
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // FUNGSI KIRIM HASIL UJIAN KE WHATSAPP GURU
+        function sendToWhatsApp(teacherName, phoneNumber) {
+            if (!latestResultData) {
+                showModal("Gagal Kirim", "Data hasil ujian belum tersedia.");
+                return;
+            }
+
+            // Standardize Phone Number Format to 62...
+            let cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+            if (cleanPhone.startsWith('0')) {
+                cleanPhone = '62' + cleanPhone.slice(1);
+            }
+
+            // Build WhatsApp Message Body
+            const textMessage = 
+                `*HASIL UJIAN ASTS ONLINE - SLBN 2 PEMALANG*\n\n` +
+                `*Kepada Yth:* ${teacherName}\n` +
+                `------------------------------------\n` +
+                `*Nama Siswa:* ${latestResultData.studentName}\n` +
+                `*Kelas:* ${latestResultData.studentClass}\n` +
+                `*Mata Pelajaran:* ${latestResultData.subject}\n` +
+                `------------------------------------\n` +
+                `*NILAI AKHIR:* *${latestResultData.score}*\n` +
+                `• Jawaban Benar: ${latestResultData.correct} dari ${latestResultData.total} soal\n` +
+                `• Jawaban Salah: ${latestResultData.wrong} soal\n` +
+                `------------------------------------\n` +
+                `_Pesan ini dikirim otomatis dari Portal Ujian ASTS SMPLB Tunarungu SLB Negeri 2 Pemalang._`;
+
+            // Properly Encode URI Components for WhatsApp Web/App compatibility
+            const encodedMessage = encodeURIComponent(textMessage);
+            const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+            
+            // Open WhatsApp link in new tab/app
+            window.open(waUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
