@@ -8,43 +8,50 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts Plus Jakarta Sans & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+        }
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
         }
         .custom-radio:checked + label {
-            border-color: #059669;
-            background-color: #ecfdf5;
-            color: #065f46;
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            color: #1e40af;
             font-weight: 700;
+        }
+        /* Efek Transparan Halus untuk Logo */
+        .logo-transparent {
+            mix-blend-mode: multiply;
+            background: transparent !important;
         }
     </style>
 </head>
 <body class="min-h-screen text-slate-800 pb-12 flex flex-col justify-between">
 
     <!-- Header / Kop Ujian -->
-    <header class="bg-emerald-700 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-4xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5 flex flex-row items-center justify-between gap-2">
-            <div class="flex items-center space-x-2 sm:space-x-3">
-                <div class="bg-white/10 p-2 sm:p-2.5 rounded-xl text-white font-black text-lg sm:text-xl flex items-center justify-center">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-sm sm:text-lg md:text-xl leading-tight tracking-tight">SLB NEGERI 2 PEMALANG</h1>
-                    <p class="text-emerald-100 text-[10px] sm:text-xs hidden sm:block">Portal Ujian Online ASTS SMPLB Tunarungu</p>
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-950 to-blue-900 text-white shadow-md sticky top-0 z-40 border-b border-blue-800/40 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto px-4 py-3 sm:py-3.5 relative flex items-center justify-center">
+            
+            <!-- Identitas SLBN 2 Pemalang Tepat di Tengah (Center Presisi) -->
+            <div class="flex items-center justify-center space-x-3 text-center">
+                <img src="C:/Users/SLB_2 - ACER 01/.gemini/antigravity/brain/041035fa-9247-4cab-aacc-6a69aad6e557/.user_uploaded/media_1793087078510_73692b37.png" alt="Logo SLBN 2 Pemalang" class="w-10 h-10 sm:w-11 sm:h-11 object-contain logo-transparent">
+                <div class="text-center">
+                    <h1 class="font-heading font-extrabold text-base sm:text-xl md:text-2xl tracking-wide uppercase leading-tight text-white drop-shadow">
+                        SLB NEGERI 2 PEMALANG
+                    </h1>
+                    <p class="text-blue-200 text-[10px] sm:text-xs font-medium tracking-normal mt-0.5">
+                        Portal Ujian Online ASTS SMPLB Tunarungu
+                    </p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <!-- Header Subject Badge -->
-                <div id="quiz-badge" class="bg-emerald-800/80 text-emerald-100 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-[10px] sm:text-xs font-semibold text-right border border-emerald-600/50 hidden sm:block">
-                    <span id="header-subject" class="text-white font-bold block text-xs md:text-sm">Asesmen Sumatif</span>
-                </div>
-
-                <!-- Timer Di Pojok Kanan Atas -->
+            <!-- Timer di Pojok Kanan Atas Absolute (Hanya muncul saat ujian aktif) -->
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
                 <div id="timer-box" class="hidden flex items-center gap-1.5 bg-rose-600 text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl shadow-md border border-rose-500 text-xs sm:text-sm font-black animate-pulse">
                     <i class="fa-regular fa-clock"></i>
                     <span id="timer-display">60:00</span>
@@ -56,15 +63,19 @@
     <main class="max-w-4xl mx-auto px-4 mt-6 md:mt-10 w-full flex-grow">
 
         <!-- STEP 1: LOGIN SECTION -->
-        <section id="login-section" class="max-w-md mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100 relative overflow-hidden transition-all">
-            <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600"></div>
+        <section id="login-section" class="max-w-md mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-blue-100 relative overflow-hidden transition-all">
+            <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-900"></div>
             
             <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-sm border border-emerald-200">
-                    <i class="fa-solid fa-user-graduate"></i>
+                <!-- Logo Sekolah Transparan di Halaman Pembuka / Opening Page -->
+                <div class="w-24 h-24 mx-auto mb-3 flex items-center justify-center p-2 rounded-2xl bg-blue-50/50">
+                    <img src="C:/Users/SLB_2 - ACER 01/.gemini/antigravity/brain/041035fa-9247-4cab-aacc-6a69aad6e557/.user_uploaded/media_1793087078510_73692b37.png" alt="Logo SLBN 2 Pemalang" class="w-full h-full object-contain logo-transparent">
                 </div>
-                <h2 class="text-xl font-extrabold text-slate-800">Masuk Ujian Online</h2>
-                <p class="text-xs text-slate-500 mt-1">Isi data diri murid untuk memulai</p>
+                <h2 class="font-heading text-xl md:text-2xl font-black text-slate-800 tracking-tight">Masuk Ujian Online</h2>
+                <div class="mt-1.5 inline-flex items-center px-3.5 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold tracking-wide shadow-sm">
+                    Asesmen Sumatif
+                </div>
+                <p class="text-xs text-slate-500 mt-2">Isi data diri murid untuk memulai ujian</p>
             </div>
 
             <form onsubmit="event.preventDefault(); processLogin();" class="space-y-5">
@@ -74,7 +85,7 @@
                         Nama Siswa:
                     </label>
                     <div class="relative">
-                        <input type="text" id="student-name" placeholder="Ketik nama lengkap..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-800 font-semibold text-sm shadow-sm transition">
+                        <input type="text" id="student-name" placeholder="Ketik nama lengkap..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-slate-800 font-semibold text-sm shadow-sm transition">
                         <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                     </div>
                 </div>
@@ -85,7 +96,8 @@
                         Pilih Kelas:
                     </label>
                     <div class="relative">
-                        <select id="student-class" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white text-slate-800 font-bold text-sm shadow-sm appearance-none cursor-pointer transition">
+                        <select id="student-class" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white text-slate-800 font-bold text-sm shadow-sm appearance-none cursor-pointer transition">
+                            <option value="Kelas 7">Kelas 7 SMPLB</option>
                             <option value="Kelas 8">Kelas 8 SMPLB</option>
                             <option value="Kelas 9" selected>Kelas 9 SMPLB</option>
                         </select>
@@ -94,7 +106,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-base rounded-2xl shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2">
+                <button type="submit" class="w-full py-3.5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-base rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2">
                     Masuk <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
             </form>
@@ -102,68 +114,96 @@
 
 
         <!-- STEP 2: DASHBOARD PILIH MATA PELAJARAN -->
-        <section id="subject-section" class="max-w-3xl mx-auto hidden transition-all">
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-emerald-100 text-center relative overflow-hidden">
-                <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl border border-emerald-200">
-                    <i class="fa-solid fa-book-bookmark"></i>
+        <section id="subject-section" class="max-w-4xl mx-auto hidden transition-all">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-blue-100 text-center relative overflow-hidden">
+                <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center p-2 rounded-2xl bg-blue-50/50">
+                    <img src="C:/Users/SLB_2 - ACER 01/.gemini/antigravity/brain/041035fa-9247-4cab-aacc-6a69aad6e557/.user_uploaded/media_1793087078510_73692b37.png" alt="Logo SLBN 2 Pemalang" class="w-full h-full object-contain logo-transparent">
                 </div>
                 
-                <h2 class="text-2xl font-black text-slate-800 mb-1">Selamat Datang, <span id="welcome-student-name" class="text-emerald-700"></span>!</h2>
+                <h2 class="font-heading text-2xl font-black text-slate-800 mb-1">Selamat Datang, <span id="welcome-student-name" class="text-blue-800"></span>!</h2>
                 <p class="text-xs md:text-sm text-slate-500 font-medium mb-6">Silakan pilih Ujian Mata Pelajaran yang ingin dikerjakan (<span id="welcome-student-class" class="font-bold text-slate-700"></span>):</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
                     <!-- Opsi 1: Bahasa Indonesia -->
-                    <button onclick="selectSubject('indo')" class="group p-5 bg-gradient-to-br from-emerald-50 to-teal-50 hover:from-emerald-100 hover:to-teal-100 border-2 border-emerald-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                    <button onclick="selectSubject('indo')" class="group p-5 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-2 border-blue-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
                         <div>
-                            <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                            <div class="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-language"></i>
                             </div>
-                            <h3 class="font-bold text-base text-slate-800 group-hover:text-emerald-800">Bahasa Indonesia</h3>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-blue-900">Bahasa Indonesia</h3>
                             <p class="text-[11px] text-slate-500 mt-1">Materi: Kalimat Tanya & Perintah (30 Soal | 60 Menit)</p>
                         </div>
-                        <div class="mt-4 flex items-center font-bold text-xs text-emerald-700 gap-1">
+                        <div class="mt-4 flex items-center font-bold text-xs text-blue-800 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
 
                     <!-- Opsi 2: Seni Budaya -->
-                    <button onclick="selectSubject('seni')" class="group p-5 bg-gradient-to-br from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 border-2 border-purple-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                    <button onclick="selectSubject('seni')" class="group p-5 bg-gradient-to-br from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 border-2 border-indigo-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
                         <div>
-                            <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-palette"></i>
                             </div>
-                            <h3 class="font-bold text-base text-slate-800 group-hover:text-purple-800">Seni Budaya</h3>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-indigo-900">Seni Budaya</h3>
                             <p class="text-[11px] text-slate-500 mt-1">Materi: Seni Rupa, Lukis, & Batik (30 Soal | 60 Menit)</p>
                         </div>
-                        <div class="mt-4 flex items-center font-bold text-xs text-purple-700 gap-1">
+                        <div class="mt-4 flex items-center font-bold text-xs text-indigo-800 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
 
                     <!-- Opsi 3: IPA Bergambar -->
-                    <button onclick="selectSubject('ipa')" class="group p-5 bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 border-2 border-amber-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                    <button onclick="selectSubject('ipa')" class="group p-5 bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border-2 border-cyan-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
                         <div>
-                            <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-flask font-bold"></i>
                             </div>
-                            <h3 class="font-bold text-base text-slate-800 group-hover:text-amber-800">IPA Bergambar</h3>
-                            <p class="text-[11px] text-slate-500 mt-1">Materi IPA Kelas 8 & 9 Tunarungu (30 Soal | Visual Gambar)</p>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-cyan-900">IPA Bergambar</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Materi IPA SMPLB Tunarungu (30 Soal | Visual Gambar)</p>
                         </div>
-                        <div class="mt-4 flex items-center font-bold text-xs text-amber-700 gap-1">
+                        <div class="mt-4 flex items-center font-bold text-xs text-cyan-800 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
 
                     <!-- Opsi 4: PKPBI -->
-                    <button onclick="selectSubject('pkpbi')" class="group p-5 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 border-2 border-blue-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                    <button onclick="selectSubject('pkpbi')" class="group p-5 bg-gradient-to-br from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border-2 border-sky-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
                         <div>
-                            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                            <div class="w-10 h-10 rounded-xl bg-sky-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
                                 <i class="fa-solid fa-ear-listen"></i>
                             </div>
-                            <h3 class="font-bold text-base text-slate-800 group-hover:text-blue-800">PKPBI</h3>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-sky-900">PKPBI</h3>
                             <p class="text-[11px] text-slate-500 mt-1">Persepsi Bunyi: Benda, Hewan, & Kendaraan (30 Soal | Visual)</p>
                         </div>
-                        <div class="mt-4 flex items-center font-bold text-xs text-blue-700 gap-1">
+                        <div class="mt-4 flex items-center font-bold text-xs text-sky-800 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+
+                    <!-- Opsi 5: Matematika -->
+                    <button onclick="selectSubject('matematika')" class="group p-5 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-2 border-blue-300 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-800 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-calculator"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-blue-900">Matematika</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Penjumlahan, Pengurangan, Perkalian, Pembagian & Cerita (30 Soal)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-blue-800 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
+
+                    <!-- Opsi 6: IPS Terpadu -->
+                    <button onclick="selectSubject('ips')" class="group p-5 bg-gradient-to-br from-slate-50 to-blue-50 hover:from-slate-100 hover:to-blue-100 border-2 border-blue-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-landmark"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-slate-900">IPS Terpadu</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Pemerintahan (Desa, Kota, Negara) & Sosialisasi (30 Soal | Bergambar)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-slate-800 gap-1">
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
@@ -183,7 +223,7 @@
             <!-- Header Info Siswa & Tombol Keluar -->
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-700">
                 <div class="flex items-center gap-3 w-full sm:w-auto">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold flex-shrink-0">
                         <i class="fa-solid fa-user-check"></i>
                     </div>
                     <div>
@@ -193,7 +233,7 @@
                 </div>
                 
                 <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2">
-                    <div id="display-student-class" class="bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 text-xs font-bold text-emerald-800">
+                    <div id="display-student-class" class="bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200 text-xs font-bold text-blue-900">
                     </div>
                     
                     <button type="button" onclick="confirmExitToSubjectMenu()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl border border-rose-200 text-xs font-bold transition flex items-center gap-1.5">
@@ -207,7 +247,7 @@
 
             <!-- Submit Button -->
             <div class="mt-8 text-center" id="submit-button-wrapper">
-                <button type="button" onclick="submitQuiz()" class="w-full sm:w-auto px-10 py-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-base md:text-lg rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mx-auto">
+                <button type="button" onclick="submitQuiz()" class="w-full sm:w-auto px-10 py-4 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-base md:text-lg rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mx-auto">
                     <i class="fa-solid fa-paper-plane"></i> Kirim & Lihat Hasil Ujian
                 </button>
             </div>
@@ -218,22 +258,22 @@
         <section id="result-section" class="hidden space-y-6">
             <!-- Ringkasan Hasil -->
             <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-slate-100 relative overflow-hidden text-center">
-                <div id="score-header-bg" class="absolute top-0 left-0 right-0 h-3 bg-emerald-500"></div>
+                <div id="score-header-bg" class="absolute top-0 left-0 right-0 h-3 bg-blue-600"></div>
                 
                 <h2 class="text-2xl font-black text-slate-800 mb-1">Hasil Ujian ASTS</h2>
                 <p id="result-student-info" class="text-xs md:text-sm text-slate-500 font-semibold mb-6"></p>
 
                 <!-- Nilai Besar -->
-                <div class="inline-flex flex-col items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full bg-slate-50 border-4 border-emerald-500 mb-6 shadow-inner">
+                <div class="inline-flex flex-col items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full bg-slate-50 border-4 border-blue-600 mb-6 shadow-inner">
                     <span class="text-xs uppercase font-extrabold text-slate-400">Nilai Akhir</span>
-                    <span id="final-score" class="text-4xl md:text-5xl font-black text-emerald-600">0</span>
+                    <span id="final-score" class="text-4xl md:text-5xl font-black text-blue-700">0</span>
                     <span class="text-xs text-slate-400 font-medium">/ 100</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto mb-6">
-                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200">
-                        <span class="text-xs text-emerald-700 block font-bold">Jawaban Benar</span>
-                        <span id="correct-count" class="text-xl font-black text-emerald-800">0 Soal</span>
+                    <div class="bg-blue-50 p-3 rounded-2xl border border-blue-200">
+                        <span class="text-xs text-blue-700 block font-bold">Jawaban Benar</span>
+                        <span id="correct-count" class="text-xl font-black text-blue-900">0 Soal</span>
                     </div>
                     <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
                         <span class="text-xs text-rose-700 block font-bold">Jawaban Salah</span>
@@ -245,7 +285,7 @@
                 <div id="evaluation-message" class="p-4 rounded-2xl font-bold text-sm mb-6"></div>
 
                 <!-- SEKSI KIRIM WA GURU -->
-                <div class="bg-emerald-50/70 border-2 border-emerald-200 rounded-2xl p-4 md:p-5 mb-6 text-left">
+                <div class="bg-blue-50/70 border-2 border-blue-200 rounded-2xl p-4 md:p-5 mb-6 text-left">
                     <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2 mb-1">
                         <i class="fa-brands fa-whatsapp text-emerald-600 text-lg md:text-xl"></i> Kirim Nilai ke WhatsApp Guru Pengampu
                     </h3>
@@ -253,35 +293,35 @@
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
                         <!-- Guru 1: Pak Tri -->
-                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col justify-between items-center text-center">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-2">
+                        <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm flex flex-col justify-between items-center text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-lg mb-2">
                                 <i class="fa-solid fa-user-tie"></i>
                             </div>
                             <h4 class="font-extrabold text-slate-800 text-sm">Pak Tri</h4>
                             <p class="text-[11px] text-slate-500 mb-3">Guru Pengampu ASTS</p>
                             
-                            <button type="button" onclick="sendToWhatsApp('Pak Tri', '082326666767')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
-                                <i class="fa-brands fa-whatsapp text-base"></i> Kirim Hasil ke Pak Tri
+                            <button type="button" onclick="sendToWhatsApp('Pak Tri', '082326666767')" class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-base text-emerald-400"></i> Kirim Hasil ke Pak Tri
                             </button>
                         </div>
 
                         <!-- Guru 2: Bu Sekar -->
-                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col justify-between items-center text-center">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-2">
+                        <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm flex flex-col justify-between items-center text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-lg mb-2">
                                 <i class="fa-solid fa-user-nurse"></i>
                             </div>
                             <h4 class="font-extrabold text-slate-800 text-sm">Bu Sekar</h4>
                             <p class="text-[11px] text-slate-500 mb-3">Guru Pengampu ASTS</p>
                             
-                            <button type="button" onclick="sendToWhatsApp('Bu Sekar', '085642155794')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
-                                <i class="fa-brands fa-whatsapp text-base"></i> Kirim Hasil ke Bu Sekar
+                            <button type="button" onclick="sendToWhatsApp('Bu Sekar', '085642155794')" class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-base text-emerald-400"></i> Kirim Hasil ke Bu Sekar
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-center gap-3">
-                    <button onclick="goToSubjectSelection()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl shadow transition flex items-center gap-2">
+                    <button onclick="goToSubjectSelection()" class="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-sm rounded-xl shadow transition flex items-center gap-2">
                         <i class="fa-solid fa-house"></i> Kembali ke Menu Utama
                     </button>
                     <button onclick="window.scrollTo({top: document.getElementById('evaluation-section').offsetTop - 80, behavior: 'smooth'});" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition flex items-center gap-2">
@@ -293,7 +333,7 @@
             <!-- Pembahasan Detail Soal -->
             <div id="evaluation-section" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200">
                 <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
-                    <i class="fa-solid fa-clipboard-check text-emerald-600"></i> Evaluasi Pembahasan Soal
+                    <i class="fa-solid fa-clipboard-check text-blue-700"></i> Evaluasi Pembahasan Soal
                 </h3>
                 <div id="review-container" class="space-y-6"></div>
 
@@ -1342,6 +1382,463 @@
             }
         ];
 
+        // DATA SOAL MATEMATIKA (25 SOAL)
+        const quizDataMatematika = [
+            // Penambahan
+            {
+                id: 1,
+                question: "Hasil dari penjumlahan berikut adalah:\n245 + 132 = ...",
+                options: ["367", "377", "387", "397"],
+                answer: 1,
+                explanation: "245 + 132 = 377."
+            },
+            {
+                id: 2,
+                question: "Hitunglah hasil penjumlahan dengan teknik menyimpan berikut:\n368 + 257 = ...",
+                options: ["615", "625", "635", "525"],
+                answer: 1,
+                explanation: "368 + 257 = 625 (8+7=15 simpan 1, 1+6+5=12 simpan 1, 1+3+2=6)."
+            },
+            {
+                id: 3,
+                question: "Hasil dari operasi hitung:\n512 + 189 = ...",
+                options: ["691", "701", "711", "681"],
+                answer: 1,
+                explanation: "512 + 189 = 701."
+            },
+            {
+                id: 4,
+                question: "Berapakah hasil penjumlahan tiga bilangan berikut?\n120 + 230 + 150 = ...",
+                options: ["480", "500", "510", "520"],
+                answer: 1,
+                explanation: "120 + 230 = 350, lalu 350 + 150 = 500."
+            },
+            {
+                id: 5,
+                question: "Hasil dari penjumlahan ribuan:\n1.250 + 1.420 = ...",
+                options: ["2.650", "2.670", "2.770", "2.570"],
+                answer: 1,
+                explanation: "1.250 + 1.420 = 2.670."
+            },
+
+            // Pengurangan
+            {
+                id: 6,
+                question: "Hasil dari pengurangan berikut adalah:\n485 - 231 = ...",
+                options: ["244", "254", "264", "274"],
+                answer: 1,
+                explanation: "485 - 231 = 254."
+            },
+            {
+                id: 7,
+                question: "Hitunglah hasil pengurangan dengan teknik meminjam:\n524 - 168 = ...",
+                options: ["346", "356", "366", "376"],
+                answer: 1,
+                explanation: "524 - 168 = 356."
+            },
+            {
+                id: 8,
+                question: "Hasil dari pengurangan ratusan:\n750 - 325 = ...",
+                options: ["415", "425", "435", "445"],
+                answer: 1,
+                explanation: "750 - 325 = 425."
+            },
+            {
+                id: 9,
+                question: "Berapakah sisa pengurangan berikut?\n900 - 465 = ...",
+                options: ["425", "435", "445", "535"],
+                answer: 1,
+                explanation: "900 - 465 = 435."
+            },
+            {
+                id: 10,
+                question: "Hasil dari pengurangan bilangan ribuan:\n2.500 - 1.150 = ...",
+                options: ["1.250", "1.350", "1.450", "1.550"],
+                answer: 1,
+                explanation: "2.500 - 1.150 = 1.350."
+            },
+
+            // Perkalian
+            {
+                id: 11,
+                question: "Berapakah hasil perkalian dasar berikut?\n15 x 6 = ...",
+                options: ["80", "90", "95", "100"],
+                answer: 1,
+                explanation: "15 x 6 = 90."
+            },
+            {
+                id: 12,
+                question: "Hasil dari perkalian puluhan dengan satuan:\n24 x 8 = ...",
+                options: ["182", "192", "202", "172"],
+                answer: 1,
+                explanation: "24 x 8 = 192 (4 x 8 = 32, 20 x 8 = 160 -> 160 + 32 = 192)."
+            },
+            {
+                id: 13,
+                question: "Hitunglah hasil perkalian berikut:\n35 x 10 = ...",
+                options: ["305", "350", "3.500", "530"],
+                answer: 1,
+                explanation: "Bilangan berapapun yang dikalikan 10 cukup ditambahkan angka 0 di belakangnya, sehingga 35 x 10 = 350."
+            },
+            {
+                id: 14,
+                question: "Berapakah hasil dari perkalian bersusun:\n42 x 12 = ...",
+                options: ["494", "504", "514", "524"],
+                answer: 1,
+                explanation: "42 x 12 = 42 x (10 + 2) = 420 + 84 = 504."
+            },
+            {
+                id: 15,
+                question: "Hasil dari perkalian ratusan dengan satuan:\n125 x 4 = ...",
+                options: ["450", "500", "550", "600"],
+                answer: 1,
+                explanation: "125 x 4 = 500."
+            },
+
+            // Pembagian
+            {
+                id: 16,
+                question: "Hasil pembagian dari bilangan berikut adalah:\n72 : 8 = ...",
+                options: ["7", "9", "8", "6"],
+                answer: 1,
+                explanation: "72 dibagi 8 hasilnya adalah 9, karena 9 x 8 = 72."
+            },
+            {
+                id: 17,
+                question: "Hitunglah hasil pembagian ratusan dengan satuan:\n144 : 6 = ...",
+                options: ["22", "24", "26", "28"],
+                answer: 1,
+                explanation: "144 : 6 = 24."
+            },
+            {
+                id: 18,
+                question: "Berapakah hasil bagi dari operasi berikut?\n250 : 5 = ...",
+                options: ["40", "50", "60", "25"],
+                answer: 1,
+                explanation: "250 : 5 = 50."
+            },
+            {
+                id: 19,
+                question: "Hasil dari pembagian berikut adalah:\n360 : 12 = ...",
+                options: ["20", "30", "40", "25"],
+                answer: 1,
+                explanation: "360 : 12 = 30."
+            },
+            {
+                id: 20,
+                question: "Berapakah hasil pembagian:\n480 : 8 = ...",
+                options: ["50", "60", "70", "80"],
+                answer: 1,
+                explanation: "480 : 8 = 60 (karena 48 : 8 = 6, ditambah 0 menjadi 60)."
+            },
+
+            // Soal Cerita Sederhana
+            {
+                id: 21,
+                question: "Siti mempunyai 15 pensil warna di kotak pensil.\nIbu membelikan lagi 12 pensil warna untuk Siti.\nBerapa jumlah semua pensil warna milik Siti sekarang?",
+                options: ["25 pensil", "27 pensil", "29 pensil", "30 pensil"],
+                answer: 1,
+                explanation: "Operasi penjumlahan: 15 + 12 = 27 pensil warna."
+            },
+            {
+                id: 22,
+                question: "Pak Budi memanen 85 buah mangga dari pohon di kebun.\nSebanyak 25 buah mangga dibagikan kepada tetangga.\nBerapa sisa buah mangga milik Pak Budi sekarang?",
+                options: ["55 buah", "60 buah", "65 buah", "70 buah"],
+                answer: 1,
+                explanation: "Operasi pengurangan: 85 - 25 = 60 buah mangga."
+            },
+            {
+                id: 23,
+                question: "Doni membeli 6 kotak penghapus untuk teman sekelasnya.\nSetiap kotak berisi 8 buah penghapus.\nBerapa jumlah seluruh penghapus yang dibeli Doni?",
+                options: ["42 buah", "48 buah", "54 buah", "56 buah"],
+                answer: 1,
+                explanation: "Operasi perkalian: 6 x 8 = 48 buah penghapus."
+            },
+            {
+                id: 24,
+                question: "Ibu guru membawa 36 buku tulis ke dalam kelas.\nBuku-buku tersebut akan dibagikan sama rata kepada 4 kelompok belajar.\nBerapa buku tulis yang diterima setiap kelompok?",
+                options: ["8 buku", "9 buku", "10 buku", "12 buku"],
+                answer: 1,
+                explanation: "Operasi pembagian: 36 : 4 = 9 buku tulis."
+            },
+            {
+                id: 25,
+                question: "Rian memiliki uang tabungan sebesar Rp 50.000.\nIa menggunakan uangnya untuk membeli buku pelajaran seharga Rp 32.000.\nBerapakah sisa uang tabungan Rian sekarang?",
+                options: ["Rp 16.000", "Rp 18.000", "Rp 20.000", "Rp 22.000"],
+                answer: 1,
+                explanation: "Operasi pengurangan: Rp 50.000 - Rp 32.000 = Rp 18.000."
+            },
+            {
+                id: 26,
+                question: "Paman memetik 45 buah apel di kebun pada pagi hari, lalu memetik lagi 35 buah apel pada sore hari.\nBerapa total seluruh buah apel yang dipetik paman?",
+                options: ["70 buah", "80 buah", "85 buah", "90 buah"],
+                answer: 1,
+                explanation: "Operasi penjumlahan: 45 + 35 = 80 buah apel."
+            },
+            {
+                id: 27,
+                question: "Di sebuah perpustakaan sekolah terdapat 150 buku cerita.\nSebanyak 42 buku sedang dipinjam oleh siswa.\nBerapakah sisa buku cerita yang masih ada di rak perpustakaan?",
+                options: ["102 buku", "108 buku", "112 buku", "118 buku"],
+                answer: 1,
+                explanation: "Operasi pengurangan: 150 - 42 = 108 buku."
+            },
+            {
+                id: 28,
+                question: "Di koperasi sekolah terdapat 5 pak penggaris.\nSetiap pak berisi 12 batang penggaris.\nBerapa jumlah keseluruhan batang penggaris di koperasi?",
+                options: ["50 batang", "60 batang", "65 batang", "70 batang"],
+                answer: 1,
+                explanation: "Operasi perkalian: 5 x 12 = 60 batang penggaris."
+            },
+            {
+                id: 29,
+                question: "Ayah memiliki 75 butir permen manis.\nPermen tersebut akan dibagikan sama rata kepada 5 orang keponakannya.\nBerapa butir permen yang didapatkan oleh masing-masing keponakan?",
+                options: ["12 butir", "15 butir", "18 butir", "20 butir"],
+                answer: 1,
+                explanation: "Operasi pembagian: 75 : 5 = 15 butir permen."
+            },
+            {
+                id: 30,
+                question: "Toni mempunyai uang saku Rp 20.000.\nIa membeli 2 bungkus roti yang masing-masing harganya Rp 4.000.\nBerapakah sisa uang saku Toni?",
+                options: ["Rp 10.000", "Rp 12.000", "Rp 14.000", "Rp 16.000"],
+                answer: 1,
+                explanation: "Harga 2 roti = 2 x Rp 4.000 = Rp 8.000. Sisa uang = Rp 20.000 - Rp 8.000 = Rp 12.000."
+            }
+        ];
+
+        // DATA SOAL IPS TERPADU (25 SOAL)
+        const quizDataIPS = [
+            // Submateri 1: Pemerintahan Desa & Kelurahan
+            {
+                id: 1,
+                question: "Perhatikan gambar kantor pelayanan masyarakat tingkat desa di bawah ini!\nLembaga pemerintahan yang bertugas memimpin dan melayani warga di tingkat desa dipimpin oleh seorang ...",
+                image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&auto=format&fit=crop&q=80",
+                options: ["Kepala Desa (Kades)", "Camat", "Bupati", "Gubernur"],
+                answer: 0,
+                explanation: "Pemerintahan tingkat desa dipimpin oleh seorang Kepala Desa (Kades) yang dipilih langsung oleh warga desa."
+            },
+            {
+                id: 2,
+                question: "Dalam menjalankan tugasnya sehari-hari di kantor desa, Kepala Desa dibantu oleh ...",
+                options: ["Perangkat Desa (Sekretaris Desa dan Kepala Dusun)", "Polisi Lalu Lintas", "Dokter Rumah Sakit", "Menteri Pertahanan"],
+                answer: 0,
+                explanation: "Kepala Desa dibantu oleh perangkat desa seperti Sekretaris Desa (Sekdes), Kepala Urusan (Kaur), dan Kepala Dusun (Kadus)."
+            },
+            {
+                id: 3,
+                question: "Lembaga permusyawaratan di desa yang bertugas menampung dan menyalurkan aspirasi masyarakat desa disebut ...",
+                options: ["BPD (Badan Permusyawaratan Desa)", "DPR RI", "Mahkamah Konstitusi", "KPK"],
+                answer: 0,
+                explanation: "BPD (Badan Permusyawaratan Desa) bertugas membahas rancangan peraturan desa dan menyalurkan aspirasi masyarakat desa."
+            },
+            {
+                id: 4,
+                question: "Wilayah pemerintahan yang setingkat dengan desa tetapi pemimpinnya berstatus Pegawai Negeri Sipil (PNS) dan ditunjuk oleh bupati/wali kota disebut ...",
+                options: ["Kelurahan (dipimpin Lurah)", "Provinsi (dipimpin Gubernur)", "Negara (dipimpin Presiden)", "Dusun"],
+                answer: 0,
+                explanation: "Kelurahan dipimpin oleh seorang Lurah yang merupakan Pegawai Negeri Sipil (PNS) yang ditunjuk oleh bupati/wali kota."
+            },
+            {
+                id: 5,
+                question: "Unit organisasi warga yang paling kecil di bawah Rukun Warga (RW) yang bertugas menjaga kerukunan antar tetangga adalah ...",
+                options: ["Rukun Tetangga (RT)", "Kecamatan", "Kabupaten", "Provinsi"],
+                answer: 0,
+                explanation: "Rukun Tetangga (RT) adalah unit kemasyarakatan paling dasar di bawah naungan Rukun Warga (RW) dan desa/kelurahan."
+            },
+
+            // Submateri 2: Pemerintahan Kabupaten & Kota
+            {
+                id: 6,
+                question: "Perhatikan lambang daerah dan pusat pemerintahan daerah tingkat II berikut!\nWilayah Kabupaten dipimpin oleh seorang kepala daerah yang disebut ...",
+                image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&auto=format&fit=crop&q=80",
+                options: ["Bupati", "Lurah", "Kepala Desa", "Camat"],
+                answer: 0,
+                explanation: "Kabupaten dipimpin oleh seorang Bupati yang dibantu oleh Wakil Bupati dan perangkat daerah."
+            },
+            {
+                id: 7,
+                question: "Wilayah administratif perkotaan (pemerintahan kota) dipimpin oleh seorang kepala daerah yang dinamakan ...",
+                options: ["Wali Kota", "Kepala Dusun", "Sekretaris Daerah", "Ketua RT"],
+                answer: 0,
+                explanation: "Daerah Kota dipimpin oleh seorang Wali Kota yang memimpin penyelenggaraan pemerintahan kota."
+            },
+            {
+                id: 8,
+                question: "Perhatikan gambar gedung Dewan Perwakilan Rakyat Daerah berikut!\nLembaga legislatif di tingkat kabupaten/kota yang bertugas membuat Peraturan Daerah (Perda) bersama bupati/wali kota adalah ...",
+                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=80",
+                options: ["DPRD Kabupaten/Kota", "MPR RI", "Kepolisian Daerah", "Pengadilan Militer"],
+                answer: 0,
+                explanation: "DPRD (Dewan Perwakilan Rakyat Daerah) Kabupaten/Kota bertugas membuat peraturan daerah, menyusun anggaran daerah, dan mengawasi jalannya pemerintahan daerah."
+            },
+            {
+                id: 9,
+                question: "Wilayah kabupaten atau kota dibagi lagi menjadi beberapa wilayah administratif yang lebih kecil yang disebut ...",
+                options: ["Kecamatan (dipimpin Camat)", "Provinsi", "Benua", "Negara bagian"],
+                answer: 0,
+                explanation: "Kabupaten/kota membawahi beberapa wilayah Kecamatan yang masing-masing dipimpin oleh seorang Camat."
+            },
+            {
+                id: 10,
+                question: "Bupati dan Wali Kota dipilih oleh rakyat melalui proses pemilihan umum yang dinamakan ...",
+                options: ["Pilkada (Pemilihan Kepala Daerah)", "Ujian Nasional", "Musyawarah Dusun", "Pelantikan Menteri"],
+                answer: 0,
+                explanation: "Bupati dan Wali Kota dipilih secara langsung oleh masyarakat melalui Pemilihan Kepala Daerah (Pilkada)."
+            },
+
+            // Submateri 3: Pemerintahan Negara Republik Indonesia
+            {
+                id: 11,
+                question: "Perhatikan lambang negara burung Garuda Pancasila di bawah ini!\nNegara Kesatuan Republik Indonesia (NKRI) dipimpin oleh seorang kepala negara sekaligus kepala pemerintahan, yaitu ...",
+                image: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=600&auto=format&fit=crop&q=80",
+                options: ["Presiden", "Gubernur", "Bupati", "Lurah"],
+                answer: 0,
+                explanation: "Presiden memegang kekuasaan pemerintahan sebagai Kepala Negara dan Kepala Pemerintahan di Republik Indonesia."
+            },
+            {
+                id: 12,
+                question: "Dalam menjalankan tugas pemerintahan sehari-hari, Presiden Republik Indonesia dibantu oleh seorang Wakil Presiden dan para ...",
+                options: ["Menteri-menteri negara", "Camat", "Kepala Desa", "Ketua RT"],
+                answer: 0,
+                explanation: "Presiden dibantu oleh para Menteri yang memimpin kementerian masing-masing (kabinet)."
+            },
+            {
+                id: 13,
+                question: "Lembaga negara yang bertugas membuat undang-undang (kekuasaan legislatif) bersama Presiden di tingkat pusat adalah ...",
+                options: ["DPR (Dewan Perwakilan Rakyat)", "Mahkamah Agung", "Kepolisian RI", "BPD"],
+                answer: 0,
+                explanation: "DPR (Dewan Perwakilan Rakyat) memegang fungsi legislasi, anggaran, dan pengawasan di tingkat nasional."
+            },
+            {
+                id: 14,
+                question: "Ibu kota negara merupakan pusat pemerintahan suatu negara. Dasar hukum tertinggi yang menjadi konstitusi tertulis negara Indonesia adalah ...",
+                options: ["UUD 1945", "Buku Tamu", "Peraturan Desa", "Tata Tertib Kelas"],
+                answer: 0,
+                explanation: "UUD Negara Republik Indonesia Tahun 1945 merupakan hukum dasar tertinggi di Indonesia."
+            },
+            {
+                id: 15,
+                question: "Lembaga kekuasaan kehakiman yang bertugas menguji undang-undang terhadap UUD 1945 adalah ...",
+                options: ["Mahkamah Konstitusi (MK)", "Kementerian Pendidikan", "DPRD", "Puskesmas"],
+                answer: 0,
+                explanation: "Mahkamah Konstitusi (MK) berwenang mengadili pada tingkat pertama dan terakhir untuk menguji undang-undang terhadap UUD 1945."
+            },
+
+            // Submateri 4: Pengertian & Hakikat Sosialisasi
+            {
+                id: 16,
+                question: "Perhatikan gambar kegiatan belajar dan interaksi bersama teman di bawah ini!\nProses belajar seorang individu untuk mengenal nilai, norma, aturan, dan sikap agar dapat hidup mandiri dan diterima di masyarakat disebut ...",
+                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop&q=80",
+                options: ["Sosialisasi", "Isolasi diri", "Perselisihan", "Urbanisasi"],
+                answer: 0,
+                explanation: "Sosialisasi adalah proses penanaman atau transfer nilai, aturan, dan norma dari satu generasi ke generasi lainnya agar individu dapat berperan di masyarakat."
+            },
+            {
+                id: 17,
+                question: "Tujuan utama seseorang melakukan sosialisasi sejak masa anak-anak adalah agar mampu ...",
+                options: ["Mengetahui aturan yang baik dan berlaku sopan di masyarakat", "Mengganggu tetangga", "Menghindari orang lain", "Mementingkan diri sendiri"],
+                answer: 0,
+                explanation: "Sosialisasi bertujuan membekali anak dengan nilai moral, tata krama, sopan santun, dan aturan hidup bermasyarakat."
+            },
+            {
+                id: 18,
+                question: "Jika seorang individu tidak pernah melakukan sosialisasi dan selalu mengurung diri, maka akibatnya adalah ...",
+                options: ["Kesulitan berinteraksi dan menyesuaikan diri dengan orang lain", "Mempunyai banyak teman", "Menjadi lebih bahagia", "Mudah memahami norma masyarakat"],
+                answer: 0,
+                explanation: "Tanpa sosialisasi, individu akan mengalami kesulitan dalam berkomunikasi, berinteraksi, dan beradaptasi dalam lingkungan sosial."
+            },
+            {
+                id: 19,
+                question: "Sosialisasi yang pertama kali dan paling penting dijalani oleh seorang anak sejak lahir disebut sosialisasi ...",
+                options: ["Primer", "Sekunder", "Tersier", "Formal luar"],
+                answer: 0,
+                explanation: "Sosialisasi primer adalah sosialisasi pertama yang dialami individu semasa kecil di dalam lingkungan keluarga."
+            },
+            {
+                id: 20,
+                question: "Sosialisasi tahap berikutnya yang memperkenalkan individu ke lingkungan baru di luar keluarga (seperti sekolah dan tempat kerja) disebut sosialisasi ...",
+                options: ["Sekunder", "Primer", "Awal", "Dasar"],
+                answer: 0,
+                explanation: "Sosialisasi sekunder adalah proses sosialisasi lanjutan setelah keluarga, seperti di sekolah, kelompok sebaya, dan tempat kerja."
+            },
+
+            // Submateri 5: Media / Agen Sosialisasi & Penerapan Sehari-hari
+            {
+                id: 21,
+                question: "Perhatikan gambar kehangatan anggota keluarga di rumah berikut!\nMedia (agen) sosialisasi yang pertama dan paling utama dalam membentuk kepribadian serta budi pekerti anak adalah ...",
+                image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop&q=80",
+                options: ["Keluarga", "Pasar", "Jalan raya", "Media sosial"],
+                answer: 0,
+                explanation: "Keluarga adalah lingkungan sosial pertama tempat anak memperoleh kasih sayang, pelajaran moral, dan pembentukan watak dasar."
+            },
+            {
+                id: 22,
+                question: "Perhatikan gambar suasana ruang kelas berikut!\nSekolah merupakan lembaga sosialisasi formal tempat murid tunarungu belajar untuk ...",
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
+                options: ["Memperoleh ilmu pengetahuan, disiplin, dan keterampilan hidup", "Bermalas-malasan dan tidur", "Mengabaikan peraturan guru", "Merusak sarana kelas"],
+                answer: 0,
+                explanation: "Sekolah mengajarkan ilmu pengetahuan, kedisiplinan, kemandirian, dan aturan resmi untuk masa depan siswa."
+            },
+            {
+                id: 23,
+                question: "Kelompok teman sebaya atau teman sepermainan (peer group) sangat berpengaruh dalam sosialisasi anak karena mengajarkan cara ...",
+                options: ["Bekerja sama, saling berbagi, dan menghargai teman", "Mengejek kekurangan kawan", "Membuat keributan di kelas", "Merugikan orang lain"],
+                answer: 0,
+                explanation: "Melalui teman sebaya, anak belajar nilai solidaritas, kerja sama, toleransi, dan kebersamaan."
+            },
+            {
+                id: 24,
+                question: "Perhatikan gambar warga sedang gotong royong membersihkan lingkungan berikut!\nKegiatan gotong royong bersama tetangga di lingkungan RT/RW merupakan contoh nyata penerapan sosialisasi di lingkungan ...",
+                image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&auto=format&fit=crop&q=80",
+                options: ["Masyarakat", "Luar angkasa", "Laboratorium tertutup", "Penjara"],
+                answer: 0,
+                explanation: "Gotong royong di RT/RW adalah wujud sosialisasi langsung dalam kehidupan bermasyarakat untuk menciptakan kerukunan."
+            },
+            {
+                id: 25,
+                question: "Televisi, internet, dan telepon pintar (gadget) yang menyajikan berbagai informasi bagi masyarakat termasuk ke dalam agen sosialisasi berupa ...",
+                options: ["Media massa / Media digital", "Keluarga inti", "Lembaga RT/RW", "Pemerintah Desa"],
+                answer: 0,
+                explanation: "Media massa dan media digital menyampaikan pesan, informasi, dan budaya yang turut memengaruhi pola perilaku masyarakat."
+            },
+            {
+                id: 26,
+                question: "Perhatikan gambar fasilitas pelayanan kesehatan di desa berikut!\nLembaga kesehatan di tingkat desa/kelurahan yang membantu masyarakat memperoleh imunisasi dan pemeriksaan kesehatan adalah ...",
+                image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&auto=format&fit=crop&q=80",
+                options: ["Posyandu / Puskesmas Pembantu", "Kantor Pos", "Stasiun Kereta", "Terminal Bus"],
+                answer: 0,
+                explanation: "Posyandu dan Puskesmas Pembantu merupakan wujud pelayanan kesehatan dasar yang diselenggarakan di lingkungan desa/kelurahan."
+            },
+            {
+                id: 27,
+                question: "Sebagai warga negara yang baik, sikap kepatuhan yang harus ditunjukkan terhadap peraturan negara adalah ...",
+                options: ["Menaati rambu lalu lintas dan membayar pajak tepat waktu", "Melanggar peraturan sesuka hati", "Mengabaikan hukum yang berlaku", "Merusak rambu-rambu jalan"],
+                answer: 0,
+                explanation: "Kepatuhan terhadap hukum seperti tertib lalu lintas dan taat pajak merupakan wujud kewajiban warga negara yang baik."
+            },
+            {
+                id: 28,
+                question: "Perhatikan gambar anak yang sedang belajar bersama orang tua di rumah berikut!\nBentuk sosialisasi yang diajarkan oleh orang tua di rumah sejak dini contohnya adalah ...",
+                image: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=600&auto=format&fit=crop&q=80",
+                options: ["Mengucapkan salam, berbicara sopan, dan menghormati orang lebih tua", "Membentak orang tua", "Tidak mau membantu pekerjaan rumah", "Bermain tanpa kenal waktu"],
+                answer: 0,
+                explanation: "Sosialisasi di rumah menanamkan kebiasaan baik, tata krama, sopan santun, dan penghormatan kepada orang tua dan sesama."
+            },
+            {
+                id: 29,
+                question: "Nilai kebersamaan yang terjalin saat masyarakat bermusyawarah di balai desa sesuai dengan pengamalan Pancasila sila ke ...",
+                options: ["Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan)", "Kesatu", "Kedua", "Ketiga"],
+                answer: 0,
+                explanation: "Musyawarah mufakat di desa merupakan cerminan pengamalan sila ke-4 Pancasila."
+            },
+            {
+                id: 30,
+                question: "Perhatikan gambar keberagaman suku dan pakaian adat Indonesia berikut!\nSalah satu tujuan penting sosialisasi di sekolah adalah menumbuhkan sikap toleransi, yaitu ...",
+                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80",
+                options: ["Menghargai perbedaan suku, agama, dan budaya teman di sekolah", "Memilih-milih teman yang kaya saja", "Mengejek bahasa daerah teman", "Menjauhi teman yang berbeda"],
+                answer: 0,
+                explanation: "Toleransi adalah sikap saling menghormati dan menghargai keragaman serta perbedaan latar belakang orang lain."
+            }
+        ];
+
         // STEP 1: LOGIN PROCESS
         function processLogin() {
             const nameInput = document.getElementById('student-name').value.trim();
@@ -1372,8 +1869,12 @@
             else if (subjectKey === 'seni') mapelTitle = 'Seni Budaya';
             else if (subjectKey === 'ipa') mapelTitle = 'IPA Bergambar';
             else if (subjectKey === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
+            else if (subjectKey === 'matematika') mapelTitle = 'Matematika';
+            else if (subjectKey === 'ips') mapelTitle = 'IPS Terpadu';
 
-            document.getElementById('header-subject').innerText = mapelTitle;
+            const headerSubjectEl = document.getElementById('header-subject');
+            if (headerSubjectEl) headerSubjectEl.innerText = mapelTitle;
+
             document.getElementById('display-student-name').innerText = currentStudentName;
             document.getElementById('display-student-class').innerText = `${currentStudentClass} | ${mapelTitle}`;
 
@@ -1435,7 +1936,8 @@
                     stopTimer();
                     document.getElementById('quiz-form').classList.add('hidden');
                     document.getElementById('subject-section').classList.remove('hidden');
-                    document.getElementById('header-subject').innerText = "Asesmen Sumatif";
+                    const headerSubjectEl = document.getElementById('header-subject');
+                    if (headerSubjectEl) headerSubjectEl.innerText = "Asesmen Sumatif";
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             );
@@ -1447,6 +1949,8 @@
             if (currentSubject === 'seni') return quizDataSeni;
             if (currentSubject === 'ipa') return quizDataIPA;
             if (currentSubject === 'pkpbi') return quizDataPKPBI;
+            if (currentSubject === 'matematika') return quizDataMatematika;
+            if (currentSubject === 'ips') return quizDataIPS;
             return quizDataIndo;
         }
 
@@ -1482,7 +1986,7 @@
                 if (q.image) {
                     imageHtml = `
                         <div class="mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 max-h-64 sm:max-h-80 flex items-center justify-center">
-                            <img src="${q.image}" alt="Gambar Soal IPA No ${index+1}" class="w-full h-auto object-cover max-h-64 sm:max-h-80 hover:scale-105 transition duration-300" loading="lazy" onError="this.onerror=null;this.src='https://placehold.co/600x350?text=Gambar+IPA+Tunarungu';">
+                            <img src="${q.image}" alt="Gambar Soal No ${index+1}" class="w-full h-auto object-cover max-h-64 sm:max-h-80 hover:scale-105 transition duration-300" loading="lazy" onError="this.onerror=null;this.src='https://placehold.co/600x350?text=Gambar+Soal+Visual';">
                         </div>
                     `;
                 }
@@ -1549,6 +2053,8 @@
             else if (currentSubject === 'seni') mapelTitle = 'Seni Budaya';
             else if (currentSubject === 'ipa') mapelTitle = 'IPA Bergambar';
             else if (currentSubject === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
+            else if (currentSubject === 'matematika') mapelTitle = 'Matematika';
+            else if (currentSubject === 'ips') mapelTitle = 'IPS Terpadu';
 
             // Display Results
             document.getElementById('quiz-form').classList.add('hidden');
@@ -1648,7 +2154,6 @@
             document.getElementById('quiz-form').classList.add('hidden');
             document.getElementById('result-section').classList.add('hidden');
             document.getElementById('subject-section').classList.remove('hidden');
-            document.getElementById('header-subject').innerText = "Asesmen Sumatif";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1659,7 +2164,6 @@
             document.getElementById('quiz-form').classList.add('hidden');
             document.getElementById('result-section').classList.add('hidden');
             document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('header-subject').innerText = "Asesmen Sumatif";
             currentStudentName = "";
             currentStudentClass = "";
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1677,12 +2181,12 @@
                 iconWrapper.className = "w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
                 icon.className = "fa-solid fa-clock";
             } else {
-                iconWrapper.className = "w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
+                iconWrapper.className = "w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl";
                 icon.className = "fa-solid fa-triangle-exclamation";
             }
 
             document.getElementById('modal-action-buttons').innerHTML = `
-                <button onclick="closeModal()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow transition">
+                <button onclick="closeModal()" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-xl shadow transition">
                     Mengerti
                 </button>
             `;
