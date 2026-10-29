@@ -207,6 +207,20 @@
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
+
+                    <!-- Opsi 7: Bahasa Inggris -->
+                    <button onclick="selectSubject('inggris')" class="group p-5 bg-gradient-to-br from-violet-50 to-indigo-50 hover:from-violet-100 hover:to-indigo-100 border-2 border-indigo-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-violet-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-violet-900">Bahasa Inggris</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">I see, You see, Classroom Objects & Action Verbs (30 Soal | Bergambar)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-violet-800 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
                 </div>
 
                 <div class="mt-6 pt-4 border-t border-slate-100 text-center">
@@ -348,7 +362,7 @@
     </main>
 
     <footer class="text-center text-xs text-slate-400 py-4 mt-8">
-        SLB Negeri 2 Pemalang &copy; Ujian Online Tunarungu
+        Created and Modified by Mohammad Trihatmodjo &copy; Ujian Online Tunarungu 2026
     </footer>
 
     <!-- Custom Modal Notification -->
@@ -375,6 +389,87 @@
         let timerInterval = null;
         let totalSeconds = 60 * 60; // 60 Menit
         let latestResultData = null;
+        let isExamActive = false; // Status apakah sedang mengerjakan ujian
+
+        // KUNCI HALAMAN / LOCK PAGE SAAT UJIAN
+        function enableExamLock() {
+            isExamActive = true;
+            // Minta browser masuk ke mode Fullscreen jika didukung
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("Fullscreen request rejected or not supported:", err);
+                });
+            }
+        }
+
+        function disableExamLock() {
+            isExamActive = false;
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(err => console.log(err));
+            }
+        }
+
+        // Peringatan saat mencoba refresh atau menutup tab
+        window.addEventListener('beforeunload', function (e) {
+            if (isExamActive) {
+                e.preventDefault();
+                e.returnValue = 'Kamu tidak boleh keluar karena sedang ujian!';
+                return e.returnValue;
+            }
+        });
+
+        // Deteksi jika siswa berpindah aplikasi / tab browser (visibility change atau blur)
+        document.addEventListener('visibilitychange', function () {
+            if (isExamActive && document.hidden) {
+                triggerExamExitWarning();
+            }
+        });
+
+        window.addEventListener('blur', function () {
+            if (isExamActive) {
+                triggerExamExitWarning();
+            }
+        });
+
+        function triggerExamExitWarning() {
+            showExamAlertModal("Kamu tidak boleh keluar karena sedang ujian!", "Tetap fokus pada lembar soal ujian Anda sampai selesai dikirim.");
+            // Coba kembalikan fullscreen jika terlepas
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+        }
+
+        // Blokir tombol shortcut umum (Alt+Tab, Windows Key, F5, F11, F12, Ctrl+R, Ctrl+W, Ctrl+T, Ctrl+Tab)
+        window.addEventListener('keydown', function (e) {
+            if (!isExamActive) return;
+
+            // F5, F12, Ctrl+R
+            if (e.key === 'F5' || e.key === 'F12' || (e.ctrlKey && (e.key === 'r' || e.key === 'R'))) {
+                e.preventDefault();
+                triggerExamExitWarning();
+                return false;
+            }
+            // Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+U
+            if (e.ctrlKey && ['w', 'W', 't', 'T', 'n', 'N', 'u', 'U'].includes(e.key)) {
+                e.preventDefault();
+                triggerExamExitWarning();
+                return false;
+            }
+            // Alt + Arrow / Backspace
+            if (e.altKey) {
+                e.preventDefault();
+                triggerExamExitWarning();
+                return false;
+            }
+        });
+
+        // Blokir klik kanan selama ujian berlangsung
+        document.addEventListener('contextmenu', function (e) {
+            if (isExamActive) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
         // DATA SOAL BAHASA INDONESIA (30 SOAL)
         const quizDataIndo = [
@@ -1382,12 +1477,13 @@
             }
         ];
 
-        // DATA SOAL MATEMATIKA (25 SOAL)
+        // DATA SOAL MATEMATIKA (30 SOAL)
         const quizDataMatematika = [
             // Penambahan
             {
                 id: 1,
-                question: "Hasil dari penjumlahan berikut adalah:\n245 + 132 = ...",
+                question: "Hasil dari penjumlahan bilangan berikut adalah:\n245 + 132 = ...",
+                image: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&auto=format&fit=crop&q=80",
                 options: ["367", "377", "387", "397"],
                 answer: 1,
                 explanation: "245 + 132 = 377."
@@ -1395,6 +1491,7 @@
             {
                 id: 2,
                 question: "Hitunglah hasil penjumlahan dengan teknik menyimpan berikut:\n368 + 257 = ...",
+                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
                 options: ["615", "625", "635", "525"],
                 answer: 1,
                 explanation: "368 + 257 = 625 (8+7=15 simpan 1, 1+6+5=12 simpan 1, 1+3+2=6)."
@@ -1425,6 +1522,7 @@
             {
                 id: 6,
                 question: "Hasil dari pengurangan berikut adalah:\n485 - 231 = ...",
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
                 options: ["244", "254", "264", "274"],
                 answer: 1,
                 explanation: "485 - 231 = 254."
@@ -1462,6 +1560,7 @@
             {
                 id: 11,
                 question: "Berapakah hasil perkalian dasar berikut?\n15 x 6 = ...",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
                 options: ["80", "90", "95", "100"],
                 answer: 1,
                 explanation: "15 x 6 = 90."
@@ -1499,6 +1598,7 @@
             {
                 id: 16,
                 question: "Hasil pembagian dari bilangan berikut adalah:\n72 : 8 = ...",
+                image: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600&auto=format&fit=crop&q=80",
                 options: ["7", "9", "8", "6"],
                 answer: 1,
                 explanation: "72 dibagi 8 hasilnya adalah 9, karena 9 x 8 = 72."
@@ -1532,73 +1632,83 @@
                 explanation: "480 : 8 = 60 (karena 48 : 8 = 6, ditambah 0 menjadi 60)."
             },
 
-            // Soal Cerita Sederhana
+            // Soal Cerita Sederhana Bergambar
             {
                 id: 21,
-                question: "Siti mempunyai 15 pensil warna di kotak pensil.\nIbu membelikan lagi 12 pensil warna untuk Siti.\nBerapa jumlah semua pensil warna milik Siti sekarang?",
+                question: "Perhatikan gambar pensil warna berikut!\nSiti mempunyai 15 pensil warna di kotak pensil.\nIbu membelikan lagi 12 pensil warna untuk Siti.\nBerapa jumlah semua pensil warna milik Siti sekarang?",
+                image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&auto=format&fit=crop&q=80",
                 options: ["25 pensil", "27 pensil", "29 pensil", "30 pensil"],
                 answer: 1,
                 explanation: "Operasi penjumlahan: 15 + 12 = 27 pensil warna."
             },
             {
                 id: 22,
-                question: "Pak Budi memanen 85 buah mangga dari pohon di kebun.\nSebanyak 25 buah mangga dibagikan kepada tetangga.\nBerapa sisa buah mangga milik Pak Budi sekarang?",
+                question: "Perhatikan gambar buah mangga segar di bawah ini!\nPak Budi memanen 85 buah mangga dari pohon di kebun.\nSebanyak 25 buah mangga dibagikan kepada tetangga.\nBerapa sisa buah mangga milik Pak Budi sekarang?",
+                image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&auto=format&fit=crop&q=80",
                 options: ["55 buah", "60 buah", "65 buah", "70 buah"],
                 answer: 1,
                 explanation: "Operasi pengurangan: 85 - 25 = 60 buah mangga."
             },
             {
                 id: 23,
-                question: "Doni membeli 6 kotak penghapus untuk teman sekelasnya.\nSetiap kotak berisi 8 buah penghapus.\nBerapa jumlah seluruh penghapus yang dibeli Doni?",
+                question: "Perhatikan gambar penghapus karet berikut!\nDoni membeli 6 kotak penghapus untuk teman sekelasnya.\nSetiap kotak berisi 8 buah penghapus.\nBerapa jumlah seluruh penghapus yang dibeli Doni?",
+                image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=600&auto=format&fit=crop&q=80",
                 options: ["42 buah", "48 buah", "54 buah", "56 buah"],
                 answer: 1,
                 explanation: "Operasi perkalian: 6 x 8 = 48 buah penghapus."
             },
             {
                 id: 24,
-                question: "Ibu guru membawa 36 buku tulis ke dalam kelas.\nBuku-buku tersebut akan dibagikan sama rata kepada 4 kelompok belajar.\nBerapa buku tulis yang diterima setiap kelompok?",
+                question: "Perhatikan gambar buku tulis bertumpuk berikut!\nIbu guru membawa 36 buku tulis ke dalam kelas.\nBuku-buku tersebut akan dibagikan sama rata kepada 4 kelompok belajar.\nBerapa buku tulis yang diterima setiap kelompok?",
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
                 options: ["8 buku", "9 buku", "10 buku", "12 buku"],
                 answer: 1,
                 explanation: "Operasi pembagian: 36 : 4 = 9 buku tulis."
             },
             {
                 id: 25,
-                question: "Rian memiliki uang tabungan sebesar Rp 50.000.\nIa menggunakan uangnya untuk membeli buku pelajaran seharga Rp 32.000.\nBerapakah sisa uang tabungan Rian sekarang?",
+                question: "Perhatikan gambar uang saku dan buku pelajaran berikut!\nRian memiliki uang tabungan sebesar Rp 50.000.\nIa menggunakan uangnya untuk membeli buku pelajaran seharga Rp 32.000.\nBerapakah sisa uang tabungan Rian sekarang?",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80",
                 options: ["Rp 16.000", "Rp 18.000", "Rp 20.000", "Rp 22.000"],
                 answer: 1,
                 explanation: "Operasi pengurangan: Rp 50.000 - Rp 32.000 = Rp 18.000."
             },
             {
                 id: 26,
-                question: "Paman memetik 45 buah apel di kebun pada pagi hari, lalu memetik lagi 35 buah apel pada sore hari.\nBerapa total seluruh buah apel yang dipetik paman?",
+                question: "Perhatikan gambar buah apel merah segar berikut!\nPaman memetik 45 buah apel di kebun pada pagi hari, lalu memetik lagi 35 buah apel pada sore hari.\nBerapa total seluruh buah apel yang dipetik paman?",
+                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop&q=80",
                 options: ["70 buah", "80 buah", "85 buah", "90 buah"],
                 answer: 1,
                 explanation: "Operasi penjumlahan: 45 + 35 = 80 buah apel."
             },
             {
                 id: 27,
-                question: "Di sebuah perpustakaan sekolah terdapat 150 buku cerita.\nSebanyak 42 buku sedang dipinjam oleh siswa.\nBerapakah sisa buku cerita yang masih ada di rak perpustakaan?",
+                question: "Perhatikan gambar rak buku di perpustakaan berikut!\nDi sebuah perpustakaan sekolah terdapat 150 buku cerita.\nSebanyak 42 buku sedang dipinjam oleh siswa.\nBerapakah sisa buku cerita yang masih ada di rak perpustakaan?",
+                image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&auto=format&fit=crop&q=80",
                 options: ["102 buku", "108 buku", "112 buku", "118 buku"],
                 answer: 1,
                 explanation: "Operasi pengurangan: 150 - 42 = 108 buku."
             },
             {
                 id: 28,
-                question: "Di koperasi sekolah terdapat 5 pak penggaris.\nSetiap pak berisi 12 batang penggaris.\nBerapa jumlah keseluruhan batang penggaris di koperasi?",
+                question: "Perhatikan gambar penggaris alat tulis berikut!\nDi koperasi sekolah terdapat 5 pak penggaris.\nSetiap pak berisi 12 batang penggaris.\nBerapa jumlah keseluruhan batang penggaris di koperasi?",
+                image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&auto=format&fit=crop&q=80",
                 options: ["50 batang", "60 batang", "65 batang", "70 batang"],
                 answer: 1,
                 explanation: "Operasi perkalian: 5 x 12 = 60 batang penggaris."
             },
             {
                 id: 29,
-                question: "Ayah memiliki 75 butir permen manis.\nPermen tersebut akan dibagikan sama rata kepada 5 orang keponakannya.\nBerapa butir permen yang didapatkan oleh masing-masing keponakan?",
+                question: "Perhatikan gambar toples permen manis warna-warni berikut!\nAyah memiliki 75 butir permen manis.\nPermen tersebut akan dibagikan sama rata kepada 5 orang keponakannya.\nBerapa butir permen yang didapatkan oleh masing-masing keponakan?",
+                image: "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=600&auto=format&fit=crop&q=80",
                 options: ["12 butir", "15 butir", "18 butir", "20 butir"],
                 answer: 1,
                 explanation: "Operasi pembagian: 75 : 5 = 15 butir permen."
             },
             {
                 id: 30,
-                question: "Toni mempunyai uang saku Rp 20.000.\nIa membeli 2 bungkus roti yang masing-masing harganya Rp 4.000.\nBerapakah sisa uang saku Toni?",
+                question: "Perhatikan gambar roti lezat berikut!\nToni mempunyai uang saku Rp 20.000.\nIa membeli 2 bungkus roti yang masing-masing harganya Rp 4.000.\nBerapakah sisa uang saku Toni?",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
                 options: ["Rp 10.000", "Rp 12.000", "Rp 14.000", "Rp 16.000"],
                 answer: 1,
                 explanation: "Harga 2 roti = 2 x Rp 4.000 = Rp 8.000. Sisa uang = Rp 20.000 - Rp 8.000 = Rp 12.000."
@@ -1611,7 +1721,7 @@
             {
                 id: 1,
                 question: "Perhatikan gambar kantor pelayanan masyarakat tingkat desa di bawah ini!\nLembaga pemerintahan yang bertugas memimpin dan melayani warga di tingkat desa dipimpin oleh seorang ...",
-                image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&auto=format&fit=crop&q=80",
+                image: "https://upload.wikimedia.org/wikipedia/commons/8/86/Kantor_Kelurahan_Menteng%2C_Jakarta_Pusat.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original?w=600&auto=format&fit=crop&q=80",
                 options: ["Kepala Desa (Kades)", "Camat", "Bupati", "Gubernur"],
                 answer: 0,
                 explanation: "Pemerintahan tingkat desa dipimpin oleh seorang Kepala Desa (Kades) yang dipilih langsung oleh warga desa."
@@ -1649,7 +1759,7 @@
             {
                 id: 6,
                 question: "Perhatikan lambang daerah dan pusat pemerintahan daerah tingkat II berikut!\nWilayah Kabupaten dipimpin oleh seorang kepala daerah yang disebut ...",
-                image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&auto=format&fit=crop&q=80",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNlM2mSx-5q_dpSj-8-F-_soCRrQjivn1jx-WnqJ7PRQ&s=10?w=600&auto=format&fit=crop&q=80",
                 options: ["Bupati", "Lurah", "Kepala Desa", "Camat"],
                 answer: 0,
                 explanation: "Kabupaten dipimpin oleh seorang Bupati yang dibantu oleh Wakil Bupati dan perangkat daerah."
@@ -1664,7 +1774,7 @@
             {
                 id: 8,
                 question: "Perhatikan gambar gedung Dewan Perwakilan Rakyat Daerah berikut!\nLembaga legislatif di tingkat kabupaten/kota yang bertugas membuat Peraturan Daerah (Perda) bersama bupati/wali kota adalah ...",
-                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=80",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MiXvv_c9SIIek8zeFC6rlMTV_CojGI_htqTzPwe4LQ&s=10?w=600&auto=format&fit=crop&q=80",
                 options: ["DPRD Kabupaten/Kota", "MPR RI", "Kepolisian Daerah", "Pengadilan Militer"],
                 answer: 0,
                 explanation: "DPRD (Dewan Perwakilan Rakyat Daerah) Kabupaten/Kota bertugas membuat peraturan daerah, menyusun anggaran daerah, dan mengawasi jalannya pemerintahan daerah."
@@ -1688,7 +1798,7 @@
             {
                 id: 11,
                 question: "Perhatikan lambang negara burung Garuda Pancasila di bawah ini!\nNegara Kesatuan Republik Indonesia (NKRI) dipimpin oleh seorang kepala negara sekaligus kepala pemerintahan, yaitu ...",
-                image: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1627881802342-a89f2687ee9d?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Presiden", "Gubernur", "Bupati", "Lurah"],
                 answer: 0,
                 explanation: "Presiden memegang kekuasaan pemerintahan sebagai Kepala Negara dan Kepala Pemerintahan di Republik Indonesia."
@@ -1787,7 +1897,7 @@
             {
                 id: 24,
                 question: "Perhatikan gambar warga sedang gotong royong membersihkan lingkungan berikut!\nKegiatan gotong royong bersama tetangga di lingkungan RT/RW merupakan contoh nyata penerapan sosialisasi di lingkungan ...",
-                image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1758599668429-121d54188b9c?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Masyarakat", "Luar angkasa", "Laboratorium tertutup", "Penjara"],
                 answer: 0,
                 explanation: "Gotong royong di RT/RW adalah wujud sosialisasi langsung dalam kehidupan bermasyarakat untuk menciptakan kerukunan."
@@ -1802,7 +1912,7 @@
             {
                 id: 26,
                 question: "Perhatikan gambar fasilitas pelayanan kesehatan di desa berikut!\nLembaga kesehatan di tingkat desa/kelurahan yang membantu masyarakat memperoleh imunisasi dan pemeriksaan kesehatan adalah ...",
-                image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1621525408631-18c0c8cccd13?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Posyandu / Puskesmas Pembantu", "Kantor Pos", "Stasiun Kereta", "Terminal Bus"],
                 answer: 0,
                 explanation: "Posyandu dan Puskesmas Pembantu merupakan wujud pelayanan kesehatan dasar yang diselenggarakan di lingkungan desa/kelurahan."
@@ -1817,7 +1927,7 @@
             {
                 id: 28,
                 question: "Perhatikan gambar anak yang sedang belajar bersama orang tua di rumah berikut!\nBentuk sosialisasi yang diajarkan oleh orang tua di rumah sejak dini contohnya adalah ...",
-                image: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1758598737505-90a3084105ac?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Mengucapkan salam, berbicara sopan, dan menghormati orang lebih tua", "Membentak orang tua", "Tidak mau membantu pekerjaan rumah", "Bermain tanpa kenal waktu"],
                 answer: 0,
                 explanation: "Sosialisasi di rumah menanamkan kebiasaan baik, tata krama, sopan santun, dan penghormatan kepada orang tua dan sesama."
@@ -1832,10 +1942,270 @@
             {
                 id: 30,
                 question: "Perhatikan gambar keberagaman suku dan pakaian adat Indonesia berikut!\nSalah satu tujuan penting sosialisasi di sekolah adalah menumbuhkan sikap toleransi, yaitu ...",
-                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1679141435935-7d8ff9659c9a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Menghargai perbedaan suku, agama, dan budaya teman di sekolah", "Memilih-milih teman yang kaya saja", "Mengejek bahasa daerah teman", "Menjauhi teman yang berbeda"],
                 answer: 0,
                 explanation: "Toleransi adalah sikap saling menghormati dan menghargai keragaman serta perbedaan latar belakang orang lain."
+            }
+        ];
+
+        // DATA SOAL BAHASA INGGRIS (30 SOAL)
+        const quizDataInggris = [
+            // Bagian 1: Classroom Objects & "I see / You see" (Soal 1 - 15)
+            {
+                id: 1,
+                question: "Look at the picture!\nWhat is this object in the classroom?",
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
+                options: ["Book", "Eraser", "Chair", "Ruler"],
+                answer: 0,
+                explanation: "Gambar tersebut menunjukkan sebuah buku ('Book')."
+            },
+            {
+                id: 2,
+                question: "Look at the picture!\nComplete the sentence:\n\"I see a blue ... on the desk.\"",
+                image: "https://images.unsplash.com/photo-1585336261026-77893a7788cb?w=600&auto=format&fit=crop&q=80",
+                options: ["Ruler", "Pen", "Bag", "Door"],
+                answer: 1,
+                explanation: "Benda alat tulis yang digunakan untuk menulis dengan tinta adalah pulpen ('Pen')."
+            },
+            {
+                id: 3,
+                question: "Look at the picture!\n\"What do you see in the classroom?\"\n\"I see a wooden ...\"",
+                image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&auto=format&fit=crop&q=80",
+                options: ["Pencil", "Ruler", "Clock", "Window"],
+                answer: 1,
+                explanation: "Gambar tersebut menunjukkan penggaris kayu ('Ruler') untuk mengukur dan membuat garis lurus."
+            },
+            {
+                id: 4,
+                question: "Look at the picture!\n\"I see a school ... to carry books.\"",
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80",
+                options: ["Bag", "Table", "Whiteboard", "Pencil case"],
+                answer: 0,
+                explanation: "Tas sekolah dalam bahasa Inggris disebut 'Bag' (School bag)."
+            },
+            {
+                id: 5,
+                question: "Look at the picture!\nWe use this to erase pencil marks.\n\"I see an ...\"",
+                image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=600&auto=format&fit=crop&q=80",
+                options: ["Book", "Desk", "Eraser", "Scissors"],
+                answer: 2,
+                explanation: "Penghapus pensil dalam bahasa Inggris disebut 'Eraser' atau rubber."
+            },
+            {
+                id: 6,
+                question: "Look at the picture!\nStudents sit on this furniture.\n\"You see a ... in the classroom.\"",
+                image: "https://images.unsplash.com/photo-1580481077191-c2904e7b64b1?w=600&auto=format&fit=crop&q=80",
+                options: ["Chair", "Fan", "Book", "Broom"],
+                answer: 0,
+                explanation: "Kursi tempat duduk siswa di ruang kelas disebut 'Chair'."
+            },
+            {
+                id: 7,
+                question: "Look at the picture!\nThe teacher writes on this board with markers.\n\"I see a ... on the wall.\"",
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
+                options: ["Pencil", "Whiteboard", "Bag", "Ruler"],
+                answer: 1,
+                explanation: "Papan tulis putih yang ada di dinding kelas adalah 'Whiteboard'."
+            },
+            {
+                id: 8,
+                question: "Look at the picture!\nWe keep pencils and pens inside this.\n\"You see a colorful ...\"",
+                image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&auto=format&fit=crop&q=80",
+                options: ["Pencil case", "Chair", "Table", "Window"],
+                answer: 0,
+                explanation: "Tempat pensil atau kotak alat tulis disebut 'Pencil case'."
+            },
+            {
+                id: 9,
+                question: "Look at the picture!\n\"What do you see?\"\n\"I see a wooden ... with books on it.\"",
+                image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=600&auto=format&fit=crop&q=80",
+                options: ["Table / Desk", "Door", "Pencil", "Eraser"],
+                answer: 0,
+                explanation: "Meja belajar siswa di kelas disebut 'Table' atau 'Desk'."
+            },
+            {
+                id: 10,
+                question: "Look at the picture!\nWe use this tool to cut paper in art class.\n\"I see a pair of ...\"",
+                image: "https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?w=600&auto=format&fit=crop&q=80",
+                options: ["Scissors", "Ruler", "Bag", "Chair"],
+                answer: 0,
+                explanation: "Gunting untuk memotong kertas dalam bahasa Inggris adalah 'Scissors'."
+            },
+            {
+                id: 11,
+                question: "Complete the sentence:\n\"... see a red book on the table.\" (Saya melihat)",
+                options: ["I", "You", "They", "We"],
+                answer: 0,
+                explanation: "Kata ganti subjek untuk 'Saya' dalam bahasa Inggris adalah 'I' ('I see' = Saya melihat)."
+            },
+            {
+                id: 12,
+                question: "Complete the conversation:\nTeacher: \"What do you see, Budi?\"\nBudi: \"... see three sharp pencils.\"",
+                options: ["I", "You", "He", "She"],
+                answer: 0,
+                explanation: "Saat ditanya 'What do you see?', jawabannya diawali dengan 'I see...' (Saya melihat...)."
+            },
+            {
+                id: 13,
+                question: "Complete the sentence:\n\"... see a green bag on my chair.\" (Kamu melihat)",
+                options: ["You", "I", "He", "It"],
+                answer: 0,
+                explanation: "'You see' berarti 'Kamu melihat'."
+            },
+            {
+                id: 14,
+                question: "\"I see two pens and one ruler.\"\nArti dari kalimat bahasa Inggris di atas adalah ...",
+                options: [
+                    "Saya melihat dua pulpen dan satu penggaris.",
+                    "Kamu melihat satu pulpen dan dua buku.",
+                    "Saya membawa dua tas dan satu penghapus.",
+                    "Kamu membaca dua buku dan pensil."
+                ],
+                answer: 0,
+                explanation: "'I see' = Saya melihat, 'two pens' = dua pulpen, 'one ruler' = satu penggaris."
+            },
+            {
+                id: 15,
+                question: "\"You see a big whiteboard in front of the class.\"\nArti dari kata 'You see' adalah ...",
+                options: ["Kamu melihat", "Saya menulis", "Kamu membaca", "Saya menggambar"],
+                answer: 0,
+                explanation: "'You' artinya kamu, 'see' artinya melihat. Jadi 'You see' = Kamu melihat."
+            },
+
+            // Bagian 2: Action Verbs (write, read, jump, run, walk, sit, stand, draw, listen, sleep, eat, drink)
+            {
+                id: 16,
+                question: "Look at the picture!\nThe student uses a pencil to ... on a notebook.",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80",
+                options: ["Write", "Jump", "Run", "Sleep"],
+                answer: 0,
+                explanation: "Aktivitas menulis dengan pensil di buku tulis adalah 'Write' (menulis)."
+            },
+            {
+                id: 17,
+                question: "Look at the picture!\nThe boy is happy because he can ... high.",
+                image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&auto=format&fit=crop&q=80",
+                options: ["Jump", "Write", "Sit", "Draw"],
+                answer: 0,
+                explanation: "Gambar melompat tinggi ke udara adalah kata kerja 'Jump' (melompat)."
+            },
+            {
+                id: 18,
+                question: "Look at the picture!\nThe children ... fast on the sports field.",
+                image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&auto=format&fit=crop&q=80",
+                options: ["Run", "Sleep", "Sit", "Write"],
+                answer: 0,
+                explanation: "Berlari kencang di lintasan olahraga dalam bahasa Inggris adalah 'Run' (berlari)."
+            },
+            {
+                id: 19,
+                question: "Look at the picture!\nThe girl is opening a storybook to ...",
+                image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+                options: ["Read", "Jump", "Run", "Stand"],
+                answer: 0,
+                explanation: "Membaca buku cerita dalam bahasa Inggris adalah 'Read' (membaca)."
+            },
+            {
+                id: 20,
+                question: "Look at the picture!\nThe child uses crayons to ... a beautiful flower.",
+                image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80",
+                options: ["Draw", "Run", "Jump", "Sleep"],
+                answer: 0,
+                explanation: "Menggambar atau melukis dengan krayon disebut 'Draw' (menggambar)."
+            },
+            {
+                id: 21,
+                question: "Look at the picture!\nThe student is having lunch. What verb is this?\nHe likes to ... fresh bread.",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+                options: ["Eat", "Read", "Jump", "Stand"],
+                answer: 0,
+                explanation: "Makan makanan/roti dalam bahasa Inggris adalah 'Eat' (makan)."
+            },
+            {
+                id: 22,
+                question: "Look at the picture!\nWhen we are thirsty, we ... mineral water.",
+                image: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80",
+                options: ["Drink", "Write", "Jump", "Walk"],
+                answer: 0,
+                explanation: "Minum air dalam bahasa Inggris adalah 'Drink' (minum)."
+            },
+            {
+                id: 23,
+                question: "Look at the picture!\nStudents go to school on foot. They ... together.",
+                image: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&auto=format&fit=crop&q=80",
+                options: ["Walk", "Sleep", "Write", "Sit"],
+                answer: 0,
+                explanation: "Berjalan kaki dengan tenang disebut 'Walk' (berjalan)."
+            },
+            {
+                id: 24,
+                question: "Teacher says: \"Please ... on your chair, students!\"\n(Instruksi untuk duduk)",
+                options: ["Sit down", "Stand up", "Run away", "Jump high"],
+                answer: 0,
+                explanation: "'Sit down' adalah instruksi untuk duduk di kursi."
+            },
+            {
+                id: 25,
+                question: "Teacher says: \"Please ... in front of the class!\"\n(Instruksi untuk berdiri)",
+                options: ["Stand up", "Sleep", "Eat", "Write"],
+                answer: 0,
+                explanation: "'Stand up' adalah instruksi untuk berdiri tegak."
+            },
+            {
+                id: 26,
+                question: "\"I write with a pen.\"\nApa arti kalimat di atas dalam bahasa Indonesia?",
+                options: [
+                    "Saya menulis dengan pulpen.",
+                    "Saya membaca buku baru.",
+                    "Kamu menggambar penggaris.",
+                    "Kamu berlari di lapangan."
+                ],
+                answer: 0,
+                explanation: "'I' = Saya, 'write' = menulis, 'with a pen' = dengan pulpen."
+            },
+            {
+                id: 27,
+                question: "\"You jump and run in the yard.\"\nKata 'jump' dan 'run' memiliki arti ...",
+                options: [
+                    "Melompat dan berlari",
+                    "Duduk dan berdiri",
+                    "Membaca dan menulis",
+                    "Makan dan minum"
+                ],
+                answer: 0,
+                explanation: "'Jump' artinya melompat, dan 'run' artinya berlari."
+            },
+            {
+                id: 28,
+                question: "Look at the sentence:\n\"I see you ... a nice picture.\"\nKata kerja yang tepat untuk menggambar gambar yang indah adalah ...",
+                options: ["draw", "sleep", "jump", "walk"],
+                answer: 0,
+                explanation: "Untuk objek berupa 'picture' (gambar/lukisan), kata kerjanya adalah 'draw' (menggambar)."
+            },
+            {
+                id: 29,
+                question: "Manakah pasangan kata benda kelas dan artinya yang BENAR?",
+                options: [
+                    "Book = Buku",
+                    "Ruler = Kursi",
+                    "Bag = Papan tulis",
+                    "Pen = Meja"
+                ],
+                answer: 0,
+                explanation: "'Book' berarti buku. (Ruler = Penggaris, Bag = Tas, Pen = Pulpen)."
+            },
+            {
+                id: 30,
+                question: "Manakah pasangan kata kerja (verb) dan artinya yang BENAR?",
+                options: [
+                    "Write = Menulis",
+                    "Run = Tidur",
+                    "Jump = Duduk",
+                    "Read = Berlari"
+                ],
+                answer: 0,
+                explanation: "'Write' berarti menulis. (Run = Berlari, Jump = Melompat, Read = Membaca)."
             }
         ];
 
@@ -1871,6 +2241,7 @@
             else if (subjectKey === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
             else if (subjectKey === 'matematika') mapelTitle = 'Matematika';
             else if (subjectKey === 'ips') mapelTitle = 'IPS Terpadu';
+            else if (subjectKey === 'inggris') mapelTitle = 'Bahasa Inggris';
 
             const headerSubjectEl = document.getElementById('header-subject');
             if (headerSubjectEl) headerSubjectEl.innerText = mapelTitle;
@@ -1885,6 +2256,7 @@
             
             document.getElementById('timer-box').classList.remove('hidden');
             startTimer(60 * 60);
+            enableExamLock(); // Aktifkan kunci page/layar dan proteksi ujian
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1933,6 +2305,7 @@
                 "Kembali ke Menu Soal?",
                 "Pengerjaan ujian yang sedang berjalan akan dibatalkan.",
                 () => {
+                    disableExamLock(); // Lepas kunci layar
                     stopTimer();
                     document.getElementById('quiz-form').classList.add('hidden');
                     document.getElementById('subject-section').classList.remove('hidden');
@@ -1951,6 +2324,7 @@
             if (currentSubject === 'pkpbi') return quizDataPKPBI;
             if (currentSubject === 'matematika') return quizDataMatematika;
             if (currentSubject === 'ips') return quizDataIPS;
+            if (currentSubject === 'inggris') return quizDataInggris;
             return quizDataIndo;
         }
 
@@ -2029,6 +2403,7 @@
         }
 
         function processSubmitQuiz(isForced = false) {
+            disableExamLock(); // Nonaktifkan kunci ujian saat selesai submit
             stopTimer();
             const activeData = getActiveData();
             let userAnswers = [];
@@ -2055,6 +2430,7 @@
             else if (currentSubject === 'pkpbi') mapelTitle = 'PKPBI (Persepsi Bunyi)';
             else if (currentSubject === 'matematika') mapelTitle = 'Matematika';
             else if (currentSubject === 'ips') mapelTitle = 'IPS Terpadu';
+            else if (currentSubject === 'inggris') mapelTitle = 'Bahasa Inggris';
 
             // Display Results
             document.getElementById('quiz-form').classList.add('hidden');
@@ -2222,6 +2598,25 @@
 
         function closeModal() {
             document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // MODAL KHUSUS PERINGATAN KELUAR UJIAN
+        function showExamAlertModal(title, message) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const iconWrapper = document.getElementById('modal-icon-wrapper');
+            const icon = document.getElementById('modal-icon');
+            iconWrapper.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl animate-bounce";
+            icon.className = "fa-solid fa-lock";
+
+            document.getElementById('modal-action-buttons').innerHTML = `
+                <button onclick="closeModal(); if (isExamActive && !document.fullscreenElement) { document.documentElement.requestFullscreen().catch(()=>{}); }" class="w-full py-3.5 bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-extrabold text-sm rounded-xl shadow-lg transition">
+                    Kembali Mengerjakan Ujian
+                </button>
+            `;
+
+            document.getElementById('custom-modal').classList.remove('hidden');
         }
 
         // WHATSAPP SENDER
