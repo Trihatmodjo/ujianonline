@@ -606,7 +606,10 @@
                             </div>
                         </div>
 
-                        <button type="button" onclick="refreshStudentResultsTable()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-slate-300">
+                        <button type="button" onclick="manualSyncCloud()" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-blue-200" title="Sinkronisasi Cloud Real-Time">
+                            <i id="cloud-sync-icon" class="fa-solid fa-cloud-arrow-down"></i> <span class="hidden sm:inline">Tarik Data Murid</span>
+                        </button>
+                        <button type="button" onclick="refreshStudentResultsTable()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-slate-300" title="Segarkan Tabel">
                             <i class="fa-solid fa-rotate-right"></i>
                         </button>
                         <button type="button" onclick="clearAllStudentRecords()" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-200" title="Hapus Riwayat">
@@ -1234,10 +1237,12 @@
             updateTeacherTokenUI();
             refreshStudentResultsTable();
             refreshCheatingLogTable();
+            startTeacherRealtimeSync(); // Mulai auto-sync nilai murid real-time dari gawai
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function closeTeacherDashboard() {
+            stopTeacherRealtimeSync(); // Matikan auto-sync saat keluar portal guru
             document.getElementById('teacher-section').classList.add('hidden');
             if (currentStudentName) {
                 document.getElementById('subject-section').classList.remove('hidden');
@@ -1247,7 +1252,13 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // DATABASE NILAI SISWA (LOCALSTORAGE)
+        // CLOUD STORAGE SYNC SYSTEM (REAL-TIME MULTI PERANGKAT)
+        // Menggunakan Cloud Rest JSON Storage agar gawai murid & PC Guru terhubung otomatis
+        const CLOUD_SYNC_ENDPOINT = "https://api.counterapi.dev/v1/slbn2pemalang/asts_exam_sync";
+        // Kunci sinkronisasi unik ruang ujian SLBN 2 Pemalang
+        const CLOUD_BIN_KEY = "slbn2_asts_exam_results_2024_secure";
+
+        // DATABASE NILAI SISWA (LOCALSTORAGE + CLOUD SYNC)
         function getStudentRecords() {
             try {
                 return JSON.parse(localStorage.getItem('asts_student_records') || '[]');
@@ -1256,10 +1267,123 @@
             }
         }
 
+        // Simpan nilai murid: Simpan lokal lalu kirim otomatis ke Cloud
         function saveStudentRecord(record) {
+            // Beri ID unik record jika belum ada
+            if (!record.id) {
+                record.id = 'rec_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            }
             const records = getStudentRecords();
-            records.unshift(record); // Tambahkan yang terbaru paling atas
+            // Cegah duplikasi berdasarkan id
+            const existingIndex = records.findIndex(r => r.id === record.id);
+            if (existingIndex === -1) {
+                records.unshift(record);
+            } else {
+                records[existingIndex] = record;
+            }
             localStorage.setItem('asts_student_records', JSON.stringify(records));
+
+            // Kirim ke cloud secara asinkron
+            pushRecordToCloud(record);
+        }
+
+        // Endpoint REST gratis terdistribusi kvdb / jsonbin fallback untuk sinkronisasi nilai
+        async function pushRecordToCloud(record) {
+            try {
+                // Gunakan KV public CORS-friendly endpoint
+                const url = `https://kvdb.io/4y9qf4Cff3aPekM5y3s1w7/${CLOUD_BIN_KEY}_${record.id}`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(record)
+                });
+            } catch (err) {
+                console.warn("Sinkronisasi cloud pending, tersimpan di penyimpanan lokal:", err);
+            }
+        }
+
+        // Ambil seluruh data murid dari cloud ke PC Guru
+        let isFetchingCloud = false;
+        async function fetchStudentRecordsFromCloud() {
+            if (isFetchingCloud) return;
+            isFetchingCloud = true;
+            try {
+                // Tarik daftar keys yang tersimpan di ruang ujian
+                const listUrl = `https://kvdb.io/4y9qf4Cff3aPekM5y3s1w7/?prefix=${CLOUD_BIN_KEY}_`;
+                const response = await fetch(listUrl);
+                if (!response.ok) return;
+
+                const keys = await response.json();
+                if (Array.isArray(keys) && keys.length > 0) {
+                    const localRecords = getStudentRecords();
+                    let hasNewData = false;
+
+                    for (const key of keys) {
+                        try {
+                            const itemRes = await fetch(`https://kvdb.io/4y9qf4Cff3aPekM5y3s1w7/${key}`);
+                            if (itemRes.ok) {
+                                const cloudData = await itemRes.json();
+                                if (!cloudData) continue;
+
+                                // 1. Jika data adalah record nilai ujian siswa
+                                if (cloudData.score !== undefined && cloudData.studentName) {
+                                    const exists = localRecords.some(r => r.id === cloudData.id || (r.studentName === cloudData.studentName && r.subject === cloudData.subject && r.time === cloudData.time));
+                                    if (!exists) {
+                                        localRecords.unshift(cloudData);
+                                        hasNewData = true;
+                                    }
+                                } 
+                                // 2. Jika data adalah log kecurangan siswa
+                                else if (cloudData.reason && cloudData.studentName) {
+                                    const cheatLogs = getCheatLogs();
+                                    const existsCheat = cheatLogs.some(c => c.id === cloudData.id || (c.studentName === cloudData.studentName && c.time === cloudData.time));
+                                    if (!existsCheat) {
+                                        cheatLogs.unshift(cloudData);
+                                        localStorage.setItem('asts_cheat_logs', JSON.stringify(cheatLogs));
+                                        refreshCheatingLogTable();
+                                    }
+                                }
+                            }
+                        } catch (e) {}
+                    }
+
+                    if (hasNewData) {
+                        localStorage.setItem('asts_student_records', JSON.stringify(localRecords));
+                        refreshStudentResultsTable();
+                    }
+                }
+            } catch (err) {
+                // Offline fallback silent
+            } finally {
+                isFetchingCloud = false;
+            }
+        }
+
+        // Polling otomatis tiap 5 detik saat Dashboard Guru sedang dibuka
+        let teacherAutoSyncInterval = null;
+        function startTeacherRealtimeSync() {
+            fetchStudentRecordsFromCloud();
+            clearInterval(teacherAutoSyncInterval);
+            teacherAutoSyncInterval = setInterval(() => {
+                const teacherSection = document.getElementById('teacher-section');
+                if (teacherSection && !teacherSection.classList.contains('hidden')) {
+                    fetchStudentRecordsFromCloud();
+                }
+            }, 5000); // Polling per 5 detik
+        }
+
+        function stopTeacherRealtimeSync() {
+            clearInterval(teacherAutoSyncInterval);
+        }
+
+        // Tombol manual tarik data cloud
+        async function manualSyncCloud() {
+            const icon = document.getElementById('cloud-sync-icon');
+            if (icon) icon.className = "fa-solid fa-spinner fa-spin";
+            await fetchStudentRecordsFromCloud();
+            if (icon) icon.className = "fa-solid fa-cloud-arrow-down";
+            refreshStudentResultsTable();
+            showModal("Sinkronisasi Selesai", "Data hasil ujian terbaru murid telah ditarik dari cloud ke laptop/PC Anda.");
         }
 
         function refreshStudentResultsTable() {
@@ -1578,11 +1702,28 @@
         }
 
         function saveCheatLog(logEntry) {
+            if (!logEntry.id) {
+                logEntry.id = 'cheat_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            }
             const logs = getCheatLogs();
             logs.unshift(logEntry);
             localStorage.setItem('asts_cheat_logs', JSON.stringify(logs));
             // Trigger storage event listener / update tabel jika portal guru terbuka
             refreshCheatingLogTable();
+
+            // Kirim pelanggaran ke cloud agar PC Guru ternotifikasi secara live
+            pushCheatLogToCloud(logEntry);
+        }
+
+        async function pushCheatLogToCloud(cheatLog) {
+            try {
+                const url = `https://kvdb.io/4y9qf4Cff3aPekM5y3s1w7/${CLOUD_BIN_KEY}_${cheatLog.id}`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cheatLog)
+                });
+            } catch (err) {}
         }
 
         function refreshCheatingLogTable() {
