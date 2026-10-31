@@ -45,13 +45,17 @@
                         SLB NEGERI 2 PEMALANG
                     </h1>
                     <p class="text-blue-200 text-[10px] sm:text-xs font-medium tracking-normal mt-0.5">
-                        Portal Ujian Online ASTS SMPLB Tunarungu
+                        Portal Ujian Online Murid Jenjang SMPLB Tunarungu
                     </p>
                 </div>
             </div>
 
-            <!-- Timer di Pojok Kanan Atas Absolute (Hanya muncul saat ujian aktif) -->
-            <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
+            <!-- Timer & Guru Portal Button di Pojok Kanan Atas Absolute -->
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                <button type="button" onclick="openTeacherLoginModal()" id="btn-guru-portal" class="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-extrabold px-3 py-1.5 rounded-xl shadow border border-amber-300 text-xs transition">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span class="hidden sm:inline">Portal Guru</span>
+                </button>
                 <div id="timer-box" class="hidden flex items-center gap-1.5 bg-rose-600 text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl shadow-md border border-rose-500 text-xs sm:text-sm font-black animate-pulse">
                     <i class="fa-regular fa-clock"></i>
                     <span id="timer-display">60:00</span>
@@ -106,11 +110,52 @@
                     </div>
                 </div>
 
+                <!-- Input Token Ujian -->
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600" for="student-token">
+                            Token Ujian (Dari Guru):
+                        </label>
+                        <span class="text-[10px] text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-bold">Wajib Diisi</span>
+                    </div>
+                    <div class="relative">
+                        <input type="text" id="student-token" maxlength="6" placeholder="Ketik 6 digit token..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-slate-800 font-black tracking-widest uppercase text-sm shadow-sm transition">
+                        <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info text-blue-500"></i> Minta token aktif kepada Bapak/Ibu guru Anda.
+                    </p>
+                </div>
+
+                <!-- Tombol Masuk -->
                 <button type="submit" class="w-full py-3.5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-base rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2">
                     Masuk <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
+
+                <!-- Tombol Informasi Penggunaan (Diletakkan Tepat di Bawah Tombol Masuk agar Rapi) -->
+                <div class="pt-1">
+                    <button type="button" onclick="openGuideModal()" class="w-full py-3 px-4 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 hover:from-amber-500 hover:to-orange-500 active:scale-95 text-slate-900 rounded-2xl font-black text-xs sm:text-sm shadow-md border-2 border-amber-300 flex items-center justify-center gap-2 transition transform animate-pulse hover:animate-none">
+                        <span class="w-6 h-6 rounded-full bg-white text-amber-700 flex items-center justify-center text-xs shadow-inner flex-shrink-0">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </span>
+                        <span>Klik Disini: PETUNJUK CARA UJIAN</span>
+                        <i class="fa-solid fa-hand-pointer text-sm animate-bounce"></i>
+                    </button>
+                    <p class="text-[11px] text-amber-700 font-bold mt-1.5 text-center flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-circle-exclamation text-amber-600"></i> Baca petunjuk ini sebelum mulai mengerjakan ujian!
+                    </p>
+                </div>
             </form>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 text-center">
+                <button type="button" onclick="openTeacherLoginModal()" class="w-full py-2.5 px-3 bg-amber-50 hover:bg-amber-100 active:bg-amber-200 border border-amber-300 rounded-xl text-xs text-amber-900 font-extrabold transition inline-flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-chalkboard-user text-amber-600 text-sm"></i> Masuk sebagai Guru (Kelola Token & Nilai Siswa)
+                </button>
+            </div>
         </section>
+
+
+
 
 
         <!-- STEP 2: DASHBOARD PILIH MATA PELAJARAN -->
@@ -221,6 +266,20 @@
                             Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
                         </div>
                     </button>
+
+                    <!-- Opsi 8: Pendidikan Pancasila -->
+                    <button onclick="selectSubject('pancasila')" class="group p-5 bg-gradient-to-br from-rose-50 to-red-50 hover:from-rose-100 hover:to-red-100 border-2 border-rose-200 rounded-2xl transition text-left flex flex-col justify-between shadow-sm hover:shadow-md">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-rose-700 text-white flex items-center justify-center font-bold text-lg mb-3 shadow-md group-hover:scale-105 transition transform">
+                                <i class="fa-solid fa-hands-holding-child"></i>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-800 group-hover:text-rose-900">Pendidikan Pancasila</h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Gotong Royong, Lingkungan Sekolah & Rumah, Tanggung Jawab (30 Soal | Bergambar)</p>
+                        </div>
+                        <div class="mt-4 flex items-center font-bold text-xs text-rose-800 gap-1">
+                            Mulai Ujian <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
+                    </button>
                 </div>
 
                 <div class="mt-6 pt-4 border-t border-slate-100 text-center">
@@ -230,6 +289,9 @@
                 </div>
             </div>
         </section>
+
+
+
 
 
         <!-- STEP 3: LEMBAR UJIAN / QUIZ FORM -->
@@ -359,11 +421,369 @@
             </div>
         </section>
 
-    </main>
+
+        <!-- STEP 5: DASHBOARD KHUSUS GURU (TOKEN GENERATOR, LOG KECURANGAN & MONITOR NILAI) -->
+        <section id="teacher-section" class="hidden space-y-6">
+            <!-- Header Kartu Guru -->
+            <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl border border-blue-800 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-amber-400 text-2xl font-black shadow-inner">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+                                    <i class="fa-solid fa-shield-halved text-[10px]"></i> Mode Guru Terverifikasi
+                                </span>
+                                <span id="teacher-profile-badge" class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-blue-500/20 text-blue-200 text-xs font-bold border border-blue-400/30">
+                                    <i class="fa-solid fa-school text-[10px]"></i> <span id="display-teacher-class-header">Semua Kelas</span>
+                                </span>
+                            </div>
+                            <h2 class="text-xl md:text-2xl font-black tracking-tight">Portal Manajemen Ujian Online Murid</h2>
+                            <p class="text-xs text-blue-200">
+                                Guru Pengampu: <strong id="display-teacher-name-header" class="text-white">-</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="openTeacherLoginModal()" class="px-3.5 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 active:bg-amber-500/40 text-amber-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-amber-400/30">
+                            <i class="fa-solid fa-user-pen"></i> Ubah Profil Guru
+                        </button>
+                        <button type="button" onclick="closeTeacherDashboard()" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 active:bg-white/30 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 backdrop-blur-sm border border-white/20">
+                            <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu Siswa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Anti-Cheat: Notifikasi & Rekap Siswa Terdeteksi Menyontek -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-rose-300 relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-rose-100">
+                    <div>
+                        <h3 class="text-lg font-black text-rose-800 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-600 animate-bounce"></i> Log Pelanggaran Siswa (Ketahuan Menyontek / Tinggalkan Laman)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Siswa yang terdeteksi berpindah tab, membuka Google/YouTube, atau meminimalkan browser akan otomatis dikunci dan dicatat di sini.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="refreshCheatingLogTable()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-rose-200">
+                            <i class="fa-solid fa-rotate-right"></i> Perbarui Log
+                        </button>
+                        <button type="button" onclick="clearCheatLogs()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash-can"></i> Bersihkan Log
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-rose-200 bg-rose-50/20">
+                    <table class="w-full text-left text-xs sm:text-sm text-slate-700">
+                        <thead class="bg-rose-100/70 uppercase text-[11px] font-extrabold text-rose-900 tracking-wider">
+                            <tr>
+                                <th class="p-3.5">Waktu Kejadian</th>
+                                <th class="p-3.5">Nama Siswa</th>
+                                <th class="p-3.5">Kelas</th>
+                                <th class="p-3.5">Mata Pelajaran</th>
+                                <th class="p-3.5">Aktivitas Terlarang</th>
+                                <th class="p-3.5 text-center">Status Ujian Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cheating-log-tbody" class="divide-y divide-rose-100 bg-white">
+                            <!-- Injeksi Baris Log Pelanggaran -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="no-cheat-placeholder" class="hidden text-center py-6">
+                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-1 text-lg">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <p class="text-xs text-slate-500 font-bold">Aman! Belum ada murid yang ketahuan meninggalkan laman ujian.</p>
+                </div>
+            </div>
+
+            <!-- Panel 1: Generator Token Otomatis (5 Menit) & Buka Kunci Siswa -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-key text-amber-500"></i> Token Akses Soal & Pemulihan Ujian
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Siswa wajib memasukkan token ini saat login atau saat <strong>layarnya terkunci akibat meninggalkan laman</strong>.</p>
+                    </div>
+                    <div>
+                        <span id="token-status-badge" class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-black inline-flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Token Aktif
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                    <!-- Tampilan Token Besar -->
+                    <div class="md:col-span-2 flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-dashed border-amber-300 rounded-2xl p-5">
+                        <div class="text-center sm:text-left flex-grow">
+                            <span class="text-xs uppercase font-extrabold text-amber-700 block tracking-wider">Token Siswa / Buka Kunci:</span>
+                            <div class="flex items-center justify-center sm:justify-start gap-3 mt-1">
+                                <span id="teacher-token-display" class="font-heading font-black text-3xl sm:text-4xl text-slate-800 tracking-[0.25em] bg-white px-5 py-2 rounded-2xl border border-amber-200 shadow-sm">
+                                    ------
+                                </span>
+                                <button type="button" onclick="copyTokenToClipboard()" title="Salin Token" class="w-11 h-11 bg-white hover:bg-amber-100 text-slate-700 border border-amber-300 rounded-xl flex items-center justify-center transition shadow-sm">
+                                    <i class="fa-regular fa-copy text-base"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hitung Mundur 5 Menit -->
+                        <div class="flex-shrink-0 text-center sm:text-right border-t sm:border-t-0 sm:border-l border-amber-200 pt-3 sm:pt-0 sm:pl-5">
+                            <span class="text-[11px] font-bold text-slate-500 block">Sisa Waktu Token:</span>
+                            <div class="flex items-center justify-center sm:justify-end gap-1.5 mt-0.5">
+                                <i class="fa-regular fa-clock text-rose-500 text-base"></i>
+                                <span id="token-countdown-display" class="font-black text-xl text-rose-600 font-mono">05:00</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">Otomatis berubah jika habis</span>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Generate Manual -->
+                    <div class="flex flex-col gap-2">
+                        <button type="button" onclick="generateNewTokenManual()" class="w-full py-3.5 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-black text-sm rounded-2xl shadow transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> Buat Token Baru Sekarang
+                        </button>
+                        <p class="text-[11px] text-slate-400 text-center">Ganti token baru jika murid yang menyontek meminta guru membuka layarnya.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Pemantau Progress Penilaian Siswa & Cetak Nilai -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-blue-700"></i> Rekap Nilai & Cetak Hasil Ujian
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-0.5">
+                            Menampilkan data murid khusus <strong id="filter-status-desc" class="text-blue-800 font-bold">Semua Kelas</strong>. Cetak Word / PDF dengan tanda tangan Guru Kelas.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Filter Kelas Cepat -->
+                        <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl text-xs">
+                            <span class="font-bold text-slate-500 text-[11px]"><i class="fa-solid fa-filter text-blue-600"></i> Kelas:</span>
+                            <select id="teacher-table-filter-class" onchange="onFilterClassChange()" class="bg-transparent font-bold text-slate-800 focus:outline-none cursor-pointer">
+                                <option value="Semua">Semua</option>
+                                <option value="Kelas 7">Kelas 7</option>
+                                <option value="Kelas 8">Kelas 8</option>
+                                <option value="Kelas 9">Kelas 9</option>
+                            </select>
+                        </div>
+
+                        <!-- Dropdown Cetak Rekap Nilai Murid -->
+                        <div class="relative inline-block text-left">
+                            <button type="button" onclick="togglePrintDropdown()" class="px-3.5 py-2 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-print"></i> Cetak Dokumen Nilai <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                            </button>
+                            <div id="print-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 rounded-2xl bg-white shadow-2xl border border-slate-200 py-2 z-50 animate-fade-in">
+                                <div class="px-3 py-1.5 text-[10px] uppercase tracking-wider font-extrabold text-slate-400 border-b border-slate-100">
+                                    Pilih Format Cetak:
+                                </div>
+                                <button type="button" onclick="printReportDocument('pdf', 'current')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-blue-50 font-bold flex items-center gap-2.5 transition">
+                                    <i class="fa-solid fa-file-pdf text-rose-600 text-sm"></i> Cetak / Simpan PDF (Per Kelas)
+                                </button>
+                                <button type="button" onclick="printReportDocument('word', 'current')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-blue-50 font-bold flex items-center gap-2.5 transition">
+                                    <i class="fa-solid fa-file-word text-blue-600 text-sm"></i> Download Word .DOC (Per Kelas)
+                                </button>
+                                <div class="border-t border-slate-100 my-1"></div>
+                                <button type="button" onclick="printReportDocument('pdf', 'all_subjects')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-emerald-50 font-bold flex items-center gap-2.5 transition">
+                                    <i class="fa-solid fa-table-list text-emerald-600 text-sm"></i> Rekap Lengkap Semua Mapel (PDF)
+                                </button>
+                                <button type="button" onclick="printReportDocument('word', 'all_subjects')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-emerald-50 font-bold flex items-center gap-2.5 transition">
+                                    <i class="fa-solid fa-file-lines text-indigo-600 text-sm"></i> Rekap Lengkap Semua Mapel (Word)
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="refreshStudentResultsTable()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-slate-300">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <button type="button" onclick="clearAllStudentRecords()" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-200" title="Hapus Riwayat">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ringkasan Statistik Siswa -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                    <div class="bg-blue-50 p-3.5 rounded-2xl border border-blue-100 text-center">
+                        <span class="text-[11px] font-bold text-blue-700 block">Total Siswa Ujian</span>
+                        <span id="stat-total-students" class="text-2xl font-black text-blue-900">0</span>
+                    </div>
+                    <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-center">
+                        <span class="text-[11px] font-bold text-emerald-700 block">Rata-Rata Nilai</span>
+                        <span id="stat-avg-score" class="text-2xl font-black text-emerald-900">0</span>
+                    </div>
+                    <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-100 text-center">
+                        <span class="text-[11px] font-bold text-amber-700 block">Nilai Tertinggi</span>
+                        <span id="stat-max-score" class="text-2xl font-black text-amber-900">0</span>
+                    </div>
+                    <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-100 text-center">
+                        <span class="text-[11px] font-bold text-rose-700 block">Nilai Terendah</span>
+                        <span id="stat-min-score" class="text-2xl font-black text-rose-900">0</span>
+                    </div>
+                </div>
+
+                <!-- Tabel Data Nilai Siswa -->
+                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                    <table class="w-full text-left text-xs sm:text-sm text-slate-700">
+                        <thead class="bg-slate-100 uppercase text-[11px] font-extrabold text-slate-600 tracking-wider">
+                            <tr>
+                                <th class="p-3.5">Waktu</th>
+                                <th class="p-3.5">Nama Siswa</th>
+                                <th class="p-3.5">Kelas</th>
+                                <th class="p-3.5">Mata Pelajaran</th>
+                                <th class="p-3.5 text-center">Benar / Salah</th>
+                                <th class="p-3.5 text-center">Nilai</th>
+                                <th class="p-3.5 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-results-tbody" class="divide-y divide-slate-100 bg-white">
+                            <!-- Injeksi Baris Data via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="no-students-placeholder" class="hidden text-center py-10">
+                    <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                        <i class="fa-solid fa-inbox"></i>
+                    </div>
+                    <p class="text-xs text-slate-400 font-bold">Belum ada murid yang menyelesaikan ujian.</p>
+                </div>
+            </div>
+        </section>
 
     <footer class="text-center text-xs text-slate-400 py-4 mt-8">
         Created and Modified by Mohammad Trihatmodjo &copy; Ujian Online Tunarungu 2026
     </footer>
+
+    <!-- Modal Panduan & Petunjuk Cara Menggunakan Aplikasi (Ramah Tunarungu) -->
+    <div id="guide-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-2xl border border-slate-100 my-8 max-h-[90vh] overflow-y-auto">
+            <!-- Header Modal -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-black">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-black text-slate-800 leading-tight">Panduan Penggunaan Ujian</h3>
+                        <p class="text-xs text-slate-500 font-medium">Khusus Siswa SMPLB Tunarungu SLBN 2 Pemalang</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeGuideModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Isi Langkah-Langkah Panduan dengan Ikon & Visual -->
+            <div class="mt-4 space-y-3.5 text-xs sm:text-sm">
+                <!-- Langkah 1 -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200">
+                    <div class="w-8 h-8 rounded-xl bg-blue-700 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        1
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-blue-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-key text-amber-600"></i> Minta Token Ujian ke Guru
+                        </h4>
+                        <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Bapak/Ibu Guru akan memberikan <strong>6 digit kode Token</strong> di papan tulis atau layar proyektor. Token ini berlaku selama <strong>5 menit</strong> dan berganti otomatis.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Langkah 2 -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-200">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-700 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        2
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-indigo-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-id-card text-indigo-600"></i> Isi Data Diri & Token
+                        </h4>
+                        <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Ketik <strong>Nama Lengkap</strong> kamu, pilih <strong>Kelas</strong> (7, 8, atau 9), lalu masukkan <strong>Token 6 digit</strong>. Setelah itu tekan tombol biru <strong>"Masuk"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Langkah 3 -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        3
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-emerald-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-book-bookmark text-emerald-600"></i> Pilih Mata Pelajaran
+                        </h4>
+                        <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Pilih mata pelajaran yang sedang diujikan hari ini (misal: <em>Pendidikan Pancasila, Bahasa Indonesia, IPA</em>, dll) lalu klik tombol <strong>"Mulai Ujian"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Langkah 4 -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
+                    <div class="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        4
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-amber-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-clock text-rose-600"></i> Kerjakan Soal (Waktu 60 Menit)
+                        </h4>
+                        <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Perhatikan gambar petunjuk pada tiap soal dengan teliti. Pilih salah satu jawaban <strong>A, B, C, atau D</strong>. Kerjakan dengan tenang dan jangan terburu-buru.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Langkah 5: Peringatan Kunci Layar -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-rose-50/80 border border-rose-300">
+                    <div class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-rose-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-halved text-rose-600"></i> Aturan Keamanan Anti-Cheat (Dilarang Keluar Laman)
+                        </h4>
+                        <p class="text-rose-800 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Jika kamu <strong>meninggalkan laman ujian</strong>, membuka tab baru, atau membuka aplikasi lain: <strong>Layar akan terkunci otomatis</strong> dan <strong>Guru akan mendapatkan notifikasi bahwa kamu menyontek</strong>. Ujian hanya bisa dibuka kembali oleh Guru dengan Token Baru!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Langkah 6 -->
+                <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-violet-50/70 border border-violet-200">
+                    <div class="w-8 h-8 rounded-xl bg-violet-700 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-sm">
+                        5
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-violet-900 text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane text-violet-600"></i> Kirim Jawaban & Nilai
+                        </h4>
+                        <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                            Setelah 30 soal selesai dijawab, tekan <strong>"Kirim & Lihat Hasil Ujian"</strong>. Nilai akan muncul dan otomatis tersimpan di data guru atau bisa dikirim ke WhatsApp Guru.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Mengerti / Tutup -->
+            <div class="mt-6 pt-4 border-t border-slate-100">
+                <button type="button" onclick="closeGuideModal()" class="w-full py-3.5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-extrabold text-sm rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check"></i> Saya Mengerti, Siap Ujian!
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Custom Modal Notification -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
@@ -381,6 +801,162 @@
         </div>
     </div>
 
+    <!-- MODAL KHUSUS GURU: NOTIFIKASI SISWA KETAHUAN MENYONTEK SECARA REAL-TIME -->
+    <div id="teacher-cheat-alert-modal" class="fixed inset-0 bg-rose-950/80 backdrop-blur-md z-[60] flex items-center justify-center hidden p-4 animate-fade-in">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 text-center shadow-2xl border-4 border-rose-500 transform transition-all relative">
+            <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner animate-bounce">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-black mb-2 tracking-wide">
+                <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span> PERINGATAN GURU: KECURANGAN TERDETEKSI
+            </span>
+            <h3 class="text-xl font-black text-slate-900 mb-1">Murid Ketahuan Menyontek!</h3>
+            <p class="text-xs text-slate-500 mb-4">Siswa berikut terdeteksi <strong>meninggalkan laman ujian</strong> (berpindah tab / aplikasi):</p>
+
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-left space-y-2 mb-5">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-semibold">Nama Siswa:</span>
+                    <span id="cheat-alert-student-name" class="font-black text-rose-900 text-sm">-</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-semibold">Kelas:</span>
+                    <span id="cheat-alert-student-class" class="font-bold text-slate-800">-</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-semibold">Mata Pelajaran:</span>
+                    <span id="cheat-alert-subject" class="font-bold text-blue-800">-</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-semibold">Waktu Pelanggaran:</span>
+                    <span id="cheat-alert-time" class="font-mono font-bold text-rose-700">-</span>
+                </div>
+                <div class="pt-2 border-t border-rose-200/80 text-[11px] text-rose-800 font-medium leading-relaxed">
+                    <i class="fa-solid fa-circle-exclamation text-rose-600 mr-1"></i>
+                    Layar siswa saat ini telah <strong>dikunci otomatis</strong>. Siswa tidak dapat melanjutkan sampai Guru memberikan <strong>Token Pemulihan Baru</strong>.
+                </div>
+            </div>
+
+            <div class="flex gap-2 justify-center">
+                <button type="button" onclick="closeTeacherCheatModal(); openTeacherDashboard();" class="w-full py-3.5 bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chalkboard-user"></i> Buka Portal Guru & Lihat Token Baru
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL KHUSUS SISWA: LAYAR TERKUNCI KARENA MENYONTEK (HARUS TOKEN BARU DARI GURU) -->
+    <div id="student-cheat-locked-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-lg z-[70] flex items-center justify-center hidden p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 text-center shadow-2xl border-4 border-rose-600 transform transition-all relative">
+            <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+                <i class="fa-solid fa-lock text-rose-600"></i>
+            </div>
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-black mb-2 tracking-wider">
+                <i class="fa-solid fa-shield-halved text-rose-600"></i> UJIAN TERKUNCI (ANTI-CHEAT)
+            </span>
+            <h3 class="text-xl md:text-2xl font-black text-rose-700 mb-1">KAMU KETAHUAN KELUAR LAMAN!</h3>
+            <p class="text-xs md:text-sm text-slate-600 mb-4 leading-relaxed font-semibold">
+                Sistem mendeteksi kamu meninggalkan halaman ujian atau membuka aplikasi lain. Ujianmu telah <strong>dikunci</strong> dan pelanggaranmu sudah dilaporkan ke Guru.
+            </p>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left text-xs text-amber-900 mb-5 leading-relaxed">
+                <div class="font-extrabold flex items-center gap-1.5 text-amber-800 mb-1">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Cara Membuka Kunci:
+                </div>
+                1. Angkat tangan dan laporkan kepada <strong>Bapak/Ibu Guru</strong> pengawas.<br>
+                2. Minta <strong>Token Baru</strong> yang di-generate oleh Guru.<br>
+                3. Masukkan 6 digit Token Baru di bawah ini untuk membuka lembar soal kembali.
+            </div>
+
+            <!-- Input Token Pembuka Kunci Baru -->
+            <form onsubmit="event.preventDefault(); submitUnlockToken();" class="space-y-4">
+                <div class="relative">
+                    <input type="text" id="unlock-token-input" maxlength="6" placeholder="Ketik 6 digit token baru..." class="w-full pl-10 pr-4 py-3.5 rounded-2xl border-2 border-rose-300 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-center font-black tracking-widest text-lg uppercase text-slate-800 shadow-inner transition bg-rose-50/40">
+                    <i class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-rose-400 text-base"></i>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-rose-600 via-rose-700 to-red-700 hover:from-rose-700 hover:to-red-800 active:scale-95 text-white font-black text-sm rounded-2xl shadow-xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-unlock-keyhole"></i> Buka Kunci Lembar Soal
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL LOGIN GURU (PASSWORD: 2233 & IDENTITAS GURU KELAS) -->
+    <div id="teacher-login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-7 text-center shadow-2xl border border-slate-100 transform transition-all my-8 max-h-[92vh] overflow-y-auto">
+            <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
+                <i class="fa-solid fa-chalkboard-user"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Verifikasi Portal Guru</h3>
+            <p class="text-xs text-slate-500 mb-5">Lengkapi profil Guru Kelas untuk memantau murid Anda dan keperluan cetak nilai (Word/PDF).</p>
+
+            <form onsubmit="event.preventDefault(); verifyTeacherPassword();" class="space-y-4 text-left">
+                <!-- 1. Input Nama Guru Pengampu -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1" for="teacher-name-input">
+                        Nama Lengkap Guru dan Gelar:
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="teacher-name-input" placeholder="Ketik nama Anda dan gelar..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-slate-800 font-bold text-xs sm:text-sm shadow-sm transition">
+                        <i class="fa-solid fa-user-tie absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- 2. Input NIP Guru -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1" for="teacher-nip-input">
+                        NIP Guru:
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="teacher-nip-input" placeholder="Ketik NIP Anda atau - ..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-slate-800 font-semibold text-xs sm:text-sm shadow-sm transition">
+                        <i class="fa-solid fa-id-badge absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- 3. Input Pilihan Guru Kelas yang Diampu -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1" for="teacher-class-select">
+                        Guru Kelas yang Diampu:
+                    </label>
+                    <div class="relative">
+                        <select id="teacher-class-select" class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white text-slate-800 font-bold text-xs sm:text-sm shadow-sm appearance-none cursor-pointer transition">
+                            <option value="Kelas 7">Kelas 7 SMPLB</option>
+                            <option value="Kelas 8">Kelas 8 SMPLB</option>
+                            <option value="Kelas 9" selected>Kelas 9 SMPLB</option>
+                            <option value="Semua Kelas">Semua Kelas (7, 8, dan 9 SMPLB)</option>
+                        </select>
+                        <i class="fa-solid fa-school absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">Rekap nilai akan otomatis dikontrol sesuai kelas yang diampu.</p>
+                </div>
+
+                <!-- 4. Input PIN atau Password Guru (Tanpa Bocoran Password di Teks) -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1" for="teacher-password-input">
+                        PIN / Password Akses Guru:
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="teacher-password-input" maxlength="15" placeholder="Masukkan PIN / Password Guru..." class="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent font-black tracking-widest text-base text-slate-800 shadow-sm transition">
+                        <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <button type="button" onclick="toggleTeacherPasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">
+                            <i id="password-toggle-icon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 justify-center pt-2">
+                    <button type="button" onclick="closeTeacherLoginModal()" class="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="w-1/2 py-3 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-door-open"></i> Buka Portal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Global User State & Timer Variables
         let currentStudentName = "";
@@ -391,9 +967,766 @@
         let latestResultData = null;
         let isExamActive = false; // Status apakah sedang mengerjakan ujian
 
-        // KUNCI HALAMAN / LOCK PAGE SAAT UJIAN
+        // MODAL PANDUAN PENGGUNAAN APLIKASI
+        function openGuideModal() {
+            document.getElementById('guide-modal').classList.remove('hidden');
+        }
+
+        function closeGuideModal() {
+            document.getElementById('guide-modal').classList.add('hidden');
+        }
+
+        // TOKEN & TEACHER SYSTEM CONFIG
+        const TEACHER_PASSWORD = "2233";
+        let activeExamToken = "";
+        let tokenExpiryTimestamp = 0; // Timestamp habis masa berlaku token
+        let tokenTimerInterval = null;
+        const TOKEN_DURATION_SEC = 5 * 60; // 5 Menit
+
+        // Inisialisasi token saat aplikasi dibuka pertama kali
+        function initTokenSystem() {
+            const savedToken = localStorage.getItem('asts_exam_token');
+            const savedExpiry = parseInt(localStorage.getItem('asts_exam_token_expiry') || '0');
+            const now = Date.now();
+
+            if (savedToken && savedExpiry > now) {
+                activeExamToken = savedToken;
+                tokenExpiryTimestamp = savedExpiry;
+            } else {
+                generateNewToken();
+            }
+            startTokenCountdown();
+        }
+
+        function generateRandomToken() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Tanpa karakter membingungkan (O, 0, 1, I)
+            let result = "";
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function generateNewToken() {
+            activeExamToken = generateRandomToken();
+            tokenExpiryTimestamp = Date.now() + (TOKEN_DURATION_SEC * 1000);
+            localStorage.setItem('asts_exam_token', activeExamToken);
+            localStorage.setItem('asts_exam_token_expiry', tokenExpiryTimestamp.toString());
+            updateTeacherTokenUI();
+        }
+
+        function generateNewTokenManual() {
+            generateNewToken();
+            updateTeacherTokenUI();
+            showModal("Token Baru Berhasil Dibuat", `Token aktif sekarang: ${activeExamToken}. Bagikan token ini kepada murid untuk membuka layarnya yang terkunci.`);
+        }
+
+        function startTokenCountdown() {
+            clearInterval(tokenTimerInterval);
+            updateTeacherTokenUI();
+
+            tokenTimerInterval = setInterval(() => {
+                const now = Date.now();
+                const remainingSec = Math.max(0, Math.floor((tokenExpiryTimestamp - now) / 1000));
+
+                const countdownEl = document.getElementById('token-countdown-display');
+                if (countdownEl) {
+                    const mins = Math.floor(remainingSec / 60);
+                    const secs = remainingSec % 60;
+                    countdownEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+
+                if (remainingSec <= 0) {
+                    generateNewToken(); // Otomatis refresh token baru jika 5 menit habis
+                }
+            }, 1000);
+        }
+
+        function updateTeacherTokenUI() {
+            const tokenEl = document.getElementById('teacher-token-display');
+            if (tokenEl) {
+                tokenEl.innerText = activeExamToken;
+            }
+        }
+
+        function copyTokenToClipboard() {
+            navigator.clipboard.writeText(activeExamToken).then(() => {
+                showModal("Token Tersalin", `Token "${activeExamToken}" berhasil disalin ke clipboard! Bagikan kepada murid.`);
+            }).catch(() => {
+                showModal("Token Ujian", `Token saat ini: ${activeExamToken}`);
+            });
+        }
+
+        // TEACHER PROFILE & AUTHENTICATION STATE
+        let currentTeacherProfile = {
+            name: "",
+            nip: "",
+            assignedClass: "Kelas 9"
+        };
+
+        function loadTeacherProfile() {
+            try {
+                const saved = localStorage.getItem('asts_teacher_profile');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    // Bersihkan jika sebelumnya tersimpan nama Mohammad Trihatmodjo
+                    if (parsed.name === "Mohammad Trihatmodjo, S.Pd." || parsed.name === "Guru Pengampu") {
+                        parsed.name = "";
+                    }
+                    if (parsed.nip === "19850101 201001 1 001" || parsed.nip === "-") {
+                        parsed.nip = "";
+                    }
+                    currentTeacherProfile = Object.assign(currentTeacherProfile, parsed);
+                }
+            } catch (e) {}
+            applyTeacherProfileUI();
+        }
+
+        function saveTeacherProfile(profile) {
+            currentTeacherProfile = profile;
+            localStorage.setItem('asts_teacher_profile', JSON.stringify(profile));
+            applyTeacherProfileUI();
+        }
+
+        function applyTeacherProfileUI() {
+            const nameEl = document.getElementById('display-teacher-name-header');
+            const classEl = document.getElementById('display-teacher-class-header');
+            const filterDescEl = document.getElementById('filter-status-desc');
+            const tableFilterSelect = document.getElementById('teacher-table-filter-class');
+
+            if (nameEl) nameEl.innerText = currentTeacherProfile.name || 'Guru Pengampu';
+            if (classEl) classEl.innerText = currentTeacherProfile.assignedClass || 'Semua Kelas';
+
+            if (tableFilterSelect) {
+                if (currentTeacherProfile.assignedClass === 'Kelas 7') tableFilterSelect.value = 'Kelas 7';
+                else if (currentTeacherProfile.assignedClass === 'Kelas 8') tableFilterSelect.value = 'Kelas 8';
+                else if (currentTeacherProfile.assignedClass === 'Kelas 9') tableFilterSelect.value = 'Kelas 9';
+                else tableFilterSelect.value = 'Semua';
+            }
+
+            if (filterDescEl) {
+                filterDescEl.innerText = tableFilterSelect ? tableFilterSelect.value : currentTeacherProfile.assignedClass;
+            }
+        }
+
+        function onFilterClassChange() {
+            const tableFilterSelect = document.getElementById('teacher-table-filter-class');
+            const filterDescEl = document.getElementById('filter-status-desc');
+            if (filterDescEl && tableFilterSelect) {
+                filterDescEl.innerText = tableFilterSelect.value === 'Semua' ? 'Semua Kelas' : tableFilterSelect.value;
+            }
+            refreshStudentResultsTable();
+        }
+
+        // PORTAL GURU: MODAL & AUTHENTICATION
+        function openTeacherLoginModal() {
+            loadTeacherProfile();
+            const pwdInput = document.getElementById('teacher-password-input');
+            const nameInput = document.getElementById('teacher-name-input');
+            const nipInput = document.getElementById('teacher-nip-input');
+            const classSelect = document.getElementById('teacher-class-select');
+
+            if (nameInput) {
+                nameInput.value = currentTeacherProfile.name || '';
+                setTimeout(() => nameInput.focus(), 150);
+            }
+            if (nipInput) nameInput ? nipInput.value = currentTeacherProfile.nip || '' : '';
+            if (classSelect) classSelect.value = currentTeacherProfile.assignedClass || 'Kelas 9';
+            if (pwdInput) pwdInput.value = '';
+
+            document.getElementById('teacher-login-modal').classList.remove('hidden');
+        }
+
+        function closeTeacherLoginModal() {
+            document.getElementById('teacher-login-modal').classList.add('hidden');
+        }
+
+        function toggleTeacherPasswordVisibility() {
+            const pwdInput = document.getElementById('teacher-password-input');
+            const icon = document.getElementById('password-toggle-icon');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                icon.className = 'fa-regular fa-eye-slash';
+            } else {
+                pwdInput.type = 'password';
+                icon.className = 'fa-regular fa-eye';
+            }
+        }
+
+        function verifyTeacherPassword() {
+            const inputPwd = document.getElementById('teacher-password-input').value.trim();
+            const inputName = document.getElementById('teacher-name-input').value.trim() || "Guru Pengampu";
+            const inputNip = document.getElementById('teacher-nip-input').value.trim() || "-";
+            const inputClass = document.getElementById('teacher-class-select').value;
+
+            if (inputPwd === TEACHER_PASSWORD) {
+                // Simpan profil guru yang terverifikasi
+                saveTeacherProfile({
+                    name: inputName,
+                    nip: inputNip,
+                    assignedClass: inputClass
+                });
+
+                closeTeacherLoginModal();
+                openTeacherDashboard();
+            } else {
+                showModal("Password Salah!", "Password akses guru tidak valid. Silakan coba kembali.");
+                document.getElementById('teacher-password-input').value = '';
+                document.getElementById('teacher-password-input').focus();
+            }
+        }
+
+        function openTeacherDashboard() {
+            loadTeacherProfile();
+            // Sembunyikan section lain
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('subject-section').classList.add('hidden');
+            document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            
+            // Tampilkan dashboard guru
+            document.getElementById('teacher-section').classList.remove('hidden');
+            updateTeacherTokenUI();
+            refreshStudentResultsTable();
+            refreshCheatingLogTable();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeTeacherDashboard() {
+            document.getElementById('teacher-section').classList.add('hidden');
+            if (currentStudentName) {
+                document.getElementById('subject-section').classList.remove('hidden');
+            } else {
+                document.getElementById('login-section').classList.remove('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // DATABASE NILAI SISWA (LOCALSTORAGE)
+        function getStudentRecords() {
+            try {
+                return JSON.parse(localStorage.getItem('asts_student_records') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveStudentRecord(record) {
+            const records = getStudentRecords();
+            records.unshift(record); // Tambahkan yang terbaru paling atas
+            localStorage.setItem('asts_student_records', JSON.stringify(records));
+        }
+
+        function refreshStudentResultsTable() {
+            const allRecords = getStudentRecords();
+            const tbody = document.getElementById('student-results-tbody');
+            const placeholder = document.getElementById('no-students-placeholder');
+            const filterClassSelect = document.getElementById('teacher-table-filter-class');
+            const selectedFilter = filterClassSelect ? filterClassSelect.value : 'Semua';
+
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            // Filter berdasarkan kelas yang dipilih
+            const records = allRecords.filter(rec => {
+                if (selectedFilter === 'Semua') return true;
+                return rec.studentClass === selectedFilter;
+            });
+
+            // Update Statistik
+            const totalEl = document.getElementById('stat-total-students');
+            const avgEl = document.getElementById('stat-avg-score');
+            const maxEl = document.getElementById('stat-max-score');
+            const minEl = document.getElementById('stat-min-score');
+
+            if (records.length === 0) {
+                if (placeholder) placeholder.classList.remove('hidden');
+                totalEl.innerText = "0";
+                avgEl.innerText = "0";
+                maxEl.innerText = "0";
+                minEl.innerText = "0";
+                return;
+            }
+
+            if (placeholder) placeholder.classList.add('hidden');
+
+            let totalScore = 0;
+            let maxScore = -1;
+            let minScore = 101;
+
+            records.forEach((rec, idx) => {
+                totalScore += rec.score;
+                if (rec.score > maxScore) maxScore = rec.score;
+                if (rec.score < minScore) minScore = rec.score;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition";
+
+                let statusBadge = '';
+                if (rec.score >= 85) {
+                    statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">Sangat Baik</span>';
+                } else if (rec.score >= 70) {
+                    statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-blue-100 text-blue-800">Tuntas</span>';
+                } else {
+                    statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800">Remedial</span>';
+                }
+
+                tr.innerHTML = `
+                    <td class="p-3.5 text-slate-400 font-mono text-[11px]">${rec.time || '-'}</td>
+                    <td class="p-3.5 font-bold text-slate-800">${rec.studentName}</td>
+                    <td class="p-3.5 font-semibold text-slate-600">${rec.studentClass}</td>
+                    <td class="p-3.5 text-blue-800 font-bold">${rec.subject}</td>
+                    <td class="p-3.5 text-center font-semibold">
+                        <span class="text-emerald-600 font-bold">${rec.correct}</span> / 
+                        <span class="text-rose-600 font-bold">${rec.wrong}</span>
+                    </td>
+                    <td class="p-3.5 text-center font-black text-sm ${rec.score >= 70 ? 'text-blue-700' : 'text-rose-600'}">
+                        ${rec.score}
+                    </td>
+                    <td class="p-3.5 text-center">
+                        ${statusBadge}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            totalEl.innerText = records.length;
+            avgEl.innerText = Math.round(totalScore / records.length);
+            maxEl.innerText = maxScore;
+            minEl.innerText = minScore;
+        }
+
+        // FITUR CETAK NILAI (WORD & PDF DENGAN TANDA TANGAN GURU)
+        function togglePrintDropdown() {
+            const menu = document.getElementById('print-dropdown-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Tutup dropdown saat klik di luar
+        window.addEventListener('click', function(e) {
+            const menu = document.getElementById('print-dropdown-menu');
+            if (menu && !e.target.closest('#print-dropdown-menu') && !e.target.closest('button[onclick="togglePrintDropdown()"]')) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        function printReportDocument(format = 'pdf', type = 'current') {
+            const menu = document.getElementById('print-dropdown-menu');
+            if (menu) menu.classList.add('hidden');
+
+            const allRecords = getStudentRecords();
+            const filterClassSelect = document.getElementById('teacher-table-filter-class');
+            const selectedClass = filterClassSelect ? filterClassSelect.value : 'Semua';
+
+            // Filter data yang akan dicetak
+            let records = allRecords;
+            if (selectedClass !== 'Semua') {
+                records = allRecords.filter(r => r.studentClass === selectedClass);
+            }
+
+            if (records.length === 0) {
+                showModal("Data Masih Kosong", `Belum ada data nilai murid untuk ${selectedClass}. Silakan tunggu murid menyelesaikan ujian.`);
+                return;
+            }
+
+            loadTeacherProfile();
+            const teacherName = currentTeacherProfile.name || "Guru Pengampu";
+            const teacherNIP = currentTeacherProfile.nip || "-";
+            const targetClassStr = selectedClass === 'Semua' ? 'Semua Kelas (7, 8, 9 SMPLB)' : selectedClass;
+
+            const now = new Date();
+            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+            let titleDocument = "";
+            let tableRowsHtml = "";
+
+            if (type === 'all_subjects') {
+                titleDocument = `REKAPITULASI HASIL EVALUASI SEMUA MATA PELAJARAN ASTS`;
+                // Kelompokkan per siswa dan hitung rata-rata
+                const studentMap = {};
+                records.forEach(rec => {
+                    if (!studentMap[rec.studentName]) {
+                        studentMap[rec.studentName] = {
+                            name: rec.studentName,
+                            studentClass: rec.studentClass,
+                            mapels: {},
+                            totalScore: 0,
+                            count: 0
+                        };
+                    }
+                    studentMap[rec.studentName].mapels[rec.subject] = rec.score;
+                    studentMap[rec.studentName].totalScore += rec.score;
+                    studentMap[rec.studentName].count += 1;
+                });
+
+                let no = 1;
+                for (const key in studentMap) {
+                    const st = studentMap[key];
+                    const avg = Math.round(st.totalScore / st.count);
+                    const mapelList = Object.entries(st.mapels).map(([m, s]) => `${m}: <b>${s}</b>`).join(', ');
+
+                    tableRowsHtml += `
+                        <tr>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${no++}</td>
+                            <td style="padding: 8px; border: 1px solid #333; font-weight: bold;">${st.name}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${st.studentClass}</td>
+                            <td style="padding: 8px; border: 1px solid #333; font-size: 11px;">${mapelList}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333; font-weight: bold; font-size: 14px;">${avg}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${avg >= 70 ? 'TUNTAS' : 'REMEDIAL'}</td>
+                        </tr>
+                    `;
+                }
+            } else {
+                titleDocument = `DAFTAR NILAI ASESMEN SUMATIF (ASTS) SMPLB TUNARUNGU`;
+                records.forEach((rec, idx) => {
+                    tableRowsHtml += `
+                        <tr>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${idx + 1}</td>
+                            <td style="padding: 8px; border: 1px solid #333; font-weight: bold;">${rec.studentName}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${rec.studentClass}</td>
+                            <td style="padding: 8px; border: 1px solid #333;">${rec.subject}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${rec.correct} / ${rec.wrong}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333; font-weight: bold; font-size: 14px;">${rec.score}</td>
+                            <td style="text-align: center; padding: 8px; border: 1px solid #333;">${rec.score >= 70 ? 'TUNTAS' : 'REMEDIAL'}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            const printHtml = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${titleDocument} - SLB Negeri 2 Pemalang</title>
+                    <style>
+                        body { font-family: 'Times New Roman', Times, serif; color: #000; padding: 25px; line-height: 1.4; }
+                        .kop { text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 20px; }
+                        .kop h3 { margin: 0; font-size: 14pt; font-weight: bold; text-transform: uppercase; }
+                        .kop h2 { margin: 2px 0; font-size: 16pt; font-weight: 900; text-transform: uppercase; }
+                        .kop p { margin: 0; font-size: 10pt; font-style: italic; }
+                        .title { text-align: center; font-weight: bold; font-size: 13pt; margin-bottom: 15px; text-decoration: underline; }
+                        .meta-table { width: 100%; margin-bottom: 15px; font-size: 11pt; }
+                        .meta-table td { padding: 3px 0; }
+                        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11pt; }
+                        .data-table th { border: 1px solid #000; padding: 8px; background-color: #f2f2f2; font-weight: bold; text-align: center; }
+                        .data-table td { border: 1px solid #000; }
+                        .ttd-container { width: 100%; margin-top: 40px; page-break-inside: avoid; }
+                        .ttd-box { float: right; width: 280px; text-align: center; font-size: 11pt; }
+                        @media print {
+                            body { padding: 0; }
+                            @page { size: A4 portrait; margin: 1.5cm; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="kop">
+                        <h3>PEMERINTAH PROVINSI JAWA TENGAH</h3>
+                        <h2>SLB NEGERI 2 PEMALANG</h2>
+                        <p>Alamat: Jl. Raya Pemalang - Randudongkal, Jawa Tengah &bull; Portal Ujian Online ASTS SMPLB Tunarungu</p>
+                    </div>
+
+                    <div class="title">${titleDocument}</div>
+
+                    <table class="meta-table">
+                        <tr>
+                            <td width="20%"><strong>Satuan Pendidikan</strong></td>
+                            <td width="2%">:</td>
+                            <td width="40%">SLB Negeri 2 Pemalang</td>
+                            <td width="15%"><strong>Kelas</strong></td>
+                            <td width="2%">:</td>
+                            <td>${targetClassStr}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tahun Ajaran</strong></td>
+                            <td>:</td>
+                            <td>2025/2026</td>
+                            <td><strong>Guru Kelas</strong></td>
+                            <td>:</td>
+                            <td>${teacherName}</td>
+                        </tr>
+                    </table>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="5%">No</th>
+                                <th width="28%">Nama Siswa</th>
+                                <th width="12%">Kelas</th>
+                                <th>${type === 'all_subjects' ? 'Rincian Nilai Mapel' : 'Mata Pelajaran'}</th>
+                                ${type === 'all_subjects' ? '' : '<th width="12%">Benar/Salah</th>'}
+                                <th width="10%">Nilai</th>
+                                <th width="12%">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRowsHtml}
+                        </tbody>
+                    </table>
+
+                    <div class="ttd-container">
+                        <div class="ttd-box">
+                            <p style="margin-bottom: 60px;">Pemalang, ${dateStr}<br>Guru Kelas / Pengampu,</p>
+                            <p style="margin: 0; font-weight: bold; text-decoration: underline;">${teacherName}</p>
+                            <p style="margin: 0;">NIP. ${teacherNIP}</p>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            if (format === 'word') {
+                // Export ke format Microsoft Word .doc (HTML wrapper)
+                const blob = new Blob(['\ufeff' + printHtml], {
+                    type: 'application/msword'
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Rekap_Nilai_ASTS_${selectedClass.replace(/\s+/g, '_')}_${now.getTime()}.doc`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showModal("Dokumen Word Berhasil Didownload", "File dokumen Word rekap nilai siswa berhasil disimpan ke komputer Anda lengkap dengan tanda tangan.");
+            } else {
+                // Format PDF via Dialog Cetak Browser
+                const printWindow = window.open('', '_blank');
+                if (!printWindow) {
+                    showModal("Pop-up Terblokir", "Harap izinkan pop-up browser untuk mencetak laporan nilai.");
+                    return;
+                }
+                printWindow.document.open();
+                printWindow.document.write(printHtml);
+                printWindow.document.close();
+                setTimeout(() => {
+                    printWindow.focus();
+                    printWindow.print();
+                }, 500);
+            }
+        }
+
+        function clearAllStudentRecords() {
+            showConfirmModal(
+                "Hapus Semua Riwayat Nilai?",
+                "Tindakan ini akan menghapus seluruh rekaman nilai murid yang tersimpan di perangkat ini.",
+                () => {
+                    localStorage.removeItem('asts_student_records');
+                    refreshStudentResultsTable();
+                    showModal("Berhasil Dihapus", "Seluruh catatan hasil ujian telah dibersihkan.");
+                }
+            );
+        }
+
+        // KUNCI HALAMAN / LOCK PAGE SAAT UJIAN & SISTEM PROTEKSI CHEAT
+        let isCheatingLocked = false; // Status apakah murid dikunci karena meninggalkan laman
+
+        // DATABASE LOG PELANGGARAN / KECURANGAN
+        function getCheatLogs() {
+            try {
+                return JSON.parse(localStorage.getItem('asts_cheat_logs') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveCheatLog(logEntry) {
+            const logs = getCheatLogs();
+            logs.unshift(logEntry);
+            localStorage.setItem('asts_cheat_logs', JSON.stringify(logs));
+            // Trigger storage event listener / update tabel jika portal guru terbuka
+            refreshCheatingLogTable();
+        }
+
+        function refreshCheatingLogTable() {
+            const logs = getCheatLogs();
+            const tbody = document.getElementById('cheating-log-tbody');
+            const placeholder = document.getElementById('no-cheat-placeholder');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (logs.length === 0) {
+                if (placeholder) placeholder.classList.remove('hidden');
+                return;
+            }
+
+            if (placeholder) placeholder.classList.add('hidden');
+
+            logs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-rose-50/60 transition";
+                tr.innerHTML = `
+                    <td class="p-3.5 text-slate-500 font-mono text-[11px] font-bold">
+                        <i class="fa-regular fa-clock text-rose-500 mr-1"></i>${log.time}
+                    </td>
+                    <td class="p-3.5 font-black text-rose-900">${log.studentName}</td>
+                    <td class="p-3.5 font-bold text-slate-700">${log.studentClass}</td>
+                    <td class="p-3.5 font-extrabold text-blue-800">${log.subject}</td>
+                    <td class="p-3.5">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                            <i class="fa-solid fa-triangle-exclamation"></i> ${log.reason}
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black ${log.status === 'Terkunci' ? 'bg-red-600 text-white animate-pulse' : 'bg-emerald-100 text-emerald-800'}">
+                            ${log.status || 'Terkunci'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearCheatLogs() {
+            showConfirmModal(
+                "Bersihkan Log Kecurangan?",
+                "Tindakan ini akan menghapus semua riwayat catatan murid yang meninggalkan laman ujian.",
+                () => {
+                    localStorage.removeItem('asts_cheat_logs');
+                    refreshCheatingLogTable();
+                    showModal("Log Dibersihkan", "Semua riwayat pelanggaran telah berhasil dikosongkan.");
+                }
+            );
+        }
+
+        function getSubjectTitleByKey(key) {
+            if (key === 'indo') return 'Bahasa Indonesia';
+            if (key === 'seni') return 'Seni Budaya';
+            if (key === 'ipa') return 'IPA Bergambar';
+            if (key === 'pkpbi') return 'PKPBI (Persepsi Bunyi)';
+            if (key === 'matematika') return 'Matematika';
+            if (key === 'ips') return 'IPS Terpadu';
+            if (key === 'inggris') return 'Bahasa Inggris';
+            if (key === 'pancasila') return 'Pendidikan Pancasila';
+            return 'Ujian ASTS';
+        }
+
+        // TRIGGER SAAT SISWA KETAHUAN TINGGALKAN LAMAN (ANTI-CHEAT DETEKTOR)
+        function triggerExamCheatingDetection(activityReason = "Meninggalkan Laman / Pindah Tab Browser") {
+            if (!isExamActive || isCheatingLocked) return;
+
+            isCheatingLocked = true;
+            const now = new Date();
+            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            const mapelTitle = getSubjectTitleByKey(currentSubject);
+
+            const cheatEvent = {
+                id: Date.now(),
+                time: timeStr,
+                studentName: currentStudentName || "Siswa",
+                studentClass: currentStudentClass || "-",
+                subject: mapelTitle,
+                reason: activityReason,
+                status: "Terkunci"
+            };
+
+            // Simpan ke riwayat cheat log lokal
+            saveCheatLog(cheatEvent);
+
+            // Broadcast ke storage agar laman guru di tab / perangkat lain langsung ternotifikasi
+            localStorage.setItem('asts_last_cheat_alert', JSON.stringify(cheatEvent));
+
+            // Jika di tab ini sedang terbuka Portal Guru, langsung tampilkan modal alert guru
+            const teacherSection = document.getElementById('teacher-section');
+            if (teacherSection && !teacherSection.classList.contains('hidden')) {
+                showTeacherCheatModal(cheatEvent);
+            }
+
+            // Tampilkan Modal Terkunci Khusus Murid
+            showStudentLockedModal();
+        }
+
+        // Tampilkan modal layar terkunci murid
+        function showStudentLockedModal() {
+            const lockedModal = document.getElementById('student-cheat-locked-modal');
+            const unlockInput = document.getElementById('unlock-token-input');
+            if (unlockInput) {
+                unlockInput.value = '';
+                setTimeout(() => unlockInput.focus(), 200);
+            }
+            if (lockedModal) {
+                lockedModal.classList.remove('hidden');
+            }
+        }
+
+        // Murid memasukkan token baru yang baru saja di-generate oleh Guru
+        function submitUnlockToken() {
+            const inputVal = document.getElementById('unlock-token-input').value.trim().toUpperCase();
+            if (!inputVal) {
+                showModal("Token Kosong", "Silakan masukkan Token Baru dari Guru Pengawas untuk membuka lembar soal.");
+                return;
+            }
+
+            const now = Date.now();
+            if (inputVal === activeExamToken && now <= tokenExpiryTimestamp) {
+                // Berhasil buka kunci!
+                isCheatingLocked = false;
+                document.getElementById('student-cheat-locked-modal').classList.add('hidden');
+                
+                // Update status di cheat log menjadi 'Dipulihkan Guru'
+                const logs = getCheatLogs();
+                if (logs.length > 0 && logs[0].studentName === currentStudentName) {
+                    logs[0].status = "Dibuka Guru";
+                    localStorage.setItem('asts_cheat_logs', JSON.stringify(logs));
+                }
+
+                showModal("Layar Terbuka Kembali", "Token baru terverifikasi valid! Lembar soal ujian dibuka kembali. Mohon jangan meninggalkan laman lagi!");
+                
+                // Kembalikan fullscreen
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
+            } else {
+                showModal(
+                    "Token Baru Tidak Valid / Salah!",
+                    "Token yang kamu masukkan salah atau sudah kedaluwarsa. Minta Guru Anda membuatkan Token Baru di Portal Guru."
+                );
+                document.getElementById('unlock-token-input').value = '';
+                document.getElementById('unlock-token-input').focus();
+            }
+        }
+
+        // Tampilkan notifikasi pada Portal Guru saat ada murid menyontek
+        function showTeacherCheatModal(cheatEvent) {
+            document.getElementById('cheat-alert-student-name').innerText = cheatEvent.studentName;
+            document.getElementById('cheat-alert-student-class').innerText = cheatEvent.studentClass;
+            document.getElementById('cheat-alert-subject').innerText = cheatEvent.subject;
+            document.getElementById('cheat-alert-time').innerText = cheatEvent.time;
+
+            document.getElementById('teacher-cheat-alert-modal').classList.remove('hidden');
+            refreshCheatingLogTable();
+        }
+
+        function closeTeacherCheatModal() {
+            document.getElementById('teacher-cheat-alert-modal').classList.add('hidden');
+        }
+
+        // Listen perubahan antartab browser (Storage Event) untuk Real-Time Notifikasi Guru
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'asts_last_cheat_alert' && e.newValue) {
+                try {
+                    const eventData = JSON.parse(e.newValue);
+                    const teacherSection = document.getElementById('teacher-section');
+                    // Jika tab ini adalah portal guru, langsung munculkan pop up notifikasi darurat
+                    if (teacherSection && !teacherSection.classList.contains('hidden')) {
+                        showTeacherCheatModal(eventData);
+                    }
+                    refreshCheatingLogTable();
+                } catch (err) {
+                    console.error("Error parsing cheat alert storage event", err);
+                }
+            }
+            if (e.key === 'asts_exam_token' && e.newValue) {
+                activeExamToken = e.newValue;
+                updateTeacherTokenUI();
+            }
+        });
+
         function enableExamLock() {
             isExamActive = true;
+            isCheatingLocked = false;
             // Minta browser masuk ke mode Fullscreen jika didukung
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -404,6 +1737,7 @@
 
         function disableExamLock() {
             isExamActive = false;
+            isCheatingLocked = false;
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(err => console.log(err));
             }
@@ -412,6 +1746,7 @@
         // Peringatan saat mencoba refresh atau menutup tab
         window.addEventListener('beforeunload', function (e) {
             if (isExamActive) {
+                triggerExamCheatingDetection("Mencoba Refresh / Menutup Tab Ujian");
                 e.preventDefault();
                 e.returnValue = 'Kamu tidak boleh keluar karena sedang ujian!';
                 return e.returnValue;
@@ -421,23 +1756,15 @@
         // Deteksi jika siswa berpindah aplikasi / tab browser (visibility change atau blur)
         document.addEventListener('visibilitychange', function () {
             if (isExamActive && document.hidden) {
-                triggerExamExitWarning();
+                triggerExamCheatingDetection("Berpindah Tab / Membuka Tab Baru");
             }
         });
 
         window.addEventListener('blur', function () {
             if (isExamActive) {
-                triggerExamExitWarning();
+                triggerExamCheatingDetection("Meninggalkan Laman / Membuka Aplikasi Lain");
             }
         });
-
-        function triggerExamExitWarning() {
-            showExamAlertModal("Kamu tidak boleh keluar karena sedang ujian!", "Tetap fokus pada lembar soal ujian Anda sampai selesai dikirim.");
-            // Coba kembalikan fullscreen jika terlepas
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
-        }
 
         // Blokir tombol shortcut umum (Alt+Tab, Windows Key, F5, F11, F12, Ctrl+R, Ctrl+W, Ctrl+T, Ctrl+Tab)
         window.addEventListener('keydown', function (e) {
@@ -446,19 +1773,19 @@
             // F5, F12, Ctrl+R
             if (e.key === 'F5' || e.key === 'F12' || (e.ctrlKey && (e.key === 'r' || e.key === 'R'))) {
                 e.preventDefault();
-                triggerExamExitWarning();
+                triggerExamCheatingDetection("Mencoba Refresh / Inspeksi Elemen");
                 return false;
             }
             // Ctrl+W, Ctrl+T, Ctrl+N, Ctrl+U
             if (e.ctrlKey && ['w', 'W', 't', 'T', 'n', 'N', 'u', 'U'].includes(e.key)) {
                 e.preventDefault();
-                triggerExamExitWarning();
+                triggerExamCheatingDetection("Mencoba Buka Tab Baru / Menutup Tab");
                 return false;
             }
             // Alt + Arrow / Backspace
             if (e.altKey) {
                 e.preventDefault();
-                triggerExamExitWarning();
+                triggerExamCheatingDetection("Mencoba Navigasi Keluar (Alt Shortcut)");
                 return false;
             }
         });
@@ -2209,14 +3536,325 @@
             }
         ];
 
+        // DATA SOAL PENDIDIKAN PANCASILA (30 SOAL BERGAMBAR)
+        const quizDataPancasila = [
+            {
+                id: 1,
+                question: "Perhatikan gambar!\nSiswa-siswi sedang bekerja sama membersihkan ruang kelas.\nKegiatan ini disebut ...",
+                image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=80",
+                options: ["Gotong royong", "Belajar sendiri", "Bermain bola", "Tidur siang"],
+                answer: 0,
+                explanation: "Gotong royong adalah kegiatan bekerja bersama-sama untuk kepentingan bersama seperti membersihkan kelas."
+            },
+            {
+                id: 2,
+                question: "Perhatikan gambar!\nGotong royong membuat pekerjaan yang berat menjadi ...",
+                image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&auto=format&fit=crop&q=80",
+                options: ["Lebih ringan dan cepat selesai", "Semakin berat", "Menghasilkan pertengkaran", "Menghabiskan banyak uang"],
+                answer: 0,
+                explanation: "Manfaat gotong royong adalah membuat beban pekerjaan menjadi lebih ringan dan cepat diselesaikan."
+            },
+            {
+                id: 3,
+                question: "Perhatikan gambar!\nWarga desa bekerja bersama memperbaiki saluran air dan jalan.\nKegiatan ini merupakan contoh gotong royong di lingkungan ...",
+                image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&auto=format&fit=crop&q=80",
+                options: ["Masyarakat / Desa", "Kamar tidur", "Dalam bus", "Mall"],
+                answer: 0,
+                explanation: "Kerja bakti memperbaiki sarana umum adalah contoh nyata gotong royong di lingkungan masyarakat."
+            },
+            {
+                id: 4,
+                question: "Perhatikan gambar!\nSikap yang benar dan terpuji saat mengikuti gotong royong adalah ...",
+                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop&q=80",
+                options: ["Ikhlas, gembira, dan kompak", "Malas dan sembunyi", "Suka marah-marah", "Menyuruh orang lain saja"],
+                answer: 0,
+                explanation: "Saat bergotong royong kita harus menunjukkan sikap sukarela, ikhlas, dan saling membantu."
+            },
+            {
+                id: 5,
+                question: "Perhatikan gambar!\nCiri lingkungan sekolah yang bersih, sehat, dan baik adalah ...",
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
+                options: ["Halaman rapi, bersih, dan udara segar", "Banyak sampah plastik berserakan", "Toilet kotor dan bau", "Dinding penuh coretan"],
+                answer: 0,
+                explanation: "Sekolah yang baik memiliki lingkungan asri, bebas sampah, dan sirkulasi udara yang nyaman."
+            },
+            {
+                id: 6,
+                question: "Perhatikan gambar!\nAgar halaman sekolah tetap indah dan bersih, sampah plastik harus dibuang ke ...",
+                image: "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=600&auto=format&fit=crop&q=80",
+                options: ["Tempat sampah", "Kolam ikan", "Bawah laci meja", "Belakang pintu"],
+                answer: 0,
+                explanation: "Membuang sampah pada tempatnya menjaga kebersihan dan kenyamanan sekolah."
+            },
+            {
+                id: 7,
+                question: "Perhatikan gambar!\nSiswa menyiram tanaman di taman sekolah.\nKegiatan ini membuat lingkungan sekolah menjadi ...",
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&auto=format&fit=crop&q=80",
+                options: ["Hijau, asri, dan sejuk", "Kering dan gersang", "Kotor berlumpur", "Gelap dan menakutkan"],
+                answer: 0,
+                explanation: "Merawat tanaman hijau memberikan oksigen segar serta keindahan bagi lingkungan sekolah."
+            },
+            {
+                id: 8,
+                question: "Perhatikan gambar!\nSelokan air yang penuh sampah plastik dan air tergenang hitam adalah ciri lingkungan sekolah yang ...",
+                image: "https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=600&auto=format&fit=crop&q=80",
+                options: ["Buruk dan tidak sehat", "Sangat bagus", "Indah dan wangi", "Modern"],
+                answer: 0,
+                explanation: "Selokan mampet dan kotor merupakan tanda lingkungan yang buruk serta berpotensi menjadi sarang penyakit."
+            },
+            {
+                id: 9,
+                question: "Perhatikan gambar!\nMencoret-coret meja dan dinding sekolah dengan spidol membuat kelas menjadi ...",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+                options: ["Kotor dan rusak", "Sangat rapi", "Menjadi juara", "Nyaman dipandang"],
+                answer: 0,
+                explanation: "Vandalisme atau mencoret meja merusak fasilitas sekolah dan membuat kelas terlihat kumuh."
+            },
+            {
+                id: 10,
+                question: "Perhatikan gambar!\nAkibat dari lingkungan sekolah yang kotor dan lembap adalah ...",
+                image: "https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=600&auto=format&fit=crop&q=80",
+                options: ["Menjadi sarang nyamuk dan sumber penyakit", "Siswa menjadi tambah pintar", "Belajar semakin tenang", "Sekolah mendapat piala"],
+                answer: 0,
+                explanation: "Sampah dan genangan air kotor dapat mendatangkan nyamuk demam berdarah dan bibit penyakit."
+            },
+            {
+                id: 11,
+                question: "Perhatikan gambar!\nCiri rumah yang sehat dan nyaman bagi keluarga adalah ...",
+                image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=80",
+                options: ["Ruangan bersih, rapi, dan ada jendela ventilasi", "Piring kotor menumpuk di meja", "Lantai penuh abu dan debu", "Jendela selalu tertutup rapat"],
+                answer: 0,
+                explanation: "Rumah sehat membutuhkan kebersihan rutin serta jendela ventilasi agar cahaya matahari dan udara segar masuk."
+            },
+            {
+                id: 12,
+                question: "Perhatikan gambar!\nMenjaga kebersihan dan ketertiban di dalam rumah adalah kewajiban ...",
+                image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop&q=80",
+                options: ["Semua anggota keluarga (Ayah, Ibu, dan Anak)", "Ibu seorang diri", "Tamu yang berkunjung", "Tetangga sebelah rumah"],
+                answer: 0,
+                explanation: "Setiap anggota keluarga bertanggung jawab menjaga kebersihan tempat tinggal bersama."
+            },
+            {
+                id: 13,
+                question: "Perhatikan gambar!\nMembuka jendela kamar pada pagi hari sangat bermanfaat agar ...",
+                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80",
+                options: ["Udara segar dan sinar matahari pagi masuk", "Kamar menjadi lembap", "Barang-barang berdebu", "Kamar menjadi gelap"],
+                answer: 0,
+                explanation: "Sinar matahari dan pergantian udara pagi membunuh kuman dan membuat kamar terasa segar."
+            },
+            {
+                id: 14,
+                question: "Perhatikan gambar!\nSandal dan sepatu yang berserakan sembarangan di lantai depan pintu membuat rumah tampak ...",
+                image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&auto=format&fit=crop&q=80",
+                options: ["Berantakan dan tidak rapi", "Sangat mewah", "Bersih berkilau", "Teratur"],
+                answer: 0,
+                explanation: "Sepatu dan sandal yang tidak ditata pada rak sepatu membuat pemandangan rumah berantakan."
+            },
+            {
+                id: 15,
+                question: "Perhatikan gambar!\nBentuk tanggung jawab anak setelah bangun tidur di pagi hari adalah ...",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop&q=80",
+                options: ["Merapikan kasur, bantal, dan selimut", "Langsung bermain game di ponsel", "Menangis mencari mainan", "Membiarkan kasur acak-acakan"],
+                answer: 0,
+                explanation: "Merapikan tempat tidur sendiri adalah wujud kemandirian dan tanggung jawab anak di rumah."
+            },
+            {
+                id: 16,
+                question: "Perhatikan gambar!\nSetelah selesai makan bersama di ruang makan, piring dan gelas kotor sebaiknya ...",
+                image: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=80",
+                options: ["Ditaruh di bak cuci piring dan dicuci", "Ditinggalkan begitu saja di atas meja", "Ditaruh di atas kasur", "Dilempar ke lantai"],
+                answer: 0,
+                explanation: "Membawa dan mencuci piring sendiri setelah makan adalah pembiasaan sikap tanggung jawab."
+            },
+            {
+                id: 17,
+                question: "Perhatikan gambar!\nBentuk tanggung jawab murid terhadap tugas sekolah saat berada di rumah adalah ...",
+                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80",
+                options: ["Belajar dan mengerjakan PR tepat waktu", "Bermain sampai larut malam", "Menyuruh adik membuatkan tugas", "Menyembunyikan buku pelajaran"],
+                answer: 0,
+                explanation: "Mengerjakan pekerjaan rumah (PR) dengan sungguh-sungguh adalah kewajiban utama siswa."
+            },
+            {
+                id: 18,
+                question: "Perhatikan gambar!\nSikap hemat energi dan bertanggung jawab saat siang hari di rumah adalah ...",
+                image: "https://images.unsplash.com/photo-1517999144091-3d9dca6d1e43?w=600&auto=format&fit=crop&q=80",
+                options: ["Mematikan lampu dan keran air yang tidak dipakai", "Menyalakan semua lampu kamar siang hari", "Membiarkan TV menyala tanpa ditonton", "Membiarkan air keran meluap tumpah"],
+                answer: 0,
+                explanation: "Menghemat listrik dan air mencerminkan sikap tanggung jawab terhadap sumber daya di rumah."
+            },
+            {
+                id: 19,
+                question: "Perhatikan gambar!\nSepatu sekolah yang sudah dipakai sebaiknya diletakkan di ...",
+                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop&q=80",
+                options: ["Rak sepatu dengan tertata rapi", "Atas meja makan", "Bawah tempat tidur", "Tengah halaman"],
+                answer: 0,
+                explanation: "Menaruh sepatu pada raknya menjaga kerapian rumah dan memudahkan saat dicari kembali."
+            },
+            {
+                id: 20,
+                question: "Perhatikan gambar!\nMembantu ibu menyapu lantai rumah merupakan contoh ...",
+                image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop&q=80",
+                options: ["Tanggung jawab dan bakti anak di rumah", "Hukuman kesalahan anak", "Pekerjaan yang memalukan", "Hak istimewa orang tua"],
+                answer: 0,
+                explanation: "Membantu orang tua merawat rumah adalah cerminan budi pekerti luhur dan tanggung jawab anak."
+            },
+            {
+                id: 21,
+                question: "[SOAL HOTS - Analisis Masalah]\nPerhatikan bagan visual berikut:\n(Warga malas kerja bakti) ➔ (Selokan tersumbat sampah) ➔ (Hujan lebat turun).\nApa yang akan terjadi pada desa tersebut?",
+                image: "https://images.unsplash.com/photo-1547683905-f686c993aae5?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Terjadi luapan air dan banjir merendam jalanan",
+                    "Tanaman warga menjadi subur dan indah",
+                    "Jalanan desa semakin bersih dan lebar",
+                    "Warga mendapatkan penghargaan kebersihan"
+                ],
+                answer: 0,
+                explanation: "Jika warga tidak bergotong royong, selokan tersumbat sehingga air hujan tidak dapat mengalir dan memicu bencana banjir."
+            },
+            {
+                id: 22,
+                question: "[SOAL HOTS - Pengambilan Keputusan]\nPerhatikan gambar!\nHari Minggu ada kerja bakti membersihkan lingkungan RT.\nTemanmu mengajak bermain game online di HP.\nSikap yang paling benar dan bertanggung jawab adalah ...",
+                image: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Ikut kerja bakti bersama warga dahulu, baru bermain setelah selesai",
+                    "Menolak kerja bakti dan asyik main game di kamar",
+                    "Pura-pura sakit agar tidak disuruh membantu",
+                    "Mengunci pintu rumah rapat-rapat"
+                ],
+                answer: 0,
+                explanation: "Mendahulukan kepentingan sosial kemasyarakatan (kerja bakti) sebelum bersenang-senang menunjukkan kedewasaan dan tanggung jawab."
+            },
+            {
+                id: 23,
+                question: "[SOAL HOTS - Evaluasi Lingkungan]\nPerhatikan gambar!\nSekolah A: Pohon hijau rindang, bersih, tempat sampah terpisah.\nSekolah B: Banyak bungkus plastik berserakan, debu tebal di meja.\nMengapa siswa di Sekolah A lebih mudah fokus belajar dibanding Sekolah B?",
+                image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Karena udara di Sekolah A sejuk, bersih, dan bebas bau tidak sedap",
+                    "Karena Sekolah A memberikan mainan gratis kepada siswa",
+                    "Karena gedung Sekolah B terlalu mewah dan bertingkat",
+                    "Karena siswa Sekolah A tidak pernah belajar di kelas"
+                ],
+                answer: 0,
+                explanation: "Lingkungan yang bersih, sehat, dan asri menciptakan suasana tenang dan mendukung konsentrasi belajar peserta didik."
+            },
+            {
+                id: 24,
+                question: "[SOAL HOTS - Solusi Tindakan]\nPerhatikan gambar!\nTong sampah di samping kelas roboh dan sampahnya berceceran tertiup angin.\nTindakan terbaik yang kamu dan teman-temanmu lakukan adalah ...",
+                image: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Bergotong royong menegakkan tong dan memungut sampah bersama-sama",
+                    "Membiarkan saja karena merasa bukan kita yang merobohkannya",
+                    "Menertawakan dan memotretnya untuk media sosial",
+                    "Menyalahkan siswa kelas lain yang sedang lewat"
+                ],
+                answer: 0,
+                explanation: "Inisiatif segera merapikan sampah yang berserakan menunjukkan kepedulian nyata terhadap lingkungan sekolah."
+            },
+            {
+                id: 25,
+                question: "[SOAL HOTS - Analisis Sebab-Akibat]\nPerhatikan gambar!\nKondisi toilet sekolah berbau pesing, lantai licin, dan bak mandi berlumut.\nBahaya yang dapat timbul bagi seluruh murid jika kondisi ini dibiarkan adalah ...",
+                image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Bakteri menyebar luas dan murid rentan terserang diare serta terpeleset",
+                    "Murid menjadi semakin bersemangat ke sekolah",
+                    "Air di dalam bak mandi menjadi semakin jernih",
+                    "Lantai toilet menjadi semakin kuat dan awet"
+                ],
+                answer: 0,
+                explanation: "Toilet yang kotor dan berlumut adalah sarang kuman penyakit menular serta berisiko mencederai siswa karena licin."
+            },
+            {
+                id: 26,
+                question: "[SOAL HOTS - Sikap Menghadapi Masalah]\nPerhatikan gambar!\nKamu melihat seorang teman sedang mencoret-coret tembok sekolah dengan cat semprot.\nTindakan bermoral yang tepat kamu lakukan adalah ...",
+                image: "https://images.unsplash.com/photo-1525909002-1b05e0c869d8?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Menegur dengan isyarat sopan bahwa perbuatannya merusak sekolah, lalu melapor ke guru",
+                    "Ikut mencoret-coret tembok agar terlihat lebih ramai",
+                    "Memusuhi dan memukul teman tersebut",
+                    "Membeli cat tambahan untuk diberikan kepadanya"
+                ],
+                answer: 0,
+                explanation: "Mengingatkan dengan santun dan melaporkan kepada pihak sekolah adalah cara bijak menjaga fasilitas bersama dari perusakan."
+            },
+            {
+                id: 27,
+                question: "[SOAL HOTS - Penerapan Pola Hidup Sehat]\nPerhatikan gambar!\nDi halaman belakang rumah terdapat beberapa ember dan kaleng bekas yang digenangi air hujan.\nUntuk mencegah sarang jentik nyamuk demam berdarah (DBD), kamu harus ...",
+                image: "https://images.unsplash.com/photo-1516214104703-d870798883c5?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Menguras, membalik atau mendaur ulang wadah kaleng bekas tersebut",
+                    "Menambahkan air ke dalam kaleng sampai penuh",
+                    "Menutup kaleng dengan kain basah yang berlumut",
+                    "Membiarkan wadah tersebut sampai tahun depan"
+                ],
+                answer: 0,
+                explanation: "Gerakan 3M (Menguras, Menutup, Mendaur ulang) efektif memutus siklus perkembangbiakan nyamuk Aedes aegypti di sekitar rumah."
+            },
+            {
+                id: 28,
+                question: "[SOAL HOTS - Manajemen Ruang Belajar]\nPerhatikan gambar!\nKamar tidur sangat berantakan: buku sekolah di lantai, baju kotor di atas kasur, dan sampah kertas berserakan.\nUrutan langkah perbaikan yang paling tepat adalah ...",
+                image: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Membuang sampah ➔ Menaruh baju kotor di keranjang ➔ Merapikan buku di meja belajar",
+                    "Menutup pintu kamar rapat-rapat dan tidur di sofa",
+                    "Memindahkan semua barang berantakan ke kamar adik",
+                    "Menyalakan lilin wangi agar bau berantakan hilang"
+                ],
+                answer: 0,
+                explanation: "Membersihkan sampah terlebih dahulu kemudian mengelompokkan barang sesuai tempatnya membuat kamar cepat kembali rapi."
+            },
+            {
+                id: 29,
+                question: "[SOAL HOTS - Nilai Kepedulian Keluarga]\nPerhatikan gambar!\nIbu sedang kurang sehat dan berbaring di tempat tidur.\nDi dapur terlihat tumpukan piring kotor dan lantai belum disapu.\nSebagai anak yang bertanggung jawab, kamu harus ...",
+                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Dengan senang hati mencuci piring dan menyapu lantai tanpa menunggu disuruh",
+                    "Bermain di luar rumah bersama teman sepanjang hari",
+                    "Membangunkan ibu dan meminta dimasakkan makanan",
+                    "Membiarkan dapur kotor sampai berhari-hari"
+                ],
+                answer: 0,
+                explanation: "Inisiatif membantu tugas rumah tangga saat orang tua sakit adalah wujud bakti dan tanggung jawab moral anak."
+            },
+            {
+                id: 30,
+                question: "[SOAL HOTS - Cerminan Sila Pancasila di Rumah]\nPerhatikan gambar!\nKakak dan adik membagi tugas: Kakak menyiram tanaman di luar, adik mengelap meja di dalam rumah.\nMereka bekerja sama dengan senyum dan rukun.\nPerilaku tersebut mencerminkan nilai luhur Pancasila yaitu ...",
+                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "Keadilan, persatuan, dan tolong-menolong dalam keluarga",
+                    "Persaingan siapa yang pekerjaannya paling cepat selesai",
+                    "Menghindari amarah orang tua semata",
+                    "Paksaan karena takut tidak diberi uang jajan"
+                ],
+                answer: 0,
+                explanation: "Berbagi tugas secara adil dan bekerja sama menjaga keharmonisan rumah merupakan pengamalan sila ke-3 (Persatuan) dan ke-5 (Keadilan)."
+            }
+        ];
+
         // STEP 1: LOGIN PROCESS
         function processLogin() {
             const nameInput = document.getElementById('student-name').value.trim();
             const classInput = document.getElementById('student-class').value;
+            const tokenInput = document.getElementById('student-token').value.trim().toUpperCase();
 
             if (!nameInput) {
                 showModal("Identitas Belum Diisi", "Mohon isi nama lengkap murid terlebih dahulu!");
                 document.getElementById('student-name').focus();
+                return;
+            }
+
+            // Validasi Token Ujian Murid
+            if (!tokenInput) {
+                showModal("Token Belum Diisi", "Silakan masukkan Token Ujian yang diberikan oleh Bapak/Ibu guru Anda.");
+                document.getElementById('student-token').focus();
+                return;
+            }
+
+            // Cek apakah token cocok dan belum kedaluwarsa
+            const now = Date.now();
+            if (tokenInput !== activeExamToken || now > tokenExpiryTimestamp) {
+                showModal("Token Tidak Valid / Kedaluwarsa", "Token yang Anda masukkan salah atau sudah habis masa berlakunya (berganti per 5 menit). Silakan minta token aktif terbaru ke Guru Anda.");
+                document.getElementById('student-token').value = '';
+                document.getElementById('student-token').focus();
                 return;
             }
 
@@ -2242,6 +3880,7 @@
             else if (subjectKey === 'matematika') mapelTitle = 'Matematika';
             else if (subjectKey === 'ips') mapelTitle = 'IPS Terpadu';
             else if (subjectKey === 'inggris') mapelTitle = 'Bahasa Inggris';
+            else if (subjectKey === 'pancasila') mapelTitle = 'Pendidikan Pancasila';
 
             const headerSubjectEl = document.getElementById('header-subject');
             if (headerSubjectEl) headerSubjectEl.innerText = mapelTitle;
@@ -2325,6 +3964,7 @@
             if (currentSubject === 'matematika') return quizDataMatematika;
             if (currentSubject === 'ips') return quizDataIPS;
             if (currentSubject === 'inggris') return quizDataInggris;
+            if (currentSubject === 'pancasila') return quizDataPancasila;
             return quizDataIndo;
         }
 
@@ -2431,6 +4071,7 @@
             else if (currentSubject === 'matematika') mapelTitle = 'Matematika';
             else if (currentSubject === 'ips') mapelTitle = 'IPS Terpadu';
             else if (currentSubject === 'inggris') mapelTitle = 'Bahasa Inggris';
+            else if (currentSubject === 'pancasila') mapelTitle = 'Pendidikan Pancasila';
 
             // Display Results
             document.getElementById('quiz-form').classList.add('hidden');
@@ -2450,6 +4091,19 @@
                 wrong: wrongCount,
                 total: activeData.length
             };
+
+            // Simpan otomatis ke database hasil murid untuk dipantau guru
+            const now = new Date();
+            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            saveStudentRecord({
+                time: timeStr,
+                studentName: currentStudentName,
+                studentClass: currentStudentClass,
+                subject: mapelTitle,
+                score: finalScore,
+                correct: correctCount,
+                wrong: wrongCount
+            });
 
             const evalBox = document.getElementById('evaluation-message');
             const scoreBg = document.getElementById('score-header-bg');
@@ -2650,6 +4304,15 @@
             
             window.open(waUrl, '_blank');
         }
+
+        // Inisialisasi Sistem Token & Profil Guru saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', function () {
+            initTokenSystem();
+            loadTeacherProfile();
+        });
+        // Panggil langsung jika script dieksekusi setelah DOM siap
+        initTokenSystem();
+        loadTeacherProfile();
     </script>
 </body>
 </html>
