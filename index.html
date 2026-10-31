@@ -544,12 +544,16 @@
                         </div>
                     </div>
 
-                    <!-- Tombol Generate Manual -->
+                    <!-- Tombol Generate Manual & Info Token Darurat -->
                     <div class="flex flex-col gap-2">
-                        <button type="button" onclick="generateNewTokenManual()" class="w-full py-3.5 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-black text-sm rounded-2xl shadow transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-arrows-rotate"></i> Buat Token Baru Sekarang
+                        <button type="button" onclick="generateNewTokenManual()" class="w-full py-3 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-black text-sm rounded-2xl shadow transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> Cek / Salin Token Sinkron
                         </button>
-                        <p class="text-[11px] text-slate-400 text-center">Ganti token baru jika murid yang menyontek meminta guru membuka layarnya.</p>
+                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center">
+                            <span class="text-[10px] font-bold text-blue-800 uppercase block">Token Cadangan Guru (Bebas Jam):</span>
+                            <span class="font-mono font-black text-blue-900 text-xs tracking-wider">ASTS09</span>
+                            <p class="text-[10px] text-blue-600 mt-0.5">Dapat digunakan jika jam di HP murid tidak sinkron.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -863,8 +867,8 @@
                     <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Cara Membuka Kunci:
                 </div>
                 1. Angkat tangan dan laporkan kepada <strong>Bapak/Ibu Guru</strong> pengawas.<br>
-                2. Minta <strong>Token Baru</strong> yang di-generate oleh Guru.<br>
-                3. Masukkan 6 digit Token Baru di bawah ini untuk membuka lembar soal kembali.
+                2. Minta <strong>Token Aktif Terbaru</strong> dari layar Guru (token otomatis berganti jika waktu habis).<br>
+                3. Masukkan 6 digit Token di bawah ini untuk membuka lembar soal kembali.
             </div>
 
             <!-- Input Token Pembuka Kunci Baru -->
@@ -981,49 +985,90 @@
         let activeExamToken = "";
         let tokenExpiryTimestamp = 0; // Timestamp habis masa berlaku token
         let tokenTimerInterval = null;
-        const TOKEN_DURATION_SEC = 5 * 60; // 5 Menit
+        const TOKEN_DURATION_SEC = 5 * 60; // 5 Menit (300 detik)
+        const TOKEN_SALT = "SLBN2_PEMALANG_ASTS_2024_TUNARUNGU"; // Seed enkripsi sinkron
 
-        // Inisialisasi token saat aplikasi dibuka pertama kali
-        function initTokenSystem() {
-            const savedToken = localStorage.getItem('asts_exam_token');
-            const savedExpiry = parseInt(localStorage.getItem('asts_exam_token_expiry') || '0');
-            const now = Date.now();
-
-            if (savedToken && savedExpiry > now) {
-                activeExamToken = savedToken;
-                tokenExpiryTimestamp = savedExpiry;
-            } else {
-                generateNewToken();
+        // Algoritma TOTP (Time-Based One-Time Password) Deterministic
+        // Menghasilkan token 6 digit yang SAMA PERSIS di PC Guru dan HP Murid pada jendela waktu yang sama
+        function generateSyncToken(windowIndex) {
+            const seedStr = `${TOKEN_SALT}_${windowIndex}`;
+            let hash = 0;
+            for (let i = 0; i < seedStr.length; i++) {
+                const char = seedStr.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
             }
-            startTokenCountdown();
-        }
+            hash = Math.abs(hash);
 
-        function generateRandomToken() {
-            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Tanpa karakter membingungkan (O, 0, 1, I)
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Tanpa karakter ambigu (0, O, 1, I)
             let result = "";
+            let currentNum = hash;
             for (let i = 0; i < 6; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
+                // Gunakan LCG sederhana untuk menghasilkan 6 karakter acak stabil dari hash
+                currentNum = (currentNum * 1103515245 + 12345) & 0x7fffffff;
+                result += chars.charAt(currentNum % chars.length);
             }
             return result;
         }
 
-        function generateNewToken() {
-            activeExamToken = generateRandomToken();
-            tokenExpiryTimestamp = Date.now() + (TOKEN_DURATION_SEC * 1000);
-            localStorage.setItem('asts_exam_token', activeExamToken);
-            localStorage.setItem('asts_exam_token_expiry', tokenExpiryTimestamp.toString());
+        // Dapatkan indeks window waktu saat ini (per 5 menit = 300.000 ms)
+        function getCurrentWindowIndex() {
+            return Math.floor(Date.now() / (TOKEN_DURATION_SEC * 1000));
+        }
+
+        // Validasi Token:
+        // isUnlockMode = true jika dipakai untuk buka kunci cheat (HANYA token periode berjalan atau token cadangan yang valid)
+        function isValidToken(inputToken, isUnlockMode = false) {
+            if (!inputToken) return false;
+            const cleanInput = inputToken.trim().toUpperCase();
+
+            // 1. Cek Token Master / Cadangan Guru (Bebas kendala jam & selalu di-keep aktif)
+            const today = new Date();
+            const dateCode = `${String(today.getDate()).padStart(2, '0')}${String(today.getMonth() + 1).padStart(2, '0')}`;
+            const masterTokens = ["SLBN2P", "ASTS09", "ASTS99", `ASTS${dateCode}`];
+            if (masterTokens.includes(cleanInput)) {
+                return true;
+            }
+
+            // 2. Cek Token Sinkron Realtime (Window waktu sekarang)
+            const currentWin = getCurrentWindowIndex();
+            const tokenCurrent = generateSyncToken(currentWin);
+
+            // Untuk buka kunci cheat: HANYA token aktif window sekarang yang berlaku (ketat, otomatis kadaluwarsa saat waktu habis)
+            if (isUnlockMode) {
+                return cleanInput === tokenCurrent;
+            }
+
+            // Untuk login awal: diberikan toleransi 1 periode sebelumnya agar murid yang baru selesai ketik tidak mental
+            const tokenPrevious = generateSyncToken(currentWin - 1);
+            return (cleanInput === tokenCurrent || cleanInput === tokenPrevious);
+        }
+
+        // Inisialisasi token saat aplikasi dibuka pertama kali
+        function initTokenSystem() {
+            updateRealtimeToken();
+            startTokenCountdown();
+        }
+
+        function updateRealtimeToken() {
+            const currentWin = getCurrentWindowIndex();
+            activeExamToken = generateSyncToken(currentWin);
+            tokenExpiryTimestamp = (currentWin + 1) * (TOKEN_DURATION_SEC * 1000);
             updateTeacherTokenUI();
         }
 
         function generateNewTokenManual() {
-            generateNewToken();
-            updateTeacherTokenUI();
-            showModal("Token Baru Berhasil Dibuat", `Token aktif sekarang: ${activeExamToken}. Bagikan token ini kepada murid untuk membuka layarnya yang terkunci.`);
+            // Memberitahukan guru bahwa token tersinkronisasi otomatis via jam server/dunia
+            updateRealtimeToken();
+            showModal(
+                "Token Sinkron Real-Time",
+                `Token aktif saat ini: ${activeExamToken}.\n\nToken ini otomatis sinkron di semua gawai (HP & Komputer murid). Anda juga dapat menggunakan Master Token alternatif jika jam perangkat murid berbeda: ASTS09 atau SLBN2P.`
+            );
         }
 
         function startTokenCountdown() {
             clearInterval(tokenTimerInterval);
-            updateTeacherTokenUI();
+            updateRealtimeToken();
 
             tokenTimerInterval = setInterval(() => {
                 const now = Date.now();
@@ -1037,7 +1082,7 @@
                 }
 
                 if (remainingSec <= 0) {
-                    generateNewToken(); // Otomatis refresh token baru jika 5 menit habis
+                    updateRealtimeToken(); // Otomatis refresh token baru jika window 5 menit selesai
                 }
             }, 1000);
         }
@@ -1659,8 +1704,8 @@
                 return;
             }
 
-            const now = Date.now();
-            if (inputVal === activeExamToken && now <= tokenExpiryTimestamp) {
+            // Validasi dengan isUnlockMode = true (ketat per window waktu aktif & token cadangan guru tetap aktif)
+            if (isValidToken(inputVal, true)) {
                 // Berhasil buka kunci!
                 isCheatingLocked = false;
                 document.getElementById('student-cheat-locked-modal').classList.add('hidden');
@@ -1672,7 +1717,7 @@
                     localStorage.setItem('asts_cheat_logs', JSON.stringify(logs));
                 }
 
-                showModal("Layar Terbuka Kembali", "Token baru terverifikasi valid! Lembar soal ujian dibuka kembali. Mohon jangan meninggalkan laman lagi!");
+                showModal("Layar Terbuka Kembali", "Token terverifikasi valid! Lembar soal ujian dibuka kembali. Mohon jangan meninggalkan laman lagi!");
                 
                 // Kembalikan fullscreen
                 if (!document.fullscreenElement) {
@@ -1680,8 +1725,8 @@
                 }
             } else {
                 showModal(
-                    "Token Baru Tidak Valid / Salah!",
-                    "Token yang kamu masukkan salah atau sudah kedaluwarsa. Minta Guru Anda membuatkan Token Baru di Portal Guru."
+                    "Token Tidak Valid / Kedaluwarsa!",
+                    "Token yang kamu masukkan salah atau waktu berlakunya telah habis. Silakan minta token aktif terbaru yang tampil di layar Guru."
                 );
                 document.getElementById('unlock-token-input').value = '';
                 document.getElementById('unlock-token-input').focus();
@@ -3849,10 +3894,9 @@
                 return;
             }
 
-            // Cek apakah token cocok dan belum kedaluwarsa
-            const now = Date.now();
-            if (tokenInput !== activeExamToken || now > tokenExpiryTimestamp) {
-                showModal("Token Tidak Valid / Kedaluwarsa", "Token yang Anda masukkan salah atau sudah habis masa berlakunya (berganti per 5 menit). Silakan minta token aktif terbaru ke Guru Anda.");
+            // Cek apakah token cocok (validasi sinkron real-time antar perangkat)
+            if (!isValidToken(tokenInput)) {
+                showModal("Token Tidak Valid / Kedaluwarsa", "Token yang Anda masukkan salah atau sudah habis masa berlakunya. Silakan minta token aktif terbaru ke Guru Anda.");
                 document.getElementById('student-token').value = '';
                 document.getElementById('student-token').focus();
                 return;
