@@ -274,6 +274,93 @@
 
 
 
+        <!-- STEP 2.5: PAGE BRIEFING & MOTIVASI SEBELUM MULAI KERJAKAN SOAL -->
+        <section id="briefing-section" class="max-w-2xl mx-auto hidden transition-all">
+            <div class="bg-white rounded-3xl p-6 sm:p-9 shadow-2xl border border-blue-100 text-center relative overflow-hidden">
+                <!-- Bar Hiasan Atas -->
+                <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-amber-500"></div>
+
+                <!-- Icon Hero -->
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-3xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white text-3xl shadow-xl shadow-blue-500/30">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+
+                <!-- Judul Utama -->
+                <h2 class="font-heading text-2xl sm:text-3xl font-black text-slate-800 tracking-tight mb-2">
+                    Selamat Datang di Test Sumatif Online
+                </h2>
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-900 text-xs sm:text-sm font-extrabold shadow-sm mb-5">
+                    <i class="fa-solid fa-book-bookmark text-blue-600"></i>
+                    <span id="briefing-subject-name">Mata Pelajaran</span> &bull; <span id="briefing-student-info">Nama Siswa</span>
+                </div>
+
+                <!-- Kotak Pesan & Nasehat Guru Sesuai Request -->
+                <div class="space-y-3.5 text-left mb-6">
+                    <!-- Pesan 1: Kejujuran & Dilarang Mencontek -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-rose-50 border-2 border-rose-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-ban"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-rose-800 text-sm sm:text-base mb-1 uppercase tracking-wide">
+                                    DILARANG MENCONTEK !!!
+                                </h4>
+                                <p class="text-xs sm:text-sm font-bold text-rose-950 leading-relaxed">
+                                    Kerjakan dengan jujur sesuai dengan kemampuan kamu. <em>"Kejujuran itu modal awal kesuksesan."</em>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pesan 2: Teliti & Pahami Perintah Soal -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-amber-900 text-sm sm:text-base mb-1">
+                                    Teliti Sebelum Mengerjakan
+                                </h4>
+                                <p class="text-xs sm:text-sm font-semibold text-amber-950 leading-relaxed">
+                                    Pahami perintah soal dan perhatikan gambar yang diujikan dengan baik. Jangan terburu-buru memilih jawaban.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pesan 3: Harapan Nilai Memuaskan & Semangat Guru -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-hands-clapping"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-emerald-900 text-sm sm:text-base mb-1">
+                                    Selamat Mengerjakan!
+                                </h4>
+                                <p class="text-xs sm:text-sm font-bold text-emerald-950 leading-relaxed">
+                                    Semoga mendapatkan nilai yang memuaskan. <strong>Semangat anak anaku !!</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
+                    <button type="button" onclick="cancelBriefingBackToMenu()" class="w-full sm:w-auto px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs sm:text-sm rounded-2xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu Soal
+                    </button>
+                    <button type="button" onclick="startExamConfirmed()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 hover:from-blue-800 hover:to-indigo-800 active:scale-95 text-white font-black text-sm sm:text-base rounded-2xl shadow-xl shadow-blue-600/30 transition transform flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-play"></i> Mulai Kerjakan Soal Sekarang
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- STEP 3: LEMBAR UJIAN / QUIZ FORM -->
         <form id="quiz-form" class="hidden" onsubmit="event.preventDefault(); submitQuiz();">
             <!-- Header Info Siswa & Tombol Keluar -->
@@ -612,9 +699,20 @@
         let currentStudentClass = "";
         let currentSubject = ""; // 'indo', 'seni', 'ipa', or 'pkpbi'
         let pendingSubjectKey = ""; // Mapel sementara yang dipilih sebelum token diverifikasi
+        let activeShuffledQuestions = []; // Soal aktif yang sudah diacak urutannya untuk murid
         let timerInterval = null;
         let totalSeconds = 60 * 60; // 60 Menit
         let latestResultData = null;
+
+        // FUNGSI PENGACAK URUTAN SOAL (Fisher-Yates Shuffle)
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
         // TOKEN CONFIGURATION (Password Soal oleh Guru)
         const EXAM_TOKEN = "Testsumatif1";
@@ -2859,7 +2957,7 @@
             // Token dicocokkan dengan "Testsumatif1" (case-insensitive & trim untuk kenyamanan murid)
             if (enteredToken.toLowerCase() === EXAM_TOKEN.toLowerCase()) {
                 closeTokenModal();
-                startExamForSubject(pendingSubjectKey);
+                showBriefingPage(pendingSubjectKey);
             } else {
                 showModal("Token / Password Salah!", "Token yang dimasukkan tidak cocok atau belum aktif. Silakan tanyakan kepada Bapak/Ibu Guru pengawas!");
                 if (tokenInput) {
@@ -2869,9 +2967,39 @@
             }
         }
 
+        // TAMPILKAN PAGE BRIEFING & MOTIVASI SEBELUM SOAL DIBUKA
+        function showBriefingPage(subjectKey) {
+            currentSubject = subjectKey;
+            const mapelTitle = getSubjectTitleByKey(subjectKey);
+
+            document.getElementById('briefing-subject-name').innerText = mapelTitle;
+            document.getElementById('briefing-student-info').innerText = `${currentStudentName} (${currentStudentClass})`;
+
+            document.getElementById('subject-section').classList.add('hidden');
+            document.getElementById('briefing-section').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelBriefingBackToMenu() {
+            document.getElementById('briefing-section').classList.add('hidden');
+            document.getElementById('subject-section').classList.remove('hidden');
+            pendingSubjectKey = "";
+            currentSubject = "";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startExamConfirmed() {
+            document.getElementById('briefing-section').classList.add('hidden');
+            startExamForSubject(currentSubject);
+        }
+
         function startExamForSubject(subjectKey) {
             currentSubject = subjectKey;
             const mapelTitle = getSubjectTitleByKey(subjectKey);
+
+            // ACAK URUTAN SOAL KHUSUS UNTUK SISWA INI (Fisher-Yates)
+            const rawQuestions = getRawSubjectData();
+            activeShuffledQuestions = shuffleArray(rawQuestions);
 
             const headerSubjectEl = document.getElementById('header-subject');
             if (headerSubjectEl) headerSubjectEl.innerText = mapelTitle;
@@ -2937,6 +3065,7 @@
                 () => {
                     disableAntiCheat(); // Lepas kunci anti-cheat
                     stopTimer();
+                    activeShuffledQuestions = [];
                     document.getElementById('quiz-form').classList.add('hidden');
                     document.getElementById('subject-section').classList.remove('hidden');
                     const headerSubjectEl = document.getElementById('header-subject');
@@ -2946,8 +3075,8 @@
             );
         }
 
-        // GET ACTIVE QUIZ DATA
-        function getActiveData() {
+        // GET ACTIVE QUIZ DATA (Menggunakan Soal yang Diacak Urutannya)
+        function getRawSubjectData() {
             if (currentSubject === 'indo') return quizDataIndo;
             if (currentSubject === 'seni') return quizDataSeni;
             if (currentSubject === 'ipa') return quizDataIPA;
@@ -2957,6 +3086,13 @@
             if (currentSubject === 'inggris') return quizDataInggris;
             if (currentSubject === 'pancasila') return quizDataPancasila;
             return quizDataIndo;
+        }
+
+        function getActiveData() {
+            if (activeShuffledQuestions && activeShuffledQuestions.length > 0) {
+                return activeShuffledQuestions;
+            }
+            return getRawSubjectData();
         }
 
         // RENDER QUESTIONS DYNAMICALLY
@@ -3158,8 +3294,10 @@
         // NAVIGATION
         function goToSubjectSelection() {
             stopTimer();
+            activeShuffledQuestions = [];
             document.getElementById('quiz-form').reset();
             document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('briefing-section').classList.add('hidden');
             document.getElementById('result-section').classList.add('hidden');
             document.getElementById('subject-section').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3167,8 +3305,10 @@
 
         function logout() {
             stopTimer();
+            activeShuffledQuestions = [];
             document.getElementById('student-name').value = '';
             document.getElementById('subject-section').classList.add('hidden');
+            document.getElementById('briefing-section').classList.add('hidden');
             document.getElementById('quiz-form').classList.add('hidden');
             document.getElementById('result-section').classList.add('hidden');
             document.getElementById('login-section').classList.remove('hidden');
