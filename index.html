@@ -208,7 +208,7 @@
                                 <i class="fa-solid fa-calculator"></i>
                             </div>
                             <h3 class="font-bold text-base text-slate-800 group-hover:text-blue-900">Matematika</h3>
-                            <p class="text-[11px] text-slate-500 mt-1">Penjumlahan, Pengurangan, Perkalian, Pembagian & Cerita (30 Soal)</p>
+                            <p class="text-[11px] text-slate-500 mt-1">Soal Cerita Hitungan Nyata, Penjumlahan, Pengurangan & Uang Belanja (30 Soal | Bergambar)</p>
                         </div>
                         <div class="mt-4 flex items-center justify-between font-bold text-xs text-blue-800">
                             <span class="inline-flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-lg border border-blue-200 text-[11px] text-slate-600"><i class="fa-solid fa-lock text-amber-500"></i> Butuh Token</span>
@@ -569,7 +569,7 @@
                             <i class="fa-solid fa-shield-halved text-rose-600"></i> Aturan Anti-Cheat (Dilarang Keluar Laman)
                         </h4>
                         <p class="text-rose-800 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
-                            Jika kamu <strong>menutup/keluar dari halaman ujian</strong> (1x): <strong>Layar akan terkunci dengan password</strong> dan hanya Guru yang tahu kuncinya (2233). Jika mencoba keluar <strong>lebih dari 1x</strong>: Kamu akan <strong>otomatis LOG OUT</strong> dan sesi ujian dibatalkan!
+                            Jika kamu <strong>menutup/keluar dari halaman ujian</strong> (1x): <strong>Layar akan terkunci</strong> dan hanya Bapak/Ibu Guru Pengawas yang dapat membukanya kembali. Jika mencoba keluar <strong>lebih dari 1x</strong>: Kamu akan <strong>otomatis LOG OUT</strong> dan sesi ujian dibatalkan!
                         </p>
                     </div>
                 </div>
@@ -651,7 +651,7 @@
         </div>
     </div>
 
-    <!-- MODAL KHUSUS SISWA: LAYAR TERKUNCI KARENA KETAHUAN KELUAR / MEMBUKA PAGE LAIN (KODE BUKA: 2233) -->
+    <!-- MODAL KHUSUS SISWA: LAYAR TERKUNCI KARENA KETAHUAN KELUAR / MEMBUKA PAGE LAIN -->
     <div id="student-cheat-locked-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-lg z-[70] flex items-center justify-center hidden p-4 select-none">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 text-center shadow-2xl border-4 border-rose-600 transform transition-all relative">
             <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner animate-pulse">
@@ -697,22 +697,12 @@
         // Global User State & Timer Variables
         let currentStudentName = "";
         let currentStudentClass = "";
-        let currentSubject = ""; // 'indo', 'seni', 'ipa', or 'pkpbi'
+        let currentSubject = ""; // 'indo', 'seni', 'ipa', etc.
         let pendingSubjectKey = ""; // Mapel sementara yang dipilih sebelum token diverifikasi
-        let activeShuffledQuestions = []; // Soal aktif yang sudah diacak urutannya untuk murid
+        let activeQuestions = []; // Soal aktif sesuai urutan asli per tema
         let timerInterval = null;
         let totalSeconds = 60 * 60; // 60 Menit
         let latestResultData = null;
-
-        // FUNGSI PENGACAK URUTAN SOAL (Fisher-Yates Shuffle)
-        function shuffleArray(array) {
-            const arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
 
         // TOKEN CONFIGURATION (Password Soal oleh Guru)
         const EXAM_TOKEN = "Testsumatif1";
@@ -904,7 +894,7 @@
             {
                 id: 4,
                 question: "Perhatikan gambar!\nBudi membersihkan gigi menggunakan sikat gigi dan pasta gigi.\nKegiatan ini bertujuan agar gigi ...",
-                image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1693692273603-3b9e13789298?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Menjadi kotor", "Sehat dan bersih", "Berwarna kuning", "Sakit dan berlubang"],
                 answer: 1,
                 explanation: "Menggosok gigi setiap pagi membuat gigi menjadi bersih, sehat, dan bebas kuman."
@@ -938,7 +928,7 @@
             {
                 id: 8,
                 question: "Perhatikan gambar!\nSebelum menikmati bekal makanan saat istirahat, apa yang wajib dilakukan Budi dan Siti?",
-                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1651291792490-795b5c32edb7?q=80&w=875&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Mencuci tangan dengan sabun", "Berlari kencang", "Menyiram lantai", "Membeli mainan"],
                 answer: 0,
                 explanation: "Sebelum makan kita harus mencuci tangan memakai air dan sabun agar bersih dari kuman."
@@ -1022,7 +1012,7 @@
             {
                 id: 18,
                 question: "Mengapa Doni membiasakan tidur malam tepat waktu pada pukul 21.00?",
-                image: "https://images.unsplash.com/photo-1511295742362-92c96b124e52?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1517912707202-5dd698d629a8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Agar tubuh sehat dan tidak terlambat bangun pagi", "Karena tidak punya teman", "Supaya dimarahi ibu", "Agar lampu mati"],
                 answer: 0,
                 explanation: "Tidur tepat waktu menjaga kesehatan tubuh dan membuat kita bangun pagi tepat waktu."
@@ -1030,7 +1020,7 @@
             {
                 id: 19,
                 question: "Perhatikan gambar!\nSebelum belajar di malam hari, meja belajar harus dalam keadaan ...",
-                image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=600&auto=format&fit=crop&q=80",
+                image: "https://images.unsplash.com/photo-1764096534686-68091ce5ab45?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D?w=600&auto=format&fit=crop&q=80",
                 options: ["Berantakan dan kotor", "Rapi dan terang", "Gelap gulita", "Basah terkena air"],
                 answer: 1,
                 explanation: "Meja belajar yang rapi dan memiliki penerangan cukup membuat belajar lebih nyaman dan konsentrasi."
@@ -1870,240 +1860,233 @@
         ];
 
         // DATA SOAL MATEMATIKA (30 SOAL)
+        // Nomor 1 - 10: Soal Cerita Penambahan & Pengurangan (Maksimal angka 100)
+        // Nomor 11 - 30: Soal Cerita Nyata Hitungan Uang (Maksimal nominal Rp 100.000)
+        // Dilengkapi 10 gambar visual pembantu belajar
         const quizDataMatematika = [
-            // Penambahan
+            // BAGIAN 1: SOAL CERITA PENAMBAHAN & PENGURANGAN (MAKSIMAL 100)
             {
                 id: 1,
-                question: "Hasil dari penjumlahan bilangan berikut adalah:\n245 + 132 = ...",
-                image: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&auto=format&fit=crop&q=80",
-                options: ["367", "377", "387", "397"],
+                question: "Perhatikan gambar pensil warna di bawah ini!\nSiti memiliki 25 batang pensil warna di tempat pensilnya.\nIbu membelikan lagi 14 batang pensil warna baru untuk Siti.\nBerapakah jumlah seluruh pensil warna Siti sekarang?",
+                image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&auto=format&fit=crop&q=80",
+                options: ["35 batang", "39 batang", "40 batang", "42 batang"],
                 answer: 1,
-                explanation: "245 + 132 = 377."
+                explanation: "Operasi penjumlahan: 25 + 14 = 39 batang pensil warna."
             },
             {
                 id: 2,
-                question: "Hitunglah hasil penjumlahan dengan teknik menyimpan berikut:\n368 + 257 = ...",
-                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
-                options: ["615", "625", "635", "525"],
+                question: "Di dalam toples meja ruang tamu ada 48 butir permen.\nAdik memakan 15 butir permen bersama temannya.\nBerapakah sisa permen di dalam toples sekarang?",
+                options: ["30 butir", "33 butir", "35 butir", "38 butir"],
                 answer: 1,
-                explanation: "368 + 257 = 625 (8+7=15 simpan 1, 1+6+5=12 simpan 1, 1+3+2=6)."
+                explanation: "Operasi pengurangan: 48 - 15 = 33 butir permen."
             },
             {
                 id: 3,
-                question: "Hasil dari operasi hitung:\n512 + 189 = ...",
-                options: ["691", "701", "711", "681"],
+                question: "Perhatikan gambar buah mangga segar berikut!\nPak Budi memetik 35 buah mangga di kebun pada pagi hari.\nPada sore hari, Pak Budi memetik lagi 28 buah mangga.\nBerapa total seluruh buah mangga yang dipetik Pak Budi?",
+                image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&auto=format&fit=crop&q=80",
+                options: ["53 buah", "63 buah", "65 buah", "73 buah"],
                 answer: 1,
-                explanation: "512 + 189 = 701."
+                explanation: "Operasi penjumlahan: 35 + 28 = 63 buah mangga."
             },
             {
                 id: 4,
-                question: "Berapakah hasil penjumlahan tiga bilangan berikut?\n120 + 230 + 150 = ...",
-                options: ["480", "500", "510", "520"],
+                question: "Doni mempunyai 65 butir kelereng.\nSaat bermain kelereng di halaman, kelereng Doni kalah sebanyak 24 butir.\nBerapakah kelereng Doni yang tersisa sekarang?",
+                options: ["39 butir", "41 butir", "43 butir", "45 butir"],
                 answer: 1,
-                explanation: "120 + 230 = 350, lalu 350 + 150 = 500."
+                explanation: "Operasi pengurangan: 65 - 24 = 41 butir kelereng."
             },
             {
                 id: 5,
-                question: "Hasil dari penjumlahan ribuan:\n1.250 + 1.420 = ...",
-                options: ["2.650", "2.670", "2.770", "2.570"],
+                question: "Perhatikan gambar buku tulis di bawah ini!\nDi perpustakaan kelas terdapat 42 buah buku pelajaran.\nBu Guru menambahkan 36 buah buku cerita baru.\nBerapa jumlah keseluruhan buku di perpustakaan kelas sekarang?",
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
+                options: ["76 buah", "78 buah", "80 buah", "82 buah"],
                 answer: 1,
-                explanation: "1.250 + 1.420 = 2.670."
+                explanation: "Operasi penjumlahan: 42 + 36 = 78 buah buku."
             },
-
-            // Pengurangan
             {
                 id: 6,
-                question: "Hasil dari pengurangan berikut adalah:\n485 - 231 = ...",
-                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
-                options: ["244", "254", "264", "274"],
+                question: "Seorang pedagang membawa 86 butir telur ayam di gerobak.\nKetika di jalan, sebanyak 18 butir telur pecah.\nBerapakah butir telur ayam yang masih utuh?",
+                options: ["64 butir", "68 butir", "70 butir", "72 butir"],
                 answer: 1,
-                explanation: "485 - 231 = 254."
+                explanation: "Operasi pengurangan: 86 - 18 = 68 butir telur."
             },
             {
                 id: 7,
-                question: "Hitunglah hasil pengurangan dengan teknik meminjam:\n524 - 168 = ...",
-                options: ["346", "356", "366", "376"],
+                question: "Perhatikan gambar buah apel merah di bawah ini!\nPaman memiliki 50 buah apel merah di dalam keranjang.\nBibi membawakan lagi 35 buah apel merah dari pasar.\nBerapakah jumlah buah apel merah di keranjang sekarang?",
+                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop&q=80",
+                options: ["75 buah", "85 buah", "90 buah", "95 buah"],
                 answer: 1,
-                explanation: "524 - 168 = 356."
+                explanation: "Operasi penjumlahan: 50 + 35 = 85 buah apel."
             },
             {
                 id: 8,
-                question: "Hasil dari pengurangan ratusan:\n750 - 325 = ...",
-                options: ["415", "425", "435", "445"],
+                question: "Di halaman sekolah mula-mula ada 90 lembar daun kering.\nRegu piket membersihkan dan membuang 45 lembar daun ke tempat sampah.\nBerapa lembar daun kering yang belum dibersihkan?",
+                options: ["35 lembar", "45 lembar", "50 lembar", "55 lembar"],
                 answer: 1,
-                explanation: "750 - 325 = 425."
+                explanation: "Operasi pengurangan: 90 - 45 = 45 lembar daun."
             },
             {
                 id: 9,
-                question: "Berapakah sisa pengurangan berikut?\n900 - 465 = ...",
-                options: ["425", "435", "445", "535"],
+                question: "Rani menanam 34 bibit bunga mawar di taman.\nKakak juga menanam 27 bibit bunga melati di sampingnya.\nBerapa jumlah seluruh bibit bunga yang ditanam Rani dan Kakak?",
+                options: ["51 bibit", "61 bibit", "63 bibit", "65 bibit"],
                 answer: 1,
-                explanation: "900 - 465 = 435."
+                explanation: "Operasi penjumlahan: 34 + 27 = 61 bibit bunga."
             },
             {
                 id: 10,
-                question: "Hasil dari pengurangan bilangan ribuan:\n2.500 - 1.150 = ...",
-                options: ["1.250", "1.350", "1.450", "1.550"],
+                question: "Perhatikan gambar penghapus karet warna-warni berikut!\nKoperasi sekolah memiliki persediaan 75 buah penghapus.\nHari ini terjual kepada murid sebanyak 32 buah penghapus.\nBerapakah sisa penghapus yang ada di koperasi?",
+                image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=600&auto=format&fit=crop&q=80",
+                options: ["39 buah", "43 buah", "45 buah", "47 buah"],
                 answer: 1,
-                explanation: "2.500 - 1.150 = 1.350."
+                explanation: "Operasi pengurangan: 75 - 32 = 43 buah penghapus."
             },
 
-            // Perkalian
+            // BAGIAN 2: SOAL CERITA NYATA HITUNGAN UANG (NOMOR 11 - 30, MAKSIMAL Rp 100.000)
             {
                 id: 11,
-                question: "Berapakah hasil perkalian dasar berikut?\n15 x 6 = ...",
-                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-                options: ["80", "90", "95", "100"],
+                question: "Perhatikan gambar uang saku berikut!\nRian memiliki uang saku sebesar Rp 10.000.\nIa membeli es teh manis di kantin seharga Rp 3.000.\nBerapakah sisa uang saku Rian sekarang?",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80",
+                options: ["Rp 6.000", "Rp 7.000", "Rp 8.000", "Rp 9.000"],
                 answer: 1,
-                explanation: "15 x 6 = 90."
+                explanation: "Operasi hitung uang: Rp 10.000 - Rp 3.000 = Rp 7.000."
             },
             {
                 id: 12,
-                question: "Hasil dari perkalian puluhan dengan satuan:\n24 x 8 = ...",
-                options: ["182", "192", "202", "172"],
+                question: "Siti mempunyai uang sebesar Rp 15.000.\nAyah memberi tambahan uang saku sebesar Rp 20.000.\nBerapakah jumlah total uang yang dimiliki Siti sekarang?",
+                options: ["Rp 30.000", "Rp 35.000", "Rp 40.000", "Rp 45.000"],
                 answer: 1,
-                explanation: "24 x 8 = 192 (4 x 8 = 32, 20 x 8 = 160 -> 160 + 32 = 192)."
+                explanation: "Operasi hitung uang: Rp 15.000 + Rp 20.000 = Rp 35.000."
             },
             {
                 id: 13,
-                question: "Hitunglah hasil perkalian berikut:\n35 x 10 = ...",
-                options: ["305", "350", "3.500", "530"],
-                answer: 1,
-                explanation: "Bilangan berapapun yang dikalikan 10 cukup ditambahkan angka 0 di belakangnya, sehingga 35 x 10 = 350."
-            },
-            {
-                id: 14,
-                question: "Berapakah hasil dari perkalian bersusun:\n42 x 12 = ...",
-                options: ["494", "504", "514", "524"],
-                answer: 1,
-                explanation: "42 x 12 = 42 x (10 + 2) = 420 + 84 = 504."
-            },
-            {
-                id: 15,
-                question: "Hasil dari perkalian ratusan dengan satuan:\n125 x 4 = ...",
-                options: ["450", "500", "550", "600"],
-                answer: 1,
-                explanation: "125 x 4 = 500."
-            },
-
-            // Pembagian
-            {
-                id: 16,
-                question: "Hasil pembagian dari bilangan berikut adalah:\n72 : 8 = ...",
-                image: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600&auto=format&fit=crop&q=80",
-                options: ["7", "9", "8", "6"],
-                answer: 1,
-                explanation: "72 dibagi 8 hasilnya adalah 9, karena 9 x 8 = 72."
-            },
-            {
-                id: 17,
-                question: "Hitunglah hasil pembagian ratusan dengan satuan:\n144 : 6 = ...",
-                options: ["22", "24", "26", "28"],
-                answer: 1,
-                explanation: "144 : 6 = 24."
-            },
-            {
-                id: 18,
-                question: "Berapakah hasil bagi dari operasi berikut?\n250 : 5 = ...",
-                options: ["40", "50", "60", "25"],
-                answer: 1,
-                explanation: "250 : 5 = 50."
-            },
-            {
-                id: 19,
-                question: "Hasil dari pembagian berikut adalah:\n360 : 12 = ...",
-                options: ["20", "30", "40", "25"],
-                answer: 1,
-                explanation: "360 : 12 = 30."
-            },
-            {
-                id: 20,
-                question: "Berapakah hasil pembagian:\n480 : 8 = ...",
-                options: ["50", "60", "70", "80"],
-                answer: 1,
-                explanation: "480 : 8 = 60 (karena 48 : 8 = 6, ditambah 0 menjadi 60)."
-            },
-
-            // Soal Cerita Sederhana Bergambar
-            {
-                id: 21,
-                question: "Perhatikan gambar pensil warna berikut!\nSiti mempunyai 15 pensil warna di kotak pensil.\nIbu membelikan lagi 12 pensil warna untuk Siti.\nBerapa jumlah semua pensil warna milik Siti sekarang?",
-                image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&auto=format&fit=crop&q=80",
-                options: ["25 pensil", "27 pensil", "29 pensil", "30 pensil"],
-                answer: 1,
-                explanation: "Operasi penjumlahan: 15 + 12 = 27 pensil warna."
-            },
-            {
-                id: 22,
-                question: "Perhatikan gambar buah mangga segar di bawah ini!\nPak Budi memanen 85 buah mangga dari pohon di kebun.\nSebanyak 25 buah mangga dibagikan kepada tetangga.\nBerapa sisa buah mangga milik Pak Budi sekarang?",
-                image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&auto=format&fit=crop&q=80",
-                options: ["55 buah", "60 buah", "65 buah", "70 buah"],
-                answer: 1,
-                explanation: "Operasi pengurangan: 85 - 25 = 60 buah mangga."
-            },
-            {
-                id: 23,
-                question: "Perhatikan gambar penghapus karet berikut!\nDoni membeli 6 kotak penghapus untuk teman sekelasnya.\nSetiap kotak berisi 8 buah penghapus.\nBerapa jumlah seluruh penghapus yang dibeli Doni?",
-                image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=600&auto=format&fit=crop&q=80",
-                options: ["42 buah", "48 buah", "54 buah", "56 buah"],
-                answer: 1,
-                explanation: "Operasi perkalian: 6 x 8 = 48 buah penghapus."
-            },
-            {
-                id: 24,
-                question: "Perhatikan gambar buku tulis bertumpuk berikut!\nIbu guru membawa 36 buku tulis ke dalam kelas.\nBuku-buku tersebut akan dibagikan sama rata kepada 4 kelompok belajar.\nBerapa buku tulis yang diterima setiap kelompok?",
-                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
-                options: ["8 buku", "9 buku", "10 buku", "12 buku"],
-                answer: 1,
-                explanation: "Operasi pembagian: 36 : 4 = 9 buku tulis."
-            },
-            {
-                id: 25,
-                question: "Perhatikan gambar uang saku dan buku pelajaran berikut!\nRian memiliki uang tabungan sebesar Rp 50.000.\nIa menggunakan uangnya untuk membeli buku pelajaran seharga Rp 32.000.\nBerapakah sisa uang tabungan Rian sekarang?",
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80",
-                options: ["Rp 16.000", "Rp 18.000", "Rp 20.000", "Rp 22.000"],
-                answer: 1,
-                explanation: "Operasi pengurangan: Rp 50.000 - Rp 32.000 = Rp 18.000."
-            },
-            {
-                id: 26,
-                question: "Perhatikan gambar buah apel merah segar berikut!\nPaman memetik 45 buah apel di kebun pada pagi hari, lalu memetik lagi 35 buah apel pada sore hari.\nBerapa total seluruh buah apel yang dipetik paman?",
-                image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop&q=80",
-                options: ["70 buah", "80 buah", "85 buah", "90 buah"],
-                answer: 1,
-                explanation: "Operasi penjumlahan: 45 + 35 = 80 buah apel."
-            },
-            {
-                id: 27,
-                question: "Perhatikan gambar rak buku di perpustakaan berikut!\nDi sebuah perpustakaan sekolah terdapat 150 buku cerita.\nSebanyak 42 buku sedang dipinjam oleh siswa.\nBerapakah sisa buku cerita yang masih ada di rak perpustakaan?",
-                image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&auto=format&fit=crop&q=80",
-                options: ["102 buku", "108 buku", "112 buku", "118 buku"],
-                answer: 1,
-                explanation: "Operasi pengurangan: 150 - 42 = 108 buku."
-            },
-            {
-                id: 28,
-                question: "Perhatikan gambar penggaris alat tulis berikut!\nDi koperasi sekolah terdapat 5 pak penggaris.\nSetiap pak berisi 12 batang penggaris.\nBerapa jumlah keseluruhan batang penggaris di koperasi?",
-                image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&auto=format&fit=crop&q=80",
-                options: ["50 batang", "60 batang", "65 batang", "70 batang"],
-                answer: 1,
-                explanation: "Operasi perkalian: 5 x 12 = 60 batang penggaris."
-            },
-            {
-                id: 29,
-                question: "Perhatikan gambar toples permen manis warna-warni berikut!\nAyah memiliki 75 butir permen manis.\nPermen tersebut akan dibagikan sama rata kepada 5 orang keponakannya.\nBerapa butir permen yang didapatkan oleh masing-masing keponakan?",
-                image: "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=600&auto=format&fit=crop&q=80",
-                options: ["12 butir", "15 butir", "18 butir", "20 butir"],
-                answer: 1,
-                explanation: "Operasi pembagian: 75 : 5 = 15 butir permen."
-            },
-            {
-                id: 30,
-                question: "Perhatikan gambar roti lezat berikut!\nToni mempunyai uang saku Rp 20.000.\nIa membeli 2 bungkus roti yang masing-masing harganya Rp 4.000.\nBerapakah sisa uang saku Toni?",
+                question: "Perhatikan gambar roti lezat di kantin sekolah berikut!\nToni membeli 2 bungkus roti bakar.\nHarga 1 bungkus roti bakar adalah Rp 6.000.\nBerapakah total uang yang harus dibayar Toni?",
                 image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
                 options: ["Rp 10.000", "Rp 12.000", "Rp 14.000", "Rp 16.000"],
                 answer: 1,
-                explanation: "Harga 2 roti = 2 x Rp 4.000 = Rp 8.000. Sisa uang = Rp 20.000 - Rp 8.000 = Rp 12.000."
+                explanation: "Operasi hitung uang: 2 x Rp 6.000 = Rp 12.000."
+            },
+            {
+                id: 14,
+                question: "Budi membeli sepiring nasi goreng seharga Rp 15.000.\nBudi membayar dengan 1 lembar uang Rp 20.000.\nBerapakah uang kembalian yang diterima Budi?",
+                options: ["Rp 3.000", "Rp 5.000", "Rp 6.000", "Rp 7.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang kembalian: Rp 20.000 - Rp 15.000 = Rp 5.000."
+            },
+            {
+                id: 15,
+                question: "Perhatikan gambar buku gambar dan alat tulis berikut!\nLani membeli 1 buku gambar seharga Rp 8.000 dan 1 kotak krayon seharga Rp 12.000.\nBerapakah total belanjaan alat tulis Lani?",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80",
+                options: ["Rp 18.000", "Rp 20.000", "Rp 22.000", "Rp 24.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 8.000 + Rp 12.000 = Rp 20.000."
+            },
+            {
+                id: 16,
+                question: "Edo membawa uang Rp 25.000 ke toko alat tulis.\nIa membeli 1 buah penggaris besi seharga Rp 7.000.\nBerapakah sisa uang belanja Edo?",
+                options: ["Rp 16.000", "Rp 18.000", "Rp 19.000", "Rp 20.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 25.000 - Rp 7.000 = Rp 18.000."
+            },
+            {
+                id: 17,
+                question: "Di dalam dompet Dimas ada 2 lembar uang Rp 10.000 dan 1 lembar uang Rp 5.000.\nBerapakah jumlah nilai keseluruhan uang di dompet Dimas?",
+                options: ["Rp 20.000", "Rp 25.000", "Rp 30.000", "Rp 35.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: (2 x Rp 10.000) + Rp 5.000 = Rp 20.000 + Rp 5.000 = Rp 25.000."
+            },
+            {
+                id: 18,
+                question: "Perhatikan gambar botol air mineral berikut!\nDoni membeli 3 botol air minum mineral untuk teman-temannya.\nHarga 1 botol air mineral adalah Rp 4.000.\nBerapakah total uang yang harus dibayar Doni?",
+                image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&auto=format&fit=crop&q=80",
+                options: ["Rp 10.000", "Rp 12.000", "Rp 14.000", "Rp 15.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: 3 x Rp 4.000 = Rp 12.000."
+            },
+            {
+                id: 19,
+                question: "Rina membeli jilbab seragam sekolah seharga Rp 35.000.\nIa membayar ke kasir menggunakan 1 lembar uang Rp 50.000.\nBerapakah uang kembalian yang harus diterima Rina?",
+                options: ["Rp 10.000", "Rp 15.000", "Rp 20.000", "Rp 25.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang kembalian: Rp 50.000 - Rp 35.000 = Rp 15.000."
+            },
+            {
+                id: 20,
+                question: "Fajar memiliki uang tabungan celengan sebesar Rp 40.000.\nHari ini Fajar menabung lagi sebesar Rp 15.000 dari sisa uang sakunya.\nBerapakah jumlah uang tabungan Fajar sekarang?",
+                options: ["Rp 50.000", "Rp 55.000", "Rp 60.000", "Rp 65.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 40.000 + Rp 15.000 = Rp 55.000."
+            },
+            {
+                id: 21,
+                question: "Perhatikan gambar tas sekolah baru berikut!\nIbu membelikan Budi tas ransel sekolah seharga Rp 65.000.\nIbu membayar dengan 1 lembar uang kertas pecahan Rp 100.000.\nBerapakah uang kembalian yang diterima Ibu dari penjual tas?",
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80",
+                options: ["Rp 30.000", "Rp 35.000", "Rp 40.000", "Rp 45.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 100.000 - Rp 65.000 = Rp 35.000."
+            },
+            {
+                id: 22,
+                question: "Harga 1 mangkok bakso adalah Rp 12.000 dan harga 1 gelas es jeruk adalah Rp 5.000.\nJika Andi memesan 1 porsi bakso dan 1 gelas es jeruk, berapakah total yang harus dibayar?",
+                options: ["Rp 15.000", "Rp 17.000", "Rp 18.000", "Rp 20.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 12.000 + Rp 5.000 = Rp 17.000."
+            },
+            {
+                id: 23,
+                question: "Wawan memiliki uang sebesar Rp 50.000.\nIa membeli kaos kaki sekolah seharga Rp 18.000.\nBerapakah sisa uang yang masih dipegang Wawan?",
+                options: ["Rp 28.000", "Rp 32.000", "Rp 35.000", "Rp 38.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 50.000 - Rp 18.000 = Rp 32.000."
+            },
+            {
+                id: 24,
+                question: "Di koperasi sekolah, harga 1 buku tulis adalah Rp 4.000.\nBerapakah uang yang harus dibayar jika Maya membeli 5 buku tulis?",
+                options: ["Rp 18.000", "Rp 20.000", "Rp 22.000", "Rp 25.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: 5 x Rp 4.000 = Rp 20.000."
+            },
+            {
+                id: 25,
+                question: "Perhatikan gambar sepatu sekolah berikut!\nAyah membeli sepatu sekolah untuk Doni seharga Rp 80.000.\nAyah membayar dengan 1 lembar uang Rp 100.000.\nBerapakah uang kembalian yang diterima Ayah?",
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80",
+                options: ["Rp 15.000", "Rp 20.000", "Rp 25.000", "Rp 30.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang kembalian: Rp 100.000 - Rp 80.000 = Rp 20.000."
+            },
+            {
+                id: 26,
+                question: "Dina mempunyai tabungan sebesar Rp 60.000.\nIa menggunakan uang tabungannya sebesar Rp 25.000 untuk membeli baju olahraga.\nBerapakah sisa uang tabungan Dina sekarang?",
+                options: ["Rp 30.000", "Rp 35.000", "Rp 40.000", "Rp 45.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 60.000 - Rp 25.000 = Rp 35.000."
+            },
+            {
+                id: 27,
+                question: "Kakek memberikan uang saku masing-masing Rp 15.000 kepada 3 cucunya.\nBerapakah total uang yang dibagikan kakek kepada seluruh cucunya?",
+                options: ["Rp 40.000", "Rp 45.000", "Rp 50.000", "Rp 55.000"],
+                answer: 1,
+                explanation: "Operasi hitung perkalian uang: 3 x Rp 15.000 = Rp 45.000."
+            },
+            {
+                id: 28,
+                question: "Pak Joko memiliki uang tunai 1 lembar Rp 50.000 dan 2 lembar Rp 20.000.\nBerapakah jumlah uang Pak Joko seluruhnya?",
+                options: ["Rp 80.000", "Rp 90.000", "Rp 95.000", "Rp 100.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 50.000 + (2 x Rp 20.000) = Rp 50.000 + Rp 40.000 = Rp 90.000."
+            },
+            {
+                id: 29,
+                question: "Ibu membeli buah jeruk di pasar seharga Rp 45.000 dan buah pisang seharga Rp 25.000.\nBerapakah total uang yang harus dibayar Ibu di pedagang buah?",
+                options: ["Rp 65.000", "Rp 70.000", "Rp 75.000", "Rp 80.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang: Rp 45.000 + Rp 25.000 = Rp 70.000."
+            },
+            {
+                id: 30,
+                question: "Bayu memiliki 1 lembar uang kertas Rp 100.000.\nBayu membeli buku ensiklopedia pelajaran seharga Rp 72.000.\nBerapakah uang kembalian yang harus diterima Bayu?",
+                options: ["Rp 26.000", "Rp 28.000", "Rp 30.000", "Rp 32.000"],
+                answer: 1,
+                explanation: "Operasi hitung uang kembalian: Rp 100.000 - Rp 72.000 = Rp 28.000."
             }
         ];
 
@@ -2947,7 +2930,6 @@
 
         function closeTokenModal() {
             document.getElementById('token-modal').classList.add('hidden');
-            pendingSubjectKey = "";
         }
 
         function verifySubjectToken() {
@@ -2956,8 +2938,9 @@
 
             // Token dicocokkan dengan "Testsumatif1" (case-insensitive & trim untuk kenyamanan murid)
             if (enteredToken.toLowerCase() === EXAM_TOKEN.toLowerCase()) {
+                const targetSubject = pendingSubjectKey;
                 closeTokenModal();
-                showBriefingPage(pendingSubjectKey);
+                showBriefingPage(targetSubject);
             } else {
                 showModal("Token / Password Salah!", "Token yang dimasukkan tidak cocok atau belum aktif. Silakan tanyakan kepada Bapak/Ibu Guru pengawas!");
                 if (tokenInput) {
@@ -2997,9 +2980,8 @@
             currentSubject = subjectKey;
             const mapelTitle = getSubjectTitleByKey(subjectKey);
 
-            // ACAK URUTAN SOAL KHUSUS UNTUK SISWA INI (Fisher-Yates)
-            const rawQuestions = getRawSubjectData();
-            activeShuffledQuestions = shuffleArray(rawQuestions);
+            // Selalu ambil data soal sesuai mata pelajaran yang dipilih
+            activeQuestions = [...getRawSubjectData(subjectKey)];
 
             const headerSubjectEl = document.getElementById('header-subject');
             if (headerSubjectEl) headerSubjectEl.innerText = mapelTitle;
@@ -3065,7 +3047,7 @@
                 () => {
                     disableAntiCheat(); // Lepas kunci anti-cheat
                     stopTimer();
-                    activeShuffledQuestions = [];
+                    activeQuestions = [];
                     document.getElementById('quiz-form').classList.add('hidden');
                     document.getElementById('subject-section').classList.remove('hidden');
                     const headerSubjectEl = document.getElementById('header-subject');
@@ -3075,24 +3057,21 @@
             );
         }
 
-        // GET ACTIVE QUIZ DATA (Menggunakan Soal yang Diacak Urutannya)
-        function getRawSubjectData() {
-            if (currentSubject === 'indo') return quizDataIndo;
-            if (currentSubject === 'seni') return quizDataSeni;
-            if (currentSubject === 'ipa') return quizDataIPA;
-            if (currentSubject === 'pkpbi') return quizDataPKPBI;
-            if (currentSubject === 'matematika') return quizDataMatematika;
-            if (currentSubject === 'ips') return quizDataIPS;
-            if (currentSubject === 'inggris') return quizDataInggris;
-            if (currentSubject === 'pancasila') return quizDataPancasila;
+        // GET ACTIVE QUIZ DATA (Urutan Soal Asli Sesuai Per Tema)
+        function getRawSubjectData(key = currentSubject) {
+            if (key === 'indo') return quizDataIndo;
+            if (key === 'seni') return quizDataSeni;
+            if (key === 'ipa') return quizDataIPA;
+            if (key === 'pkpbi') return quizDataPKPBI;
+            if (key === 'matematika') return quizDataMatematika;
+            if (key === 'ips') return quizDataIPS;
+            if (key === 'inggris') return quizDataInggris;
+            if (key === 'pancasila') return quizDataPancasila;
             return quizDataIndo;
         }
 
         function getActiveData() {
-            if (activeShuffledQuestions && activeShuffledQuestions.length > 0) {
-                return activeShuffledQuestions;
-            }
-            return getRawSubjectData();
+            return (activeQuestions && activeQuestions.length > 0) ? activeQuestions : getRawSubjectData(currentSubject);
         }
 
         // RENDER QUESTIONS DYNAMICALLY
@@ -3294,7 +3273,7 @@
         // NAVIGATION
         function goToSubjectSelection() {
             stopTimer();
-            activeShuffledQuestions = [];
+            activeQuestions = [];
             document.getElementById('quiz-form').reset();
             document.getElementById('quiz-form').classList.add('hidden');
             document.getElementById('briefing-section').classList.add('hidden');
@@ -3305,7 +3284,7 @@
 
         function logout() {
             stopTimer();
-            activeShuffledQuestions = [];
+            activeQuestions = [];
             document.getElementById('student-name').value = '';
             document.getElementById('subject-section').classList.add('hidden');
             document.getElementById('briefing-section').classList.add('hidden');
